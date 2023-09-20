@@ -10,6 +10,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -35,4 +37,9 @@ public class Semester {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable (name = "semesters_to_courses",
+            joinColumns = {@JoinColumn(name = "semester_id")},
+            inverseJoinColumns = {@JoinColumn(name = "course_id")})
+    private Set<Course> courses = new HashSet<>();
 }

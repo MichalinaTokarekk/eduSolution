@@ -19,8 +19,11 @@ public class ClassGroupService {
     private SemesterRepository semesterRepository;
 
     public ClassGroup saveClassGroup (ClassGroup group){
-        Semester semester = semesterRepository.findById(group.getSemester().getId()).orElse(null);
-        group.setSemester(semester);
+        Semester semester = group.getSemester();
+        if(semester != null) {
+            semester = semesterRepository.findById(semester.getId()).orElse(null);
+            group.setSemester(semester);
+        }
         return classgroupRepository.save(group);
     }
 
