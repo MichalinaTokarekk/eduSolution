@@ -1,5 +1,6 @@
 package com.eduSolution.eduSolution.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,10 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -34,4 +39,18 @@ public class ClassGroup {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classGroup")
+    private Set<User> users = new HashSet<>();
+
+//
+//    @Transient
+//    private List<Integer> userIds;
+//
+//    @PostLoad
+//    private void onLoad() {
+//        userIds = users.stream().map(User::getId).collect(Collectors.toList());
+//    }
 }

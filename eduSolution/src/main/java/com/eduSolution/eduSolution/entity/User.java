@@ -1,5 +1,6 @@
 package com.eduSolution.eduSolution.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -68,4 +71,10 @@ public class User {
     private LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "class_group_id")
+    private ClassGroup classGroup;
+
 }

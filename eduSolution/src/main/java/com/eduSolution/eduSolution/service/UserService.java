@@ -1,8 +1,10 @@
 package com.eduSolution.eduSolution.service;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
+import com.eduSolution.eduSolution.entity.ClassGroup;
 import com.eduSolution.eduSolution.entity.Semester;
 import com.eduSolution.eduSolution.entity.User;
+import com.eduSolution.eduSolution.repository.ClassGroupRepository;
 import com.eduSolution.eduSolution.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ClassGroupRepository classGroupRepository;
+
     public User saveUser (User user){
         String username2 = user.getFirstName() + " " + user.getLastName();
         user.setUsername(username2);
+
+        ClassGroup classGroup = classGroupRepository.findById(user.getClassGroup().getId()).orElse(null);
+        user.setClassGroup(classGroup);
+
         return userRepository.save(user);
     }
 
@@ -63,6 +72,7 @@ public class UserService {
         existingUser.setApartmentNumber(user.getApartmentNumber());
         existingUser.setPost(user.getPost());
         existingUser.setPostCode(user.getPostCode());
+        existingUser.setClassGroup(user.getClassGroup());
         changeRole(user);
 //        autenticationService.revokeAllUserTokens(user);
 

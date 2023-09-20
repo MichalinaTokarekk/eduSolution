@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/semester-controller")
+@RequestMapping("/class-group-controller")
 @RestController
 public class ClassGroupController {
     @Autowired
