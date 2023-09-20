@@ -36,9 +36,9 @@ public class SemesterService {
     }
 
     public Semester updateSemester (Semester semester){
-        Semester existingGenre = semesterRepository.findById(semester.getId()).orElse(null);
-        existingGenre.setName(semester.getName());
-        return semesterRepository.save(existingGenre);
+        Semester existingSemester = semesterRepository.findById(semester.getId()).orElse(null);
+        existingSemester.setName(semester.getName());
+        return semesterRepository.save(existingSemester);
     }
 
     public DeleteResponseDTO deleteSemester(int id){
