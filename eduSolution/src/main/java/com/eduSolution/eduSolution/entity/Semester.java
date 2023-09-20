@@ -21,7 +21,7 @@ public class Semester {
     @GeneratedValue
     private int id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String name;
 
     @CreatedBy

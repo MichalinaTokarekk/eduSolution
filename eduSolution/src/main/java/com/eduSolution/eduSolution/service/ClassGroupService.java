@@ -2,7 +2,9 @@ package com.eduSolution.eduSolution.service;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.ClassGroup;
+import com.eduSolution.eduSolution.entity.Semester;
 import com.eduSolution.eduSolution.repository.ClassGroupRepository;
+import com.eduSolution.eduSolution.repository.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,12 @@ public class ClassGroupService {
     @Autowired
     private ClassGroupRepository classgroupRepository;
 
+    @Autowired
+    private SemesterRepository semesterRepository;
+
     public ClassGroup saveClassGroup (ClassGroup group){
+        Semester semester = semesterRepository.findById(group.getSemester().getId()).orElse(null);
+        group.setSemester(semester);
         return classgroupRepository.save(group);
     }
 
@@ -35,6 +42,7 @@ public class ClassGroupService {
     public ClassGroup updateClassGroup (ClassGroup classGroup){
         ClassGroup existingClassGroup = classgroupRepository.findById(classGroup.getId()).orElse(null);
         existingClassGroup.setName(classGroup.getName());
+        existingClassGroup.setSemester(classGroup.getSemester());
         return classgroupRepository.save(existingClassGroup);
     }
 

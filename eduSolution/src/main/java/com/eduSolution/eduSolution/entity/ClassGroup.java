@@ -45,6 +45,10 @@ public class ClassGroup {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classGroup")
     private Set<User> users = new HashSet<>();
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
+
 //
 //    @Transient
 //    private List<Integer> userIds;
