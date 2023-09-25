@@ -66,10 +66,10 @@ public class SemesterService {
     }
 
     public DeleteResponseDTO deleteSemester(int id){
-//        List<Book> booksByGenreId = bookRepository.findByGenreId(id);
-//        if (!booksByGenreId.isEmpty()) {
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można usunąć tego pola. Istnieje książa o takim gatunku");
-//        }
+        List<Course> coursesBySemesterId = courseRepository.findBySemesterId(id);
+        if (!coursesBySemesterId.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można usunąć tego pola. Istnieje kurs w tym semestrze");
+        }
         Semester semester = semesterRepository.findById(id).orElse(null);
         semesterRepository.deleteById(id);
 //        return "Semestr " + name + " został usunięty";

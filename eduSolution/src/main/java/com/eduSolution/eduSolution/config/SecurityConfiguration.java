@@ -56,13 +56,18 @@ public class SecurityConfiguration {
                                         .requestMatchers("/user-controller/**").hasAuthority("ADMIN")
 
                             //COURSE
-                            .requestMatchers("/course-controller/**").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
-                            .requestMatchers("/course-controller/courses").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
-                            .requestMatchers("/course-controller/course/{id}").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
-                            .requestMatchers("/course-controller/courseName/{name}").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
-                            .requestMatchers("/course-controller/**").hasAnyAuthority("ADMIN", "LIBRARIAN")
+//                            .requestMatchers("/course-controller/**").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
+//                            .requestMatchers("/course-controller/courses").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
+//                            .requestMatchers("/course-controller/course/{id}").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
+//                            .requestMatchers("/course-controller/courseName/{name}").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
+//                            .requestMatchers("/course-controller/**").hasAnyAuthority("ADMIN", "LIBRARIAN", "STUDENT")
+                            .requestMatchers("/course-controller/**").permitAll()
 
-                            .requestMatchers("/class-group-controller/**").hasAnyAuthority("ADMIN", "STUDENT")
+//                            .requestMatchers("/class-group-controller/**").hasAnyAuthority("ADMIN", "STUDENT")
+                            .requestMatchers("/class-group-controller/**").permitAll()
+
+
+                            .requestMatchers("/semester-controller/**").permitAll()
 
 
 
