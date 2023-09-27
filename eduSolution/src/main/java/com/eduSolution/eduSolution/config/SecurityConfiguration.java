@@ -71,6 +71,9 @@ public class SecurityConfiguration {
                             .requestMatchers("/semester-controller/**").permitAll()
 
 
+                            .requestMatchers("/section-controller/**").permitAll()
+
+
 
                             //SEMESTER
 //                            .requestMatchers("/semester-controller/semesters").hasAnyAuthority("USER","LIBRARIAN","ADMIN")

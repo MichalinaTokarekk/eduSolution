@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface SemesterRepository extends JpaRepository<Semester,Integer> {
     Semester findByName (String name);
-
-
 }
