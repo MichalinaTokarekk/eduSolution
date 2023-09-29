@@ -37,6 +37,7 @@ public class EMFileService {
     public EMFile updateEMFile (EMFile emFile){
         EMFile existingCourse = emFileRepository.findById(emFile.getId()).orElse(null);
         existingCourse.setName(emFile.getName());
+        existingCourse.setFilePath(emFile.getFilePath());
         return emFileRepository.save(existingCourse);
     }
 

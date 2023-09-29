@@ -15,20 +15,19 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class EMFile {
+public class EMPicture {
     @Id
     @GeneratedValue
     private int id;
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String filePath;
 
 //    @Lob
 //    @Column(nullable = false)
-//    private byte[] fileData;
-    private String mimeType;
-    private long fileSize;
+//    private byte[] imageData;
+    private String name;
+    @Column(nullable = false)
+    private String filePath;
+    @Column(length = 1000)
+    private String description;
     @CreatedBy
     private String createdBy;
     @CreatedDate
