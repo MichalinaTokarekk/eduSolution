@@ -1,5 +1,6 @@
 package com.eduSolution.eduSolution.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,5 +40,16 @@ public class Course {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private Set<Section> sections = new HashSet<>();
+
+    public Course() {
+    }
+
+    public Course(int id) {
+        this.id = id;
+    }
 
 }

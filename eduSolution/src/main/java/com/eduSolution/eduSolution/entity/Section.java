@@ -1,5 +1,6 @@
 package com.eduSolution.eduSolution.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,5 +36,10 @@ public class Section {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+
 
 }

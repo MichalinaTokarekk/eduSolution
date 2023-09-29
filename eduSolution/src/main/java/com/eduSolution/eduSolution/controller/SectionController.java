@@ -34,6 +34,12 @@ public class SectionController {
         return sectionService.getSectionByName(name);
     }
 
+    @GetMapping (value = "/sectionsByCourse/{courseId}")
+    public List<Section> findSectionsByCourseId(@PathVariable int courseId) {
+        return sectionService.getSectionsByCourse(courseId);
+    }
+
+
     @PutMapping("/updateSection")
     public Section updateSection (@RequestBody Section section) {
         return sectionService.updateSection(section);

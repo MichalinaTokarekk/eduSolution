@@ -2,6 +2,7 @@ package com.eduSolution.eduSolution.service;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.Section;
+import com.eduSolution.eduSolution.repository.CourseRepository;
 import com.eduSolution.eduSolution.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,24 +14,34 @@ public class SectionService {
     @Autowired
     private SectionRepository sectionRepository;
 
-    public Section saveSection (Section section){
+    @Autowired
+    private CourseRepository courseRepository;
+
+    public Section saveSection(Section section) {
+        section.setCourse(courseRepository.findById(section.getCourse().getId()).orElse(null));
         return sectionRepository.save(section);
     }
 
-    public List<Section> saveSections (List <Section> sections){
+    public List<Section> saveSections(List<Section> sections) {
         return sectionRepository.saveAll(sections);
     }
-    public  Section getSectionById (int id){
+
+    public Section getSectionById(int id) {
         return sectionRepository.findById(id).orElse(null);
     }
 
-    public  List<Section> getSections (){
+    public List<Section> getSections() {
         return sectionRepository.findAll();
     }
 
-    public  Section getSectionByName (String name){
+    public Section getSectionByName(String name) {
         return sectionRepository.findByName(name);
     }
+
+    public List<Section> getSectionsByCourse(int courseId) {
+        return sectionRepository.findByCourseId(courseId);
+    }
+
 
     public Section updateSection (Section section){
         Section existingSection = sectionRepository.findById(section.getId()).orElse(null);
