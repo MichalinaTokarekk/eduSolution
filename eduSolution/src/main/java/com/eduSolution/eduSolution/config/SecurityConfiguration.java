@@ -61,7 +61,7 @@ public class SecurityConfiguration {
 //                            .requestMatchers("/course-controller/courses").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
 //                            .requestMatchers("/course-controller/course/{id}").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
 //                            .requestMatchers("/course-controller/courseName/{name}").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
-//                            .requestMatchers("/course-controller/**").hasAnyAuthority("ADMIN", "LIBRARIAN", "STUDENT")
+//                            .requestMatchers("/course-controller/**").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
                             .requestMatchers("/course-controller/**").permitAll()
 
 //                            .requestMatchers("/class-group-controller/**").hasAnyAuthority("ADMIN", "STUDENT")
@@ -72,6 +72,8 @@ public class SecurityConfiguration {
 
 
                             .requestMatchers("/section-controller/**").permitAll()
+
+                            .requestMatchers("/edu-material-controller/**").permitAll()
 
 
 

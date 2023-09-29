@@ -11,6 +11,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -41,5 +43,21 @@ public class Section {
     @JoinColumn(name = "course_id")
     private Course course;
 
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
+//    private Set<EduMaterial> eduMaterials = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable (name = "sections_to_eduMaterials",
+            joinColumns = {@JoinColumn(name = "section_id")},
+            inverseJoinColumns = {@JoinColumn(name = "eduMaterial_id")})
+    private Set<EduMaterial> eduMaterials = new HashSet<>();
+
+    public Section() {
+    }
+
+    public Section(int id) {
+        this.id = id;
+    }
 
 }

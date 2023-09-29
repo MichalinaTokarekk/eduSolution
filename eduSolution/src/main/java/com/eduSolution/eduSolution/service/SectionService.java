@@ -1,13 +1,18 @@
 package com.eduSolution.eduSolution.service;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
+import com.eduSolution.eduSolution.entity.EduMaterial;
 import com.eduSolution.eduSolution.entity.Section;
 import com.eduSolution.eduSolution.repository.CourseRepository;
+import com.eduSolution.eduSolution.repository.EduMaterialRepository;
 import com.eduSolution.eduSolution.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SectionService {
@@ -17,8 +22,17 @@ public class SectionService {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private EduMaterialRepository eduMaterialRepository;
+
     public Section saveSection(Section section) {
         section.setCourse(courseRepository.findById(section.getCourse().getId()).orElse(null));
+        Set<EduMaterial> eduMaterials = new HashSet<>();
+        for (EduMaterial author : section.getEduMaterials()) {
+            Iterable<EduMaterial> authorsById = eduMaterialRepository.findAllById(Collections.singleton(author.getId()));
+            authorsById.forEach(eduMaterials::add);
+        }
+        section.setEduMaterials(eduMaterials);
         return sectionRepository.save(section);
     }
 

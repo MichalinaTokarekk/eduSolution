@@ -2,6 +2,7 @@ package com.eduSolution.eduSolution.controller;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.EduMaterial;
+import com.eduSolution.eduSolution.entity.Section;
 import com.eduSolution.eduSolution.entity.Semester;
 import com.eduSolution.eduSolution.service.EduMaterialService;
 import com.eduSolution.eduSolution.service.SemesterService;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/semester-controller")
+@RequestMapping("/edu-material-controller")
 @RestController
 public class EduMaterialController {
     @Autowired
@@ -35,6 +36,10 @@ public class EduMaterialController {
     public EduMaterial findEduMaterialByTitle(@PathVariable String name) {
         return eduMaterialService.getEduMaterialByName(name);
     }
+//    @GetMapping (value = "/eduMaterialsBySection/{sectionId}")
+//    public List<EduMaterial> findEduMaterialsBySectionId(@PathVariable int sectionId) {
+//        return eduMaterialService.getEduMaterialsBySection(sectionId);
+//    }
 
     @PutMapping("/updateEduMaterial")
     public EduMaterial updateEduMaterial (@RequestBody EduMaterial eduMaterial) {

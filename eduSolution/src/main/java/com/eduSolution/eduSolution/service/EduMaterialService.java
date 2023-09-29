@@ -3,9 +3,11 @@ package com.eduSolution.eduSolution.service;
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.Course;
 import com.eduSolution.eduSolution.entity.EduMaterial;
+import com.eduSolution.eduSolution.entity.Section;
 import com.eduSolution.eduSolution.entity.Semester;
 import com.eduSolution.eduSolution.repository.CourseRepository;
 import com.eduSolution.eduSolution.repository.EduMaterialRepository;
+import com.eduSolution.eduSolution.repository.SectionRepository;
 import com.eduSolution.eduSolution.repository.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +24,11 @@ public class EduMaterialService {
     @Autowired
     private EduMaterialRepository eduMaterialRepository;
 
+    @Autowired
+    private SectionRepository sectionRepository;
 
     public EduMaterial saveEduMaterial (EduMaterial eduMaterial){
+//        eduMaterial.setSection(sectionRepository.findById(eduMaterial.getSection().getId()).orElse(null));
         return eduMaterialRepository.save(eduMaterial);
     }
 
@@ -41,6 +46,10 @@ public class EduMaterialService {
     public  EduMaterial getEduMaterialByName (String name){
         return eduMaterialRepository.findByName(name);
     }
+
+//    public List<EduMaterial> getEduMaterialsBySection(int sectionId) {
+//        return eduMaterialRepository.findBySectionId(sectionId);
+//    }
 
     public EduMaterial updateEduMaterial (EduMaterial eduMaterial){
         EduMaterial existingSemester = eduMaterialRepository.findById(eduMaterial.getId()).orElse(null);

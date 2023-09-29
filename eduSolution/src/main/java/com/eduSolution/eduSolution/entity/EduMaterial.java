@@ -37,4 +37,8 @@ public class EduMaterial {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+//    @ManyToOne
+//    @JoinColumn(name = "section_id")
+//    private Section section;
 }
