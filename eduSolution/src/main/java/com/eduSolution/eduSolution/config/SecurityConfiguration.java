@@ -70,10 +70,11 @@ public class SecurityConfiguration {
 
                             .requestMatchers("/semester-controller/**").permitAll()
 
+                            .requestMatchers("/edu-material-controller/**").permitAll()
+
 
                             .requestMatchers("/section-controller/**").permitAll()
 
-                            .requestMatchers("/edu-material-controller/**").permitAll()
 
 
 

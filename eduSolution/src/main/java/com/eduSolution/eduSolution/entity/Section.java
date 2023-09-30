@@ -47,11 +47,11 @@ public class Section {
 //    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
 //    private Set<EduMaterial> eduMaterials = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable (name = "sections_to_eduMaterials",
-            joinColumns = {@JoinColumn(name = "section_id")},
-            inverseJoinColumns = {@JoinColumn(name = "eduMaterial_id")})
-    private Set<EduMaterial> eduMaterials = new HashSet<>();
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable (name = "sections_to_eduMaterials",
+//            joinColumns = {@JoinColumn(name = "section_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "eduMaterial_id")})
+//    private Set<EduMaterial> eduMaterials = new HashSet<>();
 
     public Section() {
     }

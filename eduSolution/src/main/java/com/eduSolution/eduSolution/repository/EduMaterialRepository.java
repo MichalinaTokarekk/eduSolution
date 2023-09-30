@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface EduMaterialRepository extends JpaRepository<EduMaterial,Integer> {
     EduMaterial findByName (String name);
-//    List<EduMaterial> findBySectionId (int id);
+    List<EduMaterial> findBySectionsId (int id);
 }

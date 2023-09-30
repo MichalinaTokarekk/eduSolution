@@ -20,6 +20,12 @@ public class EduMaterialController {
     public EduMaterial addEduMaterial (@RequestBody EduMaterial eduMaterial){
         return eduMaterialService.saveEduMaterial(eduMaterial);
     }
+
+    @PostMapping("/addSection")
+    public EduMaterial addSection (@RequestBody EduMaterial eduMaterial, @RequestParam("sectionId") int sectionId) {
+        return eduMaterialService.addSection(eduMaterial, sectionId);
+    }
+
     @PostMapping("/addEduMaterials")
     public List<EduMaterial> addEduMaterials (@RequestBody List<EduMaterial> eduMaterials){
         return eduMaterialService.saveEduMaterials(eduMaterials);
@@ -36,10 +42,10 @@ public class EduMaterialController {
     public EduMaterial findEduMaterialByTitle(@PathVariable String name) {
         return eduMaterialService.getEduMaterialByName(name);
     }
-//    @GetMapping (value = "/eduMaterialsBySection/{sectionId}")
-//    public List<EduMaterial> findEduMaterialsBySectionId(@PathVariable int sectionId) {
-//        return eduMaterialService.getEduMaterialsBySection(sectionId);
-//    }
+    @GetMapping (value = "/eduMaterialsBySectionId/{sectionId}")
+    public List<EduMaterial> findEduMaterialsBySectionId(@PathVariable int sectionId) {
+        return eduMaterialService.getEduMaterialsBySectionId(sectionId);
+    }
 
     @PutMapping("/updateEduMaterial")
     public EduMaterial updateEduMaterial (@RequestBody EduMaterial eduMaterial) {

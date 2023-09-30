@@ -12,6 +12,8 @@ import com.eduSolution.eduSolution.repository.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
@@ -28,7 +30,18 @@ public class EduMaterialService {
     private SectionRepository sectionRepository;
 
     public EduMaterial saveEduMaterial (EduMaterial eduMaterial){
-//        eduMaterial.setSection(sectionRepository.findById(eduMaterial.getSection().getId()).orElse(null));
+        Set<Section> sections = new HashSet<>();
+        for (Section section : eduMaterial.getSections()) {
+            Iterable<Section> sectionsById = sectionRepository.findAllById(Collections.singleton(section.getId()));
+            sectionsById.forEach(sections::add);
+        }
+        eduMaterial.setSections(sections);
+        return eduMaterialRepository.save(eduMaterial);
+    }
+
+    public EduMaterial addSection (EduMaterial eduMaterial, int sectionId) {
+        Section section = sectionRepository.findById(sectionId).orElse(null);
+        eduMaterial.setSections((Set<Section>) section);
         return eduMaterialRepository.save(eduMaterial);
     }
 
@@ -47,21 +60,21 @@ public class EduMaterialService {
         return eduMaterialRepository.findByName(name);
     }
 
-//    public List<EduMaterial> getEduMaterialsBySection(int sectionId) {
-//        return eduMaterialRepository.findBySectionId(sectionId);
-//    }
+    public List<EduMaterial> getEduMaterialsBySectionId(int sectionId) {
+        return eduMaterialRepository.findBySectionsId(sectionId);
+    }
 
     public EduMaterial updateEduMaterial (EduMaterial eduMaterial){
-        EduMaterial existingSemester = eduMaterialRepository.findById(eduMaterial.getId()).orElse(null);
-        existingSemester.setName(eduMaterial.getName());
-        existingSemester.setDescription(eduMaterial.getDescription());
-//        Set<Course> courses = new HashSet<>();
-//        for (Course course : semester.getCourses()) {
-//            Iterable<Course> coursesById = courseRepository.findAllById(Collections.singleton(course.getId()));
-//            coursesById.forEach(courses::add);
-//        }
-//        existingSemester.setCourses(courses);
-        return eduMaterialRepository.save(existingSemester);
+        EduMaterial existingEduMaterial = eduMaterialRepository.findById(eduMaterial.getId()).orElse(null);
+        existingEduMaterial.setName(eduMaterial.getName());
+        existingEduMaterial.setDescription(eduMaterial.getDescription());
+        Set<Section> sections = new HashSet<>();
+        for (Section section : eduMaterial.getSections()) {
+            Iterable<Section> sectionsById = sectionRepository.findAllById(Collections.singleton(section.getId()));
+            sectionsById.forEach(sections::add);
+        }
+        existingEduMaterial.setSections(sections);
+        return eduMaterialRepository.save(existingEduMaterial);
     }
 
     public DeleteResponseDTO deleteEduMaterial(int id){

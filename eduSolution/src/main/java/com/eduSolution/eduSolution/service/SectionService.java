@@ -27,12 +27,12 @@ public class SectionService {
 
     public Section saveSection(Section section) {
         section.setCourse(courseRepository.findById(section.getCourse().getId()).orElse(null));
-        Set<EduMaterial> eduMaterials = new HashSet<>();
-        for (EduMaterial eduMaterial : section.getEduMaterials()) {
-            Iterable<EduMaterial> authorsById = eduMaterialRepository.findAllById(Collections.singleton(eduMaterial.getId()));
-            authorsById.forEach(eduMaterials::add);
-        }
-        section.setEduMaterials(eduMaterials);
+//        Set<EduMaterial> eduMaterials = new HashSet<>();
+//        for (EduMaterial eduMaterial : section.getEduMaterials()) {
+//            Iterable<EduMaterial> authorsById = eduMaterialRepository.findAllById(Collections.singleton(eduMaterial.getId()));
+//            authorsById.forEach(eduMaterials::add);
+//        }
+//        section.setEduMaterials(eduMaterials);
         return sectionRepository.save(section);
     }
 
@@ -69,22 +69,22 @@ public class SectionService {
     public Section updateSection (Section section){
         Section existingSection = sectionRepository.findById(section.getId()).orElse(null);
         existingSection.setName(section.getName());
-        Set<EduMaterial> eduMaterials = new HashSet<>();
-        for (EduMaterial author : section.getEduMaterials()) {
-            Iterable<EduMaterial> authorsById = eduMaterialRepository.findAllById(Collections.singleton(author.getId()));
-            authorsById.forEach(eduMaterials::add);
-        }
+//        Set<EduMaterial> eduMaterials = new HashSet<>();
+//        for (EduMaterial author : section.getEduMaterials()) {
+//            Iterable<EduMaterial> authorsById = eduMaterialRepository.findAllById(Collections.singleton(author.getId()));
+//            authorsById.forEach(eduMaterials::add);
+//        }
         return sectionRepository.save(existingSection);
     }
 
     public Section updateEduMaterial (Section section){
         Section existingSection = sectionRepository.findById(section.getId()).orElse(null);
-        Set<EduMaterial> eduMaterials = new HashSet<>();
-        for (EduMaterial author : section.getEduMaterials()) {
-            Iterable<EduMaterial> authorsById = eduMaterialRepository.findAllById(Collections.singleton(author.getId()));
-            authorsById.forEach(eduMaterials::add);
-        }
-        existingSection.setEduMaterials(eduMaterials);
+//        Set<EduMaterial> eduMaterials = new HashSet<>();
+//        for (EduMaterial author : section.getEduMaterials()) {
+//            Iterable<EduMaterial> authorsById = eduMaterialRepository.findAllById(Collections.singleton(author.getId()));
+//            authorsById.forEach(eduMaterials::add);
+//        }
+//        existingSection.setEduMaterials(eduMaterials);
         return sectionRepository.save(existingSection);
     }
 
