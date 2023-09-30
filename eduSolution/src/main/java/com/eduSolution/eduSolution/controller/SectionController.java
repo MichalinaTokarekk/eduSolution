@@ -1,7 +1,9 @@
 package com.eduSolution.eduSolution.controller;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
+import com.eduSolution.eduSolution.entity.EduMaterial;
 import com.eduSolution.eduSolution.entity.Section;
+import com.eduSolution.eduSolution.repository.SectionRepository;
 import com.eduSolution.eduSolution.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,10 @@ import java.util.List;
 public class SectionController {
     @Autowired
     private SectionService sectionService;
+
+    @Autowired
+    private SectionRepository sectionRepository;
+
     @PostMapping("/addSection")
     public Section addSection (@RequestBody Section section){
         return sectionService.saveSection(section);
@@ -21,6 +27,10 @@ public class SectionController {
     public List<Section> addSections (@RequestBody List<Section> sections){
         return sectionService.saveSections(sections);
     }
+
+
+
+
     @GetMapping("/sections")
     public List<Section> findAllSections() {
         return sectionService.getSections();
@@ -43,6 +53,11 @@ public class SectionController {
     @PutMapping("/updateSection")
     public Section updateSection (@RequestBody Section section) {
         return sectionService.updateSection(section);
+    }
+
+    @PutMapping("/updateEduMaterial")
+    public Section updateEduMaterial(@RequestBody Section section) {
+        return sectionService.updateEduMaterial(section);
     }
 
     @DeleteMapping("/deleteSection/{id}")
