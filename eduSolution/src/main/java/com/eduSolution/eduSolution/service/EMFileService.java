@@ -58,6 +58,11 @@ public class EMFileService {
 //        return emFileRepository.findByName(name);
 //    }
 //
+
+    public List<EMFile> getEMFilesByEduMaterialId(int sectionId) {
+        return emFileRepository.findByEduMaterialsId(sectionId);
+    }
+
     public EMFile updateEMFile (EMFile emFile){
         EMFile existingEMFile = emFileRepository.findById(emFile.getId()).orElse(null);
 //        existingCourse.setName(emFile.getName());

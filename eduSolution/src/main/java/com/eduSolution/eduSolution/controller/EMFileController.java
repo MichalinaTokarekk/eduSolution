@@ -3,6 +3,7 @@ package com.eduSolution.eduSolution.controller;
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.Course;
 import com.eduSolution.eduSolution.entity.EMFile;
+import com.eduSolution.eduSolution.entity.EduMaterial;
 import com.eduSolution.eduSolution.service.CourseService;
 import com.eduSolution.eduSolution.service.EMFileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class EMFileController {
     public ResponseEntity<?> downloadFile(@PathVariable String fileName) {
         byte[] fileData = emFileService.downloadFile(fileName);
         return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("file/doc, file/pdf, file/png"))
+                .contentType(MediaType.valueOf("application/doc; application/pdf; image/png"))
                 .body(fileData);
     }
 
@@ -58,6 +59,12 @@ public class EMFileController {
 //        return emFileService.getEMFileByName(name);
 //    }
 //
+
+    @GetMapping (value = "/emFilesByEduMaterialId/{eduMaterialId}")
+    public List<EMFile> findEduMaterialsBySectionId(@PathVariable int eduMaterialId) {
+        return emFileService.getEMFilesByEduMaterialId(eduMaterialId);
+    }
+
     @PutMapping("/updateEMFile")
     public EMFile updateEMFile (@RequestBody EMFile emFile) {
         return emFileService.updateEMFile(emFile);
