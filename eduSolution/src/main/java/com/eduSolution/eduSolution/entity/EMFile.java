@@ -1,8 +1,7 @@
 package com.eduSolution.eduSolution.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -16,21 +15,19 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Builder
 public class EMFile {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
-    private String filePath;
-
-//    @Lob
-//    @Column(nullable = false)
-//    private byte[] fileData;
-    private String mimeType;
-    private long fileSize;
+    private String type;
+    @Lob
+    @Column(name = "fileData",  columnDefinition = "LONGBLOB")
+    private byte[] fileData;
     @CreatedBy
     private String createdBy;
     @CreatedDate
@@ -45,9 +42,6 @@ public class EMFile {
             joinColumns = {@JoinColumn(name = "emFile_id")},
             inverseJoinColumns = {@JoinColumn(name = "eduMaterial_id")})
     private Set<EduMaterial> eduMaterials = new HashSet<>();
-
-    public EMFile() {
-    }
 
     public EMFile(int id) {
         this.id = id;
