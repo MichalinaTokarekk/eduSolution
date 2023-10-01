@@ -8,6 +8,10 @@ import com.eduSolution.eduSolution.repository.EMFileRepository;
 import com.eduSolution.eduSolution.repository.EduMaterialRepository;
 import com.eduSolution.eduSolution.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,11 +37,31 @@ public class EMFileService {
         return null;
     }
 
-    public byte[] downloadFile(String fileName) {
-        Optional<EMFile> dbFileData = emFileRepository.findByName(fileName);
-        byte[] files = FileUtils.decompressFile(dbFileData.orElseThrow().getFileData());
-        return files;
+//    public byte[] downloadFile(String fileName) {
+//        Optional<EMFile> dbFileData = emFileRepository.findByName(fileName);
+//        byte[] files = FileUtils.decompressFile(dbFileData.orElseThrow().getFileData());
+//        return files;
+//    }
+
+    public ResponseEntity<byte[]> downloadFileById(int fileId) {
+        Optional<EMFile> dbFileData = emFileRepository.findById(fileId);
+
+        if (dbFileData.isPresent()) {
+            EMFile emFile = dbFileData.get();
+            byte[] fileContent = FileUtils.decompressFile(emFile.getFileData());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", emFile.getName());
+
+            return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
+        } else {
+            // Tutaj możesz obsłużyć sytuację, gdy plik o danym ID nie został znaleziony
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
+
 
     public EMFile saveEMFile (EMFile emFile){
         return emFileRepository.save(emFile);

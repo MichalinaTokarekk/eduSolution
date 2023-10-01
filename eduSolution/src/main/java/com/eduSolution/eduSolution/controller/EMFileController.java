@@ -29,14 +29,19 @@ public class EMFileController {
                 .body(uploadFile);
     }
 
-    @GetMapping("/{fileName}")
-    public ResponseEntity<?> downloadFile(@PathVariable String fileName) {
-        byte[] fileData = emFileService.downloadFile(fileName);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("application/doc; application/pdf; image/png"))
-                .body(fileData);
-    }
+//    @GetMapping("/{fileName}")
+//    public ResponseEntity<?> downloadFile(@PathVariable String fileName) {
+//        byte[] fileData = emFileService.downloadFile(fileName);
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .contentType(MediaType.valueOf("application/doc; application/pdf; image/png"))
+//                .body(fileData);
+//    }
 
+
+    @GetMapping("/{fileId}")
+    public ResponseEntity<byte[]> downloadFileById(@PathVariable int fileId) {
+        return emFileService.downloadFileById(fileId);
+    }
 
     @PostMapping("/addEMFile")
     public EMFile addEMFile (@RequestBody EMFile emFile){
