@@ -10,6 +10,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -37,4 +39,22 @@ public class EMFile {
     private String updatedBy;
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable (name = "emFiles_to_eduMaterials",
+            joinColumns = {@JoinColumn(name = "emFile_id")},
+            inverseJoinColumns = {@JoinColumn(name = "eduMaterial_id")})
+    private Set<EduMaterial> eduMaterials = new HashSet<>();
+
+    public EMFile() {
+    }
+
+    public EMFile(int id) {
+        this.id = id;
+    }
+
+    @PreRemove
+    private void removeRelations() {
+        eduMaterials.clear();
+    }
 }
