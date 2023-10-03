@@ -1,7 +1,9 @@
 package com.eduSolution.eduSolution.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -16,6 +18,8 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class EduMaterial {
     @Id
@@ -50,12 +54,12 @@ public class EduMaterial {
             inverseJoinColumns = {@JoinColumn(name = "section_id")})
     private Set<Section> sections = new HashSet<>();
 
-    public EduMaterial() {
-    }
+//    public EduMaterial() {
+//    }
 
-    public EduMaterial(int id) {
-        this.id = id;
-    }
+//    public EduMaterial(int id) {
+//        this.id = id;
+//    }
 
     @PreRemove
     private void removeRelations() {

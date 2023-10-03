@@ -31,8 +31,13 @@ public class EMFileService {
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
                 .fileData(FileUtils.compressFile(file.getBytes())).build());
-        if (fileData!=null) {
-            return "File uploaded successfully : " + file.getOriginalFilename();
+//        if (fileData!=null) {
+//            return "File uploaded successfully : " + file.getOriginalFilename();
+//        }
+        EMFile savedFile = emFileRepository.save(fileData);
+        if (savedFile != null) {
+            int fileId = savedFile.getId(); // Pobierz identyfikator zapisanego pliku
+            return "File uploaded successfully. File ID: " + fileId;
         }
         return null;
     }
@@ -64,6 +69,12 @@ public class EMFileService {
 
 
     public EMFile saveEMFile (EMFile emFile){
+        Set<EduMaterial> eduMaterials = new HashSet<>();
+        for (EduMaterial eduMaterial : emFile.getEduMaterials()) {
+            Iterable<EduMaterial> eduMaterialsById = eduMaterialRepository.findAllById(Collections.singleton(eduMaterial.getId()));
+            eduMaterialsById.forEach(eduMaterials::add);
+        }
+        emFile.setEduMaterials(eduMaterials);
         return emFileRepository.save(emFile);
     }
 //
