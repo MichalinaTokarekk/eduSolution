@@ -28,6 +28,6 @@ public class EMFileDTO {
         setName(emFile.getName());
         setType(emFile.getType());
         setFileData(emFile.getFileData());
-        setEduMaterialIds(emFile.getEduMaterials());
+        setEduMaterialIds((Set<EduMaterial>) emFile.getEduMaterial());
     }
 }

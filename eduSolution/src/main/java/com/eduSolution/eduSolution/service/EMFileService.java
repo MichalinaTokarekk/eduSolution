@@ -26,18 +26,23 @@ public class EMFileService {
     @Autowired
     private EduMaterialRepository eduMaterialRepository;
 
-    public String uploadFile(MultipartFile file) throws IOException {
+    public String uploadFile(MultipartFile file, int eduMaterialId) throws IOException {
+        EduMaterial eduMaterial = eduMaterialRepository.findById(eduMaterialId).orElse(null);
         EMFile fileData = emFileRepository.save(EMFile.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
-                .fileData(FileUtils.compressFile(file.getBytes())).build());
+                .fileData(FileUtils.compressFile(file.getBytes()))
+                .eduMaterial(eduMaterial).build());
 //        if (fileData!=null) {
 //            return "File uploaded successfully : " + file.getOriginalFilename();
 //        }
         EMFile savedFile = emFileRepository.save(fileData);
         if (savedFile != null) {
-            int fileId = savedFile.getId(); // Pobierz identyfikator zapisanego pliku
+            int fileId = savedFile.getId();
+//            updateEMFile(savedFile);
             return "File uploaded successfully. File ID: " + fileId;
+
+
         }
         return null;
     }
@@ -69,12 +74,13 @@ public class EMFileService {
 
 
     public EMFile saveEMFile (EMFile emFile){
-        Set<EduMaterial> eduMaterials = new HashSet<>();
-        for (EduMaterial eduMaterial : emFile.getEduMaterials()) {
-            Iterable<EduMaterial> eduMaterialsById = eduMaterialRepository.findAllById(Collections.singleton(eduMaterial.getId()));
-            eduMaterialsById.forEach(eduMaterials::add);
-        }
-        emFile.setEduMaterials(eduMaterials);
+//        Set<EduMaterial> eduMaterials = new HashSet<>();
+//        for (EduMaterial eduMaterial : emFile.getEduMaterials()) {
+//            Iterable<EduMaterial> eduMaterialsById = eduMaterialRepository.findAllById(Collections.singleton(eduMaterial.getId()));
+//            eduMaterialsById.forEach(eduMaterials::add);
+//        }
+//        emFile.setEduMaterials(eduMaterials);
+        emFile.setEduMaterial(eduMaterialRepository.findById(emFile.getEduMaterial().getId()).orElse(null));
         return emFileRepository.save(emFile);
     }
 //
@@ -95,19 +101,12 @@ public class EMFileService {
 //
 
     public List<EMFile> getEMFilesByEduMaterialId(int sectionId) {
-        return emFileRepository.findByEduMaterialsId(sectionId);
+        return emFileRepository.findByEduMaterialId(sectionId);
     }
 
     public EMFile updateEMFile (EMFile emFile){
         EMFile existingEMFile = emFileRepository.findById(emFile.getId()).orElse(null);
-//        existingCourse.setName(emFile.getName());
-//        existingCourse.setType(emFile.getType());
-        Set<EduMaterial> eduMaterials = new HashSet<>();
-        for (EduMaterial eduMaterial : emFile.getEduMaterials()) {
-            Iterable<EduMaterial> eduMaterialsById = eduMaterialRepository.findAllById(Collections.singleton(eduMaterial.getId()));
-            eduMaterialsById.forEach(eduMaterials::add);
-        }
-        existingEMFile.setEduMaterials(eduMaterials);
+        existingEMFile.setEduMaterial(eduMaterialRepository.findById(emFile.getEduMaterial().getId()).orElse(null));
         return emFileRepository.save(existingEMFile);
     }
 //

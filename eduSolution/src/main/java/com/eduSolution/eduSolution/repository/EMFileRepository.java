@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface EMFileRepository extends JpaRepository<EMFile,Integer> {
     Optional<EMFile> findByName (String fileName);
 
-    List<EMFile> findByEduMaterialsId (int id);
+    List<EMFile> findByEduMaterialId (int id);
 }

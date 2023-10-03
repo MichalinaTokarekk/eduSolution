@@ -38,18 +38,22 @@ public class EMFile {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable (name = "emFiles_to_eduMaterials",
-            joinColumns = {@JoinColumn(name = "emFile_id")},
-            inverseJoinColumns = {@JoinColumn(name = "eduMaterial_id")})
-    private Set<EduMaterial> eduMaterials = new HashSet<>();
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable (name = "emFiles_to_eduMaterials",
+//            joinColumns = {@JoinColumn(name = "emFile_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "eduMaterial_id")})
+//    private Set<EduMaterial> eduMaterials = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "eduMaterial_id")
+    private EduMaterial eduMaterial;
 
     public EMFile(int id) {
         this.id = id;
     }
 
-    @PreRemove
-    private void removeRelations() {
-        eduMaterials.clear();
-    }
+//    @PreRemove
+//    private void removeRelations() {
+//        eduMaterial.clear();
+//    }
 }

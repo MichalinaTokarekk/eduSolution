@@ -22,9 +22,9 @@ public class EMFileController {
     @Autowired
     private EMFileService emFileService;
 
-    @PostMapping
-    public ResponseEntity<?> uploadFile(@RequestParam("file")MultipartFile file) throws IOException {
-        String uploadFile = emFileService.uploadFile(file);
+    @PostMapping("/{eduMaterialId}")
+    public ResponseEntity<?> uploadFile(@RequestParam("file")MultipartFile file, @PathVariable int eduMaterialId) throws IOException {
+        String uploadFile = emFileService.uploadFile(file, eduMaterialId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadFile);
     }
