@@ -80,6 +80,8 @@ public class SecurityConfiguration {
 
                             .requestMatchers("/homeworkTest-controller/**").permitAll()
 
+                            .requestMatchers("/htFile-controller/**").permitAll()
+
 
 
 
