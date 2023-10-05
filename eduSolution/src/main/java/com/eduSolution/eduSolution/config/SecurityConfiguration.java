@@ -76,7 +76,9 @@ public class SecurityConfiguration {
                             .requestMatchers("/section-controller/**").permitAll()
 
                             .requestMatchers("/emFile-controller/**").permitAll()
-//                            .requestMatchers("/emFile-controller").permitAll()
+
+
+                            .requestMatchers("/homeworkTest-controller/**").permitAll()
 
 
 
