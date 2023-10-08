@@ -49,6 +49,11 @@ public class AnswerController {
         return answerService.getAnswersByUserId(userId);
     }
 
+    @GetMapping(value = "/answerByHomeworkTestIdAndUserId/homeworkTest/{homeworkTestId}/user/{userId}")
+    public Answer findByHomeworkTestIdAndUserId(@PathVariable int homeworkTestId, @PathVariable int userId) {
+        return answerService.getAnswerByHomeworkTestIdAndUserId(homeworkTestId, userId);
+    }
+
     @PutMapping("/updateAnswer")
     public Answer updateAnswer (@RequestBody Answer answer) {
         return answerService.updateAnswer(answer);

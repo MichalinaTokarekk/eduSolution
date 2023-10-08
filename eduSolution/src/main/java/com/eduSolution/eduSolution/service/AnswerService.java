@@ -1,10 +1,7 @@
 package com.eduSolution.eduSolution.service;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
-import com.eduSolution.eduSolution.entity.Answer;
-import com.eduSolution.eduSolution.entity.HomeworkTest;
-import com.eduSolution.eduSolution.entity.Section;
-import com.eduSolution.eduSolution.entity.User;
+import com.eduSolution.eduSolution.entity.*;
 import com.eduSolution.eduSolution.repository.AnswerRepository;
 import com.eduSolution.eduSolution.repository.HomeworkTestRepository;
 import com.eduSolution.eduSolution.repository.SectionRepository;
@@ -29,6 +26,7 @@ public class AnswerService {
     public Answer saveAnswer (Answer answer){
         answer.setHomeworkTest(homeworkTestRepository.findById(answer.getHomeworkTest().getId()).orElse(null));
         answer.setUser(userRepository.findById(answer.getUser().getId()).orElse(null));
+        answer.setAnswerStatus(AnswerStatus.NIEOCENIONE);
         return answerRepository.save(answer);
     }
 
@@ -59,10 +57,16 @@ public class AnswerService {
         return answerRepository.findByUserId(userId);
     }
 
+    public Answer getAnswerByHomeworkTestIdAndUserId(int homeworkTestId, int userId) {
+        return answerRepository.findByHomeworkTestIdAndUserId(homeworkTestId, userId);
+    }
+
+
     public Answer updateAnswer (Answer answer){
         Answer existingAnswer = answerRepository.findById(answer.getId()).orElse(null);
         existingAnswer.setAnswerContent(answer.getAnswerContent());
         existingAnswer.setComment(answer.getComment());
+        existingAnswer.setAnswerStatus(answer.getAnswerStatus());
         return answerRepository.save(existingAnswer);
     }
 

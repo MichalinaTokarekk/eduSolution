@@ -10,4 +10,6 @@ public interface AnswerRepository extends JpaRepository<Answer,Integer> {
 
     List<Answer> findByHomeworkTestId (int id);
     List<Answer> findByUserId (int id);
+
+    Answer findByHomeworkTestIdAndUserId(int homeworkTestId, int userId);
 }

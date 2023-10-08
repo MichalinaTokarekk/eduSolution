@@ -45,4 +45,7 @@ public class Answer {
     public Answer(int id) {
         this.id = id;
     }
+
+    @Enumerated(EnumType.STRING)
+    private AnswerStatus answerStatus;
 }
