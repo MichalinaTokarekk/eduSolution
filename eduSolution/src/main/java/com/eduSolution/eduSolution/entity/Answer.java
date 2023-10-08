@@ -12,8 +12,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -21,37 +19,30 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class HomeworkTest {
-
+public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(nullable = false, length = 100)
-    private String name;
-
-    private String taskContent;
-
+    private String answerContent;
+    private String comment;
     @CreatedBy
     private String createdBy;
-
     @CreatedDate
     private LocalDateTime createdAt;
-
     @LastModifiedBy
     private String updatedBy;
-
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "homeworkTest_id")
+    private HomeworkTest homeworkTest;
 
     @ManyToOne
-    @JoinColumn(name = "section_id")
-    private Section section;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-
-    public HomeworkTest(int id) {
+    public Answer(int id) {
         this.id = id;
     }
-
 }

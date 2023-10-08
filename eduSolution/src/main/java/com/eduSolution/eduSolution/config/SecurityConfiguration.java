@@ -82,6 +82,8 @@ public class SecurityConfiguration {
 
                             .requestMatchers("/htFile-controller/**").permitAll()
 
+                            .requestMatchers("/answer-controller/**").permitAll()
+
 
 
 
