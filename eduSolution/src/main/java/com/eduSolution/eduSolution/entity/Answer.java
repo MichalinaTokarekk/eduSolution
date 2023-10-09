@@ -23,6 +23,8 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String answerContent;
     private String comment;
     @CreatedBy

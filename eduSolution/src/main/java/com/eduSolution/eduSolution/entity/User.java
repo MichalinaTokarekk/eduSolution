@@ -108,4 +108,8 @@ public class User implements UserDetails {
         return true;
     }
 
+    public User(int id) {
+        this.id = id;
+    }
+
 }
