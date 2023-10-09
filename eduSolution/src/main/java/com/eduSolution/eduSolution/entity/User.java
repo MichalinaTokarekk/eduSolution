@@ -82,6 +82,19 @@ public class User implements UserDetails {
     @JoinColumn(name = "class_group_id")
     private ClassGroup classGroup;
 
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable (name = "users_to_classGroups",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "classGroup_id")})
+    private Set<ClassGroup> teachingClassGroups = new HashSet<>();
+
+    @PreRemove
+    private void removeRelations() {
+        teachingClassGroups.clear();
+    }
+
+
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

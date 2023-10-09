@@ -2,18 +2,27 @@ package com.eduSolution.eduSolution.service;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.ClassGroup;
+import com.eduSolution.eduSolution.entity.Course;
+import com.eduSolution.eduSolution.entity.Section;
 import com.eduSolution.eduSolution.entity.Semester;
 import com.eduSolution.eduSolution.repository.ClassGroupRepository;
+import com.eduSolution.eduSolution.repository.CourseRepository;
 import com.eduSolution.eduSolution.repository.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ClassGroupService {
     @Autowired
     private ClassGroupRepository classgroupRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Autowired
     private SemesterRepository semesterRepository;
@@ -24,6 +33,13 @@ public class ClassGroupService {
             semester = semesterRepository.findById(semester.getId()).orElse(null);
             group.setSemester(semester);
         }
+
+        Set<Course> courses = new HashSet<>();
+        for (Course course : group.getCourses()) {
+            Iterable<Course> sectionsById = courseRepository.findAllById(Collections.singleton(course.getId()));
+            sectionsById.forEach(courses::add);
+        }
+        group.setCourses(courses);
         return classgroupRepository.save(group);
     }
 
@@ -42,10 +58,21 @@ public class ClassGroupService {
         return classgroupRepository.findByName(name);
     }
 
+    public List<ClassGroup> findClassGroupsByCoursesId(int courseId) {
+        return (List<ClassGroup>) classgroupRepository.findClassGroupsByCoursesId(courseId);
+    }
+
     public ClassGroup updateClassGroup (ClassGroup classGroup){
         ClassGroup existingClassGroup = classgroupRepository.findById(classGroup.getId()).orElse(null);
         existingClassGroup.setName(classGroup.getName());
         existingClassGroup.setSemester(classGroup.getSemester());
+
+        Set<Course> courses = new HashSet<>();
+        for (Course course : classGroup.getCourses()) {
+            Iterable<Course> sectionsById = courseRepository.findAllById(Collections.singleton(course.getId()));
+            sectionsById.forEach(courses::add);
+        }
+        existingClassGroup.setCourses(courses);
         return classgroupRepository.save(existingClassGroup);
     }
 

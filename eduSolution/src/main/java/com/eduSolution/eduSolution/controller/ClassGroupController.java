@@ -34,6 +34,11 @@ public class ClassGroupController {
         return classGroupService.getClassGroupByName(name);
     }
 
+    @GetMapping("/findClassGroupsByCourseId/{courseId}")
+    public List<ClassGroup> findClassGroupsByCourseId(@PathVariable int courseId) {
+        return (List<ClassGroup>) classGroupService.findClassGroupsByCoursesId(courseId);
+    }
+
     @PutMapping("/updateGroup")
     public ClassGroup updateSemester (@RequestBody ClassGroup group) {
         return classGroupService.updateClassGroup(group);

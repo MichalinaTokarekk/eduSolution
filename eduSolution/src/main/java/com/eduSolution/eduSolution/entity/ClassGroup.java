@@ -2,7 +2,9 @@ package com.eduSolution.eduSolution.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class ClassGroup {
     @Id
@@ -48,6 +52,22 @@ public class ClassGroup {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "semester_id")
     private Semester semester;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable (name = "classGroups_to_courses",
+            joinColumns = {@JoinColumn(name = "classGroup_id")},
+            inverseJoinColumns = {@JoinColumn(name = "course_id")})
+    private Set<Course> courses = new HashSet<>();
+
+    @PreRemove
+    private void removeRelations() {
+        courses.clear();
+    }
+
+    public ClassGroup(int id) {
+        this.id = id;
+    }
+
 
 //
 //    @Transient
