@@ -1,6 +1,7 @@
 package com.eduSolution.eduSolution.controller;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
+import com.eduSolution.eduSolution.entity.ClassGroup;
 import com.eduSolution.eduSolution.entity.User;
 import com.eduSolution.eduSolution.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/user-controller")
@@ -51,5 +53,10 @@ public class UserController {
     @PutMapping("/changeRole")
     public User changeRole (@RequestBody User user) {
         return userService.changeRole(user);
+    }
+
+    @GetMapping("/teachingClassGroups/{userId}")
+    public Set<ClassGroup> getTeachingClassGroupsByUserId(@PathVariable Integer userId) {
+        return userService.findTeachingClassGroupsById(userId);
     }
 }

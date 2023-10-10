@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -83,5 +84,9 @@ public class UserService {
         User existingUser = userRepository.findById(user.getId()).orElse(null);
         existingUser.setRole(user.getRole());
         return userRepository.save(existingUser);
+    }
+
+    public Set<ClassGroup> findTeachingClassGroupsById(Integer userId) {
+        return userRepository.findTeachingClassGroupsById(userId);
     }
 }

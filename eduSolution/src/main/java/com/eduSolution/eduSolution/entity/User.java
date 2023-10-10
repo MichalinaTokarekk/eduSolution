@@ -84,9 +84,9 @@ public class User implements UserDetails {
 
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable (name = "users_to_classGroups",
+    @JoinTable (name = "users_to_teachingClassGroups",
             joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "classGroup_id")})
+            inverseJoinColumns = {@JoinColumn(name = "teachingClassGroup_id")})
     private Set<ClassGroup> teachingClassGroups = new HashSet<>();
 
     @PreRemove

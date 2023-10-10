@@ -1,12 +1,15 @@
 package com.eduSolution.eduSolution.auth;
 
 import com.eduSolution.eduSolution.config.JwtService;
+import com.eduSolution.eduSolution.entity.ClassGroup;
 import com.eduSolution.eduSolution.entity.Role;
 import com.eduSolution.eduSolution.entity.User;
+import com.eduSolution.eduSolution.repository.ClassGroupRepository;
 import com.eduSolution.eduSolution.repository.UserRepository;
 import com.eduSolution.eduSolution.token.Token;
 import com.eduSolution.eduSolution.token.TokenRepository;
 import com.eduSolution.eduSolution.token.TokenType;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,17 +18,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository userRepository;
+
+    private final ClassGroupRepository classGroupRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
+        Set<ClassGroup> classGroups = new HashSet<>();
+        for (Integer classGroupId : request.getTeachingClassGroups()) {
+            ClassGroup classGroup = classGroupRepository.findById(classGroupId)
+                    .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono klasy o podanym ID: " + classGroupId));
+            classGroups.add(classGroup);
+        }
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -39,6 +52,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.STUDENT)
+                .teachingClassGroups(classGroups)
                 .build();
         String username2 = user.getFirstName() + " " + user.getLastName();
         user.setUsername(username2);
