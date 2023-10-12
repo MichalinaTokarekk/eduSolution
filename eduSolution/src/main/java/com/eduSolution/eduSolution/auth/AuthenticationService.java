@@ -33,11 +33,13 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
-        Set<ClassGroup> teachingClassGroups = new HashSet<>();
-        for (Integer classGroupId : request.getTeachingClassGroups()) {
-            ClassGroup classGroup = classGroupRepository.findById(classGroupId)
-                    .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono klasy o podanym ID: " + classGroupId));
-            teachingClassGroups.add(classGroup);
+        Set<ClassGroup> teachingClassGroups = null;
+        if (request.getTeachingClassGroups() != null && !request.getTeachingClassGroups().isEmpty()) {
+            for (Integer classGroupId : request.getTeachingClassGroups()) {
+                ClassGroup classGroup = classGroupRepository.findById(classGroupId)
+                        .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono klasy o podanym ID: " + classGroupId));
+                teachingClassGroups.add(classGroup);
+            }
         }
         int classGroupId = request.getClassGroup();
         ClassGroup classGroup = classGroupRepository.findById(classGroupId)

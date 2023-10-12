@@ -61,6 +61,10 @@ public class AnswerService {
         return answerRepository.findByClassGroupId(classGroupId);
     }
 
+    public List<Answer> findByHomeworkTestAndClassGroup(int homeworkTestId, int classGroupId) {
+        return answerRepository.findByHomeworkTestAndClassGroup(homeworkTestId, classGroupId);
+    }
+
     public Answer getAnswerByHomeworkTestIdAndUserId(int homeworkTestId, int userId) {
         return answerRepository.findByHomeworkTestIdAndUserId(homeworkTestId, userId);
     }

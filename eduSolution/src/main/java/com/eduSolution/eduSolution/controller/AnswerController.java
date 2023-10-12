@@ -59,6 +59,11 @@ public class AnswerController {
         return answerService.findByClassGroupId(classGroupId);
     }
 
+    @GetMapping(value = "/findByHomeworkTestAndClassGroup/homeworkTest/{homeworkTestId}/classGroup/{classGroupId}")
+    public List<Answer> findByHomeworkTestAndClassGroup(@PathVariable int homeworkTestId, @PathVariable int classGroupId) {
+        return answerService.findByHomeworkTestAndClassGroup(homeworkTestId, classGroupId);
+    }
+
     @PutMapping("/updateAnswer")
     public Answer updateAnswer (@RequestBody Answer answer) {
         return answerService.updateAnswer(answer);
