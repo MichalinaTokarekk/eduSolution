@@ -33,12 +33,17 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
-        Set<ClassGroup> classGroups = new HashSet<>();
+        Set<ClassGroup> teachingClassGroups = new HashSet<>();
         for (Integer classGroupId : request.getTeachingClassGroups()) {
             ClassGroup classGroup = classGroupRepository.findById(classGroupId)
                     .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono klasy o podanym ID: " + classGroupId));
-            classGroups.add(classGroup);
+            teachingClassGroups.add(classGroup);
         }
+        int classGroupId = request.getClassGroup();
+        ClassGroup classGroup = classGroupRepository.findById(classGroupId)
+                .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono klasy o podanym ID: " + classGroupId));
+
+
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -52,7 +57,8 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.STUDENT)
-                .teachingClassGroups(classGroups)
+                .classGroup(classGroup)
+                .teachingClassGroups(teachingClassGroups)
                 .build();
         String username2 = user.getFirstName() + " " + user.getLastName();
         user.setUsername(username2);

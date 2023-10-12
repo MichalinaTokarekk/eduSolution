@@ -23,7 +23,7 @@ public class RegisterRequest {
     private String post;
     private String postCode;
     private String country;
-
+    private int classGroup;
     private Set<Integer> teachingClassGroups;
 
 }
