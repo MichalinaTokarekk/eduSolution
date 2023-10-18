@@ -59,4 +59,9 @@ public class UserController {
     public Set<ClassGroup> getTeachingClassGroupsByUserId(@PathVariable Integer userId) {
         return userService.findTeachingClassGroupsById(userId);
     }
+
+    @GetMapping("/findUsersByClassGroupId/{classGroupId}")
+    public List<User> findUsersByClassGroupId(@PathVariable int classGroupId) {
+        return userService.findUsersByClassGroupId(classGroupId);
+    }
 }
