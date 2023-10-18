@@ -33,6 +33,10 @@ public class CourseService {
         return courseRepository.findByName(name);
     }
 
+    public List<Course> findCoursesByUserId(int userId) {
+        return courseRepository.findCoursesByUserId(userId);
+    }
+
     public Course updateCourse (Course course){
         Course existingCourse = courseRepository.findById(course.getId()).orElse(null);
         existingCourse.setName(course.getName());
