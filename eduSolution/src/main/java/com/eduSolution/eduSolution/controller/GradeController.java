@@ -39,10 +39,10 @@ public class GradeController {
 //        return gradeService.getGradesByStudentId(studentId);
 //    }
 
-    @GetMapping("/getGradesByStudentId/{studentId}")
-    public List<Grade> getGradesByStudentId(@PathVariable Integer studentId) {
+    @GetMapping("/findByStudentIdAndCourseId/{studentId}/{courseId}")
+    public List<Grade> findByStudentIdAndCourseId(@PathVariable Integer studentId, @PathVariable Integer courseId) {
         System.out.println("Received studentId: " + studentId);
-        List<Grade> grades = gradeService.getGradesByStudentId(studentId);
+        List<Grade> grades = gradeService.findByStudentIdAndCourseId(studentId, courseId);
         System.out.println("Number of grades found: " + grades.size());
         return grades;
     }

@@ -28,6 +28,8 @@ public class Grade {
     @Column(nullable = false)
     private double value;
 
+    private double finalValue;
+
     private String description;
 
     @ManyToOne
@@ -41,6 +43,10 @@ public class Grade {
     @ManyToOne
     @JoinColumn(name = "typeOfTestingKnowledge_id")
     private TypeOfTestingKnowledge typeOfTestingKnowledge;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     @CreatedBy
     private String createdBy;

@@ -3,6 +3,7 @@ package com.eduSolution.eduSolution.service;
 import com.eduSolution.eduSolution.dto.DeleteResponseLongDTO;
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.*;
+import com.eduSolution.eduSolution.repository.CourseRepository;
 import com.eduSolution.eduSolution.repository.GradeRepository;
 import com.eduSolution.eduSolution.repository.TypeOfTestingKnowledgeRespository;
 import com.eduSolution.eduSolution.repository.UserRepository;
@@ -22,11 +23,15 @@ public class GradeService {
     @Autowired
     private TypeOfTestingKnowledgeRespository typeOfTestingKnowledgeRespository;
 
+    @Autowired
+    private CourseRepository courseRepository;
+
 
     public Grade saveGrade (Grade grade){
         grade.setStudent(userRepository.findById(grade.getStudent().getId()).orElse(null));
         grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
         grade.setTypeOfTestingKnowledge(typeOfTestingKnowledgeRespository.findById(grade.getTypeOfTestingKnowledge().getId()).orElse(null));
+        grade.setCourse(courseRepository.findById(grade.getCourse().getId()).orElse(null));
         return gradeRepository.save(grade);
     }
 
@@ -41,8 +46,8 @@ public class GradeService {
         return gradeRepository.findAll();
     }
 
-    public List<Grade> getGradesByStudentId(Integer studentId) {
-        return gradeRepository.findByStudentId(studentId);
+    public List<Grade> findByStudentIdAndCourseId(Integer studentId, Integer courseId) {
+        return gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
     }
 
     public Grade updateGrade (Grade grade){
