@@ -86,6 +86,10 @@ public class SecurityConfiguration {
 
                             .requestMatchers("/aFile-controller/**").permitAll()
 
+                            .requestMatchers("/grade-controller/**").permitAll()
+
+                            .requestMatchers("/typeOfTestingKnowledge-controller/**").permitAll()
+
 
 
 
