@@ -36,4 +36,8 @@ public class TypeOfTestingKnowledge {
     private String updatedBy;
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    public TypeOfTestingKnowledge(int id) {
+        this.id = id;
+    }
 }

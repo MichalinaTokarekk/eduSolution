@@ -30,7 +30,7 @@ public class GradeService {
     public Grade saveGrade (Grade grade){
         grade.setStudent(userRepository.findById(grade.getStudent().getId()).orElse(null));
         grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
-        grade.setTypeOfTestingKnowledge(typeOfTestingKnowledgeRespository.findById(grade.getTypeOfTestingKnowledge().getId()).orElse(null));
+//        grade.setTypeOfTestingKnowledge(typeOfTestingKnowledgeRespository.findById(grade.getTypeOfTestingKnowledge().getId()).orElse(null));
         grade.setCourse(courseRepository.findById(grade.getCourse().getId()).orElse(null));
         return gradeRepository.save(grade);
     }
