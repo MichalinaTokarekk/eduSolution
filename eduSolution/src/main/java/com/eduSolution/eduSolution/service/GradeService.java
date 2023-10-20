@@ -50,6 +50,10 @@ public class GradeService {
         return gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
     }
 
+    public TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(Long gradeId) {
+        return gradeRepository.findTypeOfTestingKnowledgeByGradeId(gradeId);
+    }
+
     public Grade updateGrade (Grade grade){
         Grade existingGrade = gradeRepository.findById(grade.getId()).orElse(null);
         existingGrade.setValue(grade.getValue());

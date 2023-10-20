@@ -4,6 +4,7 @@ import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.dto.DeleteResponseLongDTO;
 import com.eduSolution.eduSolution.entity.Answer;
 import com.eduSolution.eduSolution.entity.Grade;
+import com.eduSolution.eduSolution.entity.TypeOfTestingKnowledge;
 import com.eduSolution.eduSolution.service.AnswerService;
 import com.eduSolution.eduSolution.service.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class GradeController {
         List<Grade> grades = gradeService.findByStudentIdAndCourseId(studentId, courseId);
         System.out.println("Number of grades found: " + grades.size());
         return grades;
+    }
+
+    @GetMapping("/findTypeOfTestingKnowledgeByGradeId/{gradeId}")
+    public TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(@PathVariable Long gradeId) {
+        return gradeService.findTypeOfTestingKnowledgeByGradeId(gradeId);
     }
 
 
