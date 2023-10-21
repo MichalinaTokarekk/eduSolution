@@ -28,7 +28,7 @@ public class Grade {
     @Column(nullable = false)
     private double value;
 
-    private double finalValue;
+    private boolean isFinalValue;
 
     private String description;
 
@@ -56,4 +56,8 @@ public class Grade {
     private String updatedBy;
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    public Grade(int id) {
+        this.id = id;
+    }
 }

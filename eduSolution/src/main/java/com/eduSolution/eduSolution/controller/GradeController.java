@@ -22,6 +22,11 @@ public class GradeController {
         return gradeService.saveGrade(grade);
     }
 
+    @PostMapping("/addFinalGrade")
+    public Grade addFinalGrade (@RequestBody Grade grade) {
+        return gradeService.saveFinalGrade(grade);
+    }
+
     @PostMapping("/addGrades")
     public List<Grade> addGrades (@RequestBody List<Grade> grades){
         return gradeService.saveGrades(grades);
@@ -57,6 +62,11 @@ public class GradeController {
     @PutMapping("/updateGrade")
     public Grade updateAnswer (@RequestBody Grade grade) {
         return gradeService.updateGrade(grade);
+    }
+
+    @PutMapping("/updateFinalGrade")
+    public Grade updateFinalAnswer (@RequestBody Grade grade) {
+        return gradeService.updateFinalGrade(grade);
     }
 
     @DeleteMapping("/deleteGrade/{id}")

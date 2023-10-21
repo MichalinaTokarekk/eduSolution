@@ -1,7 +1,9 @@
 package com.eduSolution.eduSolution.repository;
 
+import com.eduSolution.eduSolution.entity.Course;
 import com.eduSolution.eduSolution.entity.Grade;
 import com.eduSolution.eduSolution.entity.TypeOfTestingKnowledge;
+import com.eduSolution.eduSolution.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,5 +21,8 @@ public interface GradeRepository extends JpaRepository<Grade,Long> {
 
     @Query("SELECT g.typeOfTestingKnowledge FROM Grade g WHERE g.id = :gradeId")
     TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(Long gradeId);
+
+    boolean existsByStudentAndCourseAndIsFinalValue(User student, Course course, boolean isFinalValue);
+
 
 }

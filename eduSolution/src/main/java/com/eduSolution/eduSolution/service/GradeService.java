@@ -8,7 +8,10 @@ import com.eduSolution.eduSolution.repository.GradeRepository;
 import com.eduSolution.eduSolution.repository.TypeOfTestingKnowledgeRespository;
 import com.eduSolution.eduSolution.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,8 +33,21 @@ public class GradeService {
     public Grade saveGrade (Grade grade){
         grade.setStudent(userRepository.findById(grade.getStudent().getId()).orElse(null));
         grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
-//        grade.setTypeOfTestingKnowledge(typeOfTestingKnowledgeRespository.findById(grade.getTypeOfTestingKnowledge().getId()).orElse(null));
+        grade.setTypeOfTestingKnowledge(typeOfTestingKnowledgeRespository.findById(grade.getTypeOfTestingKnowledge().getId()).orElse(null));
         grade.setCourse(courseRepository.findById(grade.getCourse().getId()).orElse(null));
+        grade.setFinalValue(false);
+        return gradeRepository.save(grade);
+    }
+
+    public Grade saveFinalGrade (Grade grade) {
+        grade.setStudent(userRepository.findById(grade.getStudent().getId()).orElse(null));
+        grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
+        grade.setCourse(courseRepository.findById(grade.getCourse().getId()).orElse(null));
+        grade.setFinalValue(true);
+        boolean finalGradeExists = gradeRepository.existsByStudentAndCourseAndIsFinalValue(grade.getStudent(), grade.getCourse(), true);
+
+        if (finalGradeExists && grade.isFinalValue()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można dodać drugiej oceny końcowej!!!!!!!");        }
         return gradeRepository.save(grade);
     }
 
@@ -59,6 +75,13 @@ public class GradeService {
         existingGrade.setValue(grade.getValue());
         existingGrade.setDescription(grade.getDescription());
         existingGrade.setTypeOfTestingKnowledge(grade.getTypeOfTestingKnowledge());
+        return gradeRepository.save(existingGrade);
+    }
+
+    public Grade updateFinalGrade (Grade grade){
+        Grade existingGrade = gradeRepository.findById(grade.getId()).orElse(null);
+        existingGrade.setValue(grade.getValue());
+        existingGrade.setFinalValue(true);
         return gradeRepository.save(existingGrade);
     }
 
