@@ -23,4 +23,10 @@ public interface CourseRepository extends JpaRepository<Course,Integer> {
             "JOIN cg.courses c " +
             "WHERE cg.id IN (SELECT tcg.id FROM User u JOIN u.teachingClassGroups tcg WHERE u.id = :userId)")
     List<Course> findCoursesByUserId(int userId);
+
+//    @Query("SELECT DISTINCT c FROM User u " +
+//            "JOIN u.classGroups cg " +
+//            "JOIN cg.courses c " +
+//            "WHERE u.id = :userId")
+//    List<Course> getCoursesByUserId(int userId);
 }

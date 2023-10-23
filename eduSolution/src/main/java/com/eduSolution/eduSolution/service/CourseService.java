@@ -4,6 +4,7 @@ import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.Course;
 import com.eduSolution.eduSolution.repository.CourseRepository;
 import com.eduSolution.eduSolution.repository.SemesterRepository;
+import com.eduSolution.eduSolution.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ import java.util.List;
 public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public Course saveCourse (Course course){
         return courseRepository.save(course);
@@ -35,6 +39,10 @@ public class CourseService {
 
     public List<Course> findCoursesByUserId(int userId) {
         return courseRepository.findCoursesByUserId(userId);
+    }
+
+    public List<Course> findCoursesByStudentId(int userId) {
+        return userRepository.findCoursesByUserId(userId);
     }
 
     public Course updateCourse (Course course){
