@@ -70,6 +70,10 @@ public class GradeService {
         return gradeRepository.findTypeOfTestingKnowledgeByGradeId(gradeId);
     }
 
+    public List<Grade> findAllByStudentAndCourse(Integer studentId, Integer courseUd) {
+        return gradeRepository.findAllByStudentAndCourse(studentId, courseUd);
+    }
+
     public Grade updateGrade (Grade grade){
         Grade existingGrade = gradeRepository.findById(grade.getId()).orElse(null);
         existingGrade.setValue(grade.getValue());

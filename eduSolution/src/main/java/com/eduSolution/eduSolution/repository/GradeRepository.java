@@ -24,5 +24,8 @@ public interface GradeRepository extends JpaRepository<Grade,Long> {
 
     boolean existsByStudentAndCourseAndIsFinalValue(User student, Course course, boolean isFinalValue);
 
+    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.course.id = :courseId")
+    List<Grade> findAllByStudentAndCourse(Integer studentId, Integer courseId);
+
 
 }
