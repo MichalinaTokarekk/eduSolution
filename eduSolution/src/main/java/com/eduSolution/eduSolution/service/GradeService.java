@@ -29,6 +29,9 @@ public class GradeService {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private SemesterService semesterService;
+
 
     public Grade saveGrade (Grade grade){
         grade.setStudent(userRepository.findById(grade.getStudent().getId()).orElse(null));
@@ -36,6 +39,20 @@ public class GradeService {
         grade.setTypeOfTestingKnowledge(typeOfTestingKnowledgeRespository.findById(grade.getTypeOfTestingKnowledge().getId()).orElse(null));
         grade.setCourse(courseRepository.findById(grade.getCourse().getId()).orElse(null));
         grade.setFinalValue(false);
+        Course course = grade.getCourse();
+        Integer targetSemesterId = null;
+
+        // Iteruj przez wszystkie semestry
+        for (Semester semester : semesterService.getSemesters()) {
+            if (semester.getCourses().contains(course)) {
+                targetSemesterId = semester.getId();
+                Semester targetSemester = new Semester();
+                targetSemester.setId(targetSemesterId);
+                grade.setSemester(targetSemester);
+                break;
+            }
+        }
+
         return gradeRepository.save(grade);
     }
 
@@ -44,6 +61,7 @@ public class GradeService {
         grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
         grade.setCourse(courseRepository.findById(grade.getCourse().getId()).orElse(null));
         grade.setFinalValue(true);
+
         boolean finalGradeExists = gradeRepository.existsByStudentAndCourseAndIsFinalValue(grade.getStudent(), grade.getCourse(), true);
 
         if (finalGradeExists && grade.isFinalValue()) {
@@ -52,6 +70,7 @@ public class GradeService {
     }
 
     public List<Grade> saveGrades (List <Grade> grades){
+
         return gradeRepository.saveAll(grades);
     }
     public  Grade getGradeById (long id){

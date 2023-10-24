@@ -45,6 +45,10 @@ public class Grade {
     private TypeOfTestingKnowledge typeOfTestingKnowledge;
 
     @ManyToOne
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
+
+    @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
 
