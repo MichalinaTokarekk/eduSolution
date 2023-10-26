@@ -61,6 +61,19 @@ public class GradeService {
         grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
         grade.setCourse(courseRepository.findById(grade.getCourse().getId()).orElse(null));
         grade.setFinalValue(true);
+        Course course = grade.getCourse();
+        Integer targetSemesterId = null;
+
+        // Iteruj przez wszystkie semestry
+        for (Semester semester : semesterService.getSemesters()) {
+            if (semester.getCourses().contains(course)) {
+                targetSemesterId = semester.getId();
+                Semester targetSemester = new Semester();
+                targetSemester.setId(targetSemesterId);
+                grade.setSemester(targetSemester);
+                break;
+            }
+        }
 
         boolean finalGradeExists = gradeRepository.existsByStudentAndCourseAndIsFinalValue(grade.getStudent(), grade.getCourse(), true);
 

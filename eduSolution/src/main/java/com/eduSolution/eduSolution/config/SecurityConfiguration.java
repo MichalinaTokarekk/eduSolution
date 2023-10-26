@@ -61,8 +61,8 @@ public class SecurityConfiguration {
 //                            .requestMatchers("/course-controller/courses").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
 //                            .requestMatchers("/course-controller/course/{id}").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
 //                            .requestMatchers("/course-controller/courseName/{name}").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
-//                            .requestMatchers("/course-controller/**").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
-                            .requestMatchers("/course-controller/**").permitAll()
+                            .requestMatchers("/course-controller/**").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
+//                            .requestMatchers("/course-controller/**").permitAll()
 
 //                            .requestMatchers("/class-group-controller/**").hasAnyAuthority("ADMIN", "STUDENT")
                             .requestMatchers("/class-group-controller/**").permitAll()
@@ -86,7 +86,8 @@ public class SecurityConfiguration {
 
                             .requestMatchers("/aFile-controller/**").permitAll()
 
-                            .requestMatchers("/grade-controller/**").permitAll()
+                            .requestMatchers("/grade-controller/**").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
+//                            .requestMatchers("/grade-controller/**").permitAll()
 
                             .requestMatchers("/typeOfTestingKnowledge-controller/**").permitAll()
 
