@@ -32,6 +32,8 @@ public class HomeworkTest {
 
     private String taskContent;
 
+    private LocalDateTime deadline;
+
     @CreatedBy
     private String createdBy;
 
