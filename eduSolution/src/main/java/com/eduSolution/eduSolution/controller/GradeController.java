@@ -63,6 +63,11 @@ public class GradeController {
         return gradeService.findAllByStudentAndCourse(studentId, courseId);
     }
 
+    @GetMapping("/gradeByAnswerId/{answerId}")
+    public Grade getGradeByAnswerId(@PathVariable Integer answerId) {
+        return gradeService.getGradeByAnswerId(answerId);
+    }
+
 
     @PutMapping("/updateGrade")
     public Grade updateAnswer (@RequestBody Grade grade) {
