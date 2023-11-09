@@ -23,7 +23,7 @@ import java.util.Set;
 
 @Data
 @Builder
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -63,6 +63,8 @@ public class User implements UserDetails {
 
     @Column(nullable = false, length = 100)
     private String country;
+
+    private String yearBook;
     @CreatedBy
     private String createdBy;
 
@@ -88,6 +90,10 @@ public class User implements UserDetails {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "teachingClassGroup_id")})
     private Set<ClassGroup> teachingClassGroups = new HashSet<>();
+
+    public User() {
+        this.teachingClassGroups = new HashSet<>();
+    }
 
     @PreRemove
     private void removeRelations() {

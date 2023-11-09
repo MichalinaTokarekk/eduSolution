@@ -9,9 +9,7 @@ import com.eduSolution.eduSolution.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -66,19 +64,36 @@ public class UserService {
     }
     public User updateUser (User user){
         User existingUser = userRepository.findById(user.getId()).orElse(null);
-        existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setCity(user.getCity());
-        existingUser.setCountry(user.getCountry());
-        existingUser.setStreetName(user.getStreetName());
-        existingUser.setBuildingNumber(user.getBuildingNumber());
-        existingUser.setApartmentNumber(user.getApartmentNumber());
-        existingUser.setPost(user.getPost());
-        existingUser.setPostCode(user.getPostCode());
-        existingUser.setClassGroup(user.getClassGroup());
-        changeRole(user);
+        if (existingUser != null) {
+            existingUser.setEmail(user.getEmail());
+            existingUser.setPassword(user.getPassword());
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastName(user.getLastName());
+            existingUser.setCity(user.getCity());
+            existingUser.setCountry(user.getCountry());
+            existingUser.setStreetName(user.getStreetName());
+            existingUser.setBuildingNumber(user.getBuildingNumber());
+            existingUser.setApartmentNumber(user.getApartmentNumber());
+            existingUser.setPost(user.getPost());
+            existingUser.setPostCode(user.getPostCode());
+//            existingUser.setClassGroup(user.getClassGroup());
+            changeRole(user);
+
+            ClassGroup classGroup = classGroupRepository.findById(user.getClassGroup().getId()).orElse(null);
+            existingUser.setClassGroup(classGroup);
+
+            // Aktualizuj teachingClassGroups
+            Set<ClassGroup> teachingClassGroups = new HashSet<>();
+            if (user.getTeachingClassGroups() != null) {
+                for (ClassGroup teachingClassGroup : user.getTeachingClassGroups()) {
+                    ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
+                    if (existingTeachingClassGroup != null) {
+                        teachingClassGroups.add(existingTeachingClassGroup);
+                    }
+                }
+            }
+            existingUser.setTeachingClassGroups(teachingClassGroups);
+        }
 //        autenticationService.revokeAllUserTokens(user);
 
         return userRepository.save(existingUser);
