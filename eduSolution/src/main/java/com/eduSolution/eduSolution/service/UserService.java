@@ -2,6 +2,7 @@ package com.eduSolution.eduSolution.service;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.ClassGroup;
+import com.eduSolution.eduSolution.entity.Role;
 import com.eduSolution.eduSolution.entity.Semester;
 import com.eduSolution.eduSolution.entity.User;
 import com.eduSolution.eduSolution.repository.ClassGroupRepository;
@@ -71,6 +72,7 @@ public class UserService {
             existingUser.setLastName(user.getLastName());
             existingUser.setCity(user.getCity());
             existingUser.setCountry(user.getCountry());
+            existingUser.setYearBook(user.getYearBook());
             existingUser.setStreetName(user.getStreetName());
             existingUser.setBuildingNumber(user.getBuildingNumber());
             existingUser.setApartmentNumber(user.getApartmentNumber());
@@ -111,5 +113,9 @@ public class UserService {
 
     public Set<ClassGroup> findTeachingClassGroupsById(Integer userId) {
         return userRepository.findTeachingClassGroupsById(userId);
+    }
+
+    public List<User> getUsersByRole(Role role) {
+        return userRepository.findByRole(role);
     }
 }

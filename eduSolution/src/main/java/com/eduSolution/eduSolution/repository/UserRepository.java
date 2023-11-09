@@ -2,6 +2,7 @@ package com.eduSolution.eduSolution.repository;
 
 import com.eduSolution.eduSolution.entity.ClassGroup;
 import com.eduSolution.eduSolution.entity.Course;
+import com.eduSolution.eduSolution.entity.Role;
 import com.eduSolution.eduSolution.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +27,8 @@ public interface UserRepository extends JpaRepository<User,Integer> {
             "JOIN cg.courses c " +
             "WHERE cg.id IN (SELECT tcg.id FROM User u JOIN u.classGroup tcg WHERE u.id = :userId)")
     List<Course> findCoursesByUserId(int userId);
+
+    List<User> findByRole(Role role);
 
 
 }

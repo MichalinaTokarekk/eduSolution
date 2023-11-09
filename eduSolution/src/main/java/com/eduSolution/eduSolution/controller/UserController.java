@@ -2,6 +2,7 @@ package com.eduSolution.eduSolution.controller;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.ClassGroup;
+import com.eduSolution.eduSolution.entity.Role;
 import com.eduSolution.eduSolution.entity.User;
 import com.eduSolution.eduSolution.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,11 @@ public class UserController {
     @GetMapping ("/username/{username}")
     public Optional <User> findUserByUsername(@PathVariable String username) {
         return userService.getUserByUsername(username);
+    }
+
+    @GetMapping("/usersByRole")
+    public List<User> getUsersByRole(@RequestParam Role role) {
+        return userService.getUsersByRole(role);
     }
     @DeleteMapping("/deleteUser/{id}")
     public DeleteResponseDTO deleteUser(@PathVariable int id) {

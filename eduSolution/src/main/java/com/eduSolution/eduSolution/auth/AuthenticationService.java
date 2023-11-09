@@ -72,6 +72,7 @@ public class AuthenticationService {
                 .post(request.getPost())
                 .postCode(request.getPostCode())
                 .country(request.getCountry())
+                .yearBook(request.getYearBook())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.STUDENT)
