@@ -77,10 +77,14 @@ public class UserService {
             existingUser.setPost(user.getPost());
             existingUser.setPostCode(user.getPostCode());
 //            existingUser.setClassGroup(user.getClassGroup());
+
+            if (user.getClassGroup() != null) {
+                ClassGroup classGroup = classGroupRepository.findById(user.getClassGroup().getId()).orElse(null);
+                existingUser.setClassGroup(classGroup);
+            }
+
             changeRole(user);
 
-            ClassGroup classGroup = classGroupRepository.findById(user.getClassGroup().getId()).orElse(null);
-            existingUser.setClassGroup(classGroup);
 
             // Aktualizuj teachingClassGroups
             Set<ClassGroup> teachingClassGroups = new HashSet<>();
