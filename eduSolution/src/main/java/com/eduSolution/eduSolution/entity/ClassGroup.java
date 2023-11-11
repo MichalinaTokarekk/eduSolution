@@ -29,7 +29,7 @@ public class ClassGroup {
     @GeneratedValue
     private int id;
 
-    @Column(nullable = true, length = 100)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @CreatedBy

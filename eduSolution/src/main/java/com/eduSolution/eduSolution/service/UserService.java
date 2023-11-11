@@ -79,13 +79,14 @@ public class UserService {
             existingUser.setPost(user.getPost());
             existingUser.setPostCode(user.getPostCode());
 //            existingUser.setClassGroup(user.getClassGroup());
+            changeRole(user);
 
             if (user.getClassGroup() != null) {
                 ClassGroup classGroup = classGroupRepository.findById(user.getClassGroup().getId()).orElse(null);
                 existingUser.setClassGroup(classGroup);
             }
 
-            changeRole(user);
+
 
 
             // Aktualizuj teachingClassGroups
