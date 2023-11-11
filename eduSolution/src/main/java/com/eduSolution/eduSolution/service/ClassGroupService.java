@@ -71,12 +71,21 @@ public class ClassGroupService {
         existingClassGroup.setName(classGroup.getName());
         existingClassGroup.setSemester(classGroup.getSemester());
 
-        Set<Course> courses = new HashSet<>();
-        for (Course course : classGroup.getCourses()) {
-            Iterable<Course> sectionsById = courseRepository.findAllById(Collections.singleton(course.getId()));
-            sectionsById.forEach(courses::add);
+//        Set<Course> courses = new HashSet<>();
+//        for (Course course : classGroup.getCourses()) {
+//            Iterable<Course> sectionsById = courseRepository.findAllById(Collections.singleton(course.getId()));
+//            sectionsById.forEach(courses::add);
+//        }
+//        existingClassGroup.setCourses(courses);
+
+        if (classGroup.getCourses() != null && !classGroup.getCourses().isEmpty()) {
+            Set<Course> courses = new HashSet<>();
+            for (Course course : classGroup.getCourses()) {
+                Iterable<Course> coursesById = courseRepository.findAllById(Collections.singleton(course.getId()));
+                coursesById.forEach(courses::add);
+            }
+            existingClassGroup.setCourses(courses);
         }
-        existingClassGroup.setCourses(courses);
         return classgroupRepository.save(existingClassGroup);
     }
 

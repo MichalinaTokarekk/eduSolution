@@ -106,6 +106,11 @@ public class GradeService {
         return gradeRepository.findAllByStudentAndCourse(studentId, courseUd);
     }
 
+    public List<Grade> findAllByStudent(Integer studentId) {
+        return gradeRepository.findAllByStudent(studentId);
+
+    }
+
     public Grade getGradeByAnswerId(Integer answerId) {
         return gradeRepository.findByAnswerId(answerId);
     }
