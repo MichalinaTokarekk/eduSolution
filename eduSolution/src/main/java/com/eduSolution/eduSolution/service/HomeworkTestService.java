@@ -57,6 +57,8 @@ public class HomeworkTestService {
         HomeworkTest existingHomeworkTest = homeworkTestRepository.findById(homeworkTest.getId()).orElse(null);
         existingHomeworkTest.setName(homeworkTest.getName());
         existingHomeworkTest.setTaskContent(homeworkTest.getTaskContent());
+        existingHomeworkTest.setDeadline(homeworkTest.getDeadline());
+
 
         return homeworkTestRepository.save(existingHomeworkTest);
     }

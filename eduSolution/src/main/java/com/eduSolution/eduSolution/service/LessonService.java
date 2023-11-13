@@ -1,21 +1,13 @@
 package com.eduSolution.eduSolution.service;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
-import com.eduSolution.eduSolution.entity.ClassGroup;
-import com.eduSolution.eduSolution.entity.Course;
-import com.eduSolution.eduSolution.entity.Lesson;
-import com.eduSolution.eduSolution.entity.Semester;
-import com.eduSolution.eduSolution.repository.ClassGroupRepository;
-import com.eduSolution.eduSolution.repository.CourseRepository;
-import com.eduSolution.eduSolution.repository.LessonRepository;
-import com.eduSolution.eduSolution.repository.SemesterRepository;
+import com.eduSolution.eduSolution.entity.*;
+import com.eduSolution.eduSolution.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class LessonService {
@@ -27,6 +19,9 @@ public class LessonService {
 
     @Autowired
     private ClassGroupRepository classGroupRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public Lesson saveLesson (Lesson lesson){
         Course course = lesson.getCourse();
@@ -56,15 +51,29 @@ public class LessonService {
         return lessonRepository.findAll();
     }
 
-    public List<Lesson> findByClassGroupOrTeachingClassGroups(Integer groupId, Integer userId) {
-        return lessonRepository.findByClassGroupOrTeachingClassGroups(groupId, userId);
+//    public List<Lesson> findByClassGroupOrTeachingClassGroups(Integer groupId, Integer userId) {
+//        return lessonRepository.findByClassGroupOrTeachingClassGroups(groupId, userId);
+//    }
+
+    public List<Lesson> findByClassGroupOrTeachingClassGroups(Integer userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user.getTeachingClassGroups().isEmpty()) {
+            return lessonRepository.findByClassGroupSemesterId(user.getClassGroup().getSemester().getId());
+        }
+        return lessonRepository.findByClassGroupSemesterIds(user.getTeachingClassGroups().stream().map(classGroup -> classGroup.getSemester().getId()).collect(Collectors.toList()));
     }
 
 
     public Lesson updateLesson (Lesson lesson){
         Lesson existingLesson = lessonRepository.findById(lesson.getId()).orElse(null);
-        existingLesson.setCourse(lesson.getCourse());
-        existingLesson.setClassGroup(lesson.getClassGroup());
+//        existingLesson.setCourse(lesson.getCourse());
+//        existingLesson.setClassGroup(lesson.getClassGroup());
+        existingLesson.setStartLessonTime(lesson.getStartLessonTime());
+        existingLesson.setEndLessonTime(lesson.getEndLessonTime());
+        existingLesson.setDayName(lesson.getDayName());
+        existingLesson.setCourse(courseRepository.findById(lesson.getCourse().getId()).orElse(null));
+        existingLesson.setClassGroup(classGroupRepository.findById(lesson.getClassGroup().getId()).orElse(null));
+
 
         return lessonRepository.save(existingLesson);
     }

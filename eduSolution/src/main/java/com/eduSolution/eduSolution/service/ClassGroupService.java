@@ -69,7 +69,7 @@ public class ClassGroupService {
     public ClassGroup updateClassGroup (ClassGroup classGroup){
         ClassGroup existingClassGroup = classgroupRepository.findById(classGroup.getId()).orElse(null);
         existingClassGroup.setName(classGroup.getName());
-        existingClassGroup.setSemester(classGroup.getSemester());
+        existingClassGroup.setSemester(semesterRepository.findById(classGroup.getSemester().getId()).orElse(null));
 
 //        Set<Course> courses = new HashSet<>();
 //        for (Course course : classGroup.getCourses()) {
