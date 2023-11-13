@@ -91,6 +91,8 @@ public class SecurityConfiguration {
 
                             .requestMatchers("/typeOfTestingKnowledge-controller/**").permitAll()
 
+                            .requestMatchers("/lesson-controller/**").permitAll()
+
 
 
 
