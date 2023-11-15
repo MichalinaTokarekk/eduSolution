@@ -93,6 +93,8 @@ public class SecurityConfiguration {
 
                             .requestMatchers("/lesson-controller/**").permitAll()
 
+                            .requestMatchers("/event-controller/**").permitAll()
+
 
 
 
