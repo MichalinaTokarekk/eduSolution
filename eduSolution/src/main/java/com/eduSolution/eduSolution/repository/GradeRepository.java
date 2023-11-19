@@ -19,10 +19,8 @@ public interface GradeRepository extends JpaRepository<Grade,Long> {
 //    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.classGroup.id = :classGroupId")
 //    List<Grade> findByStudentIdAndClassGroupeId(Integer studentId, Integer classGroupId);
 //
-//    @Query("SELECT g.typeOfTestingKnowledge FROM Grade g WHERE g.id = :gradeId")
-//    TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(Long gradeId);
 //
-//    boolean existsByStudentAndIsFinalValue(User student, boolean isFinalValue);
+    boolean existsByStudentAndIsFinalValue(User student, boolean isFinalValue);
 //
 //    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.classGroup.id = :classGroupId")
 //    List<Grade> findAllByStudentAndClassGroup(Integer studentId, Integer classGroupId);

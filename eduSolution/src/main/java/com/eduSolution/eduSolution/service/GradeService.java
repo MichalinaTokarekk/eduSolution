@@ -42,17 +42,17 @@ public class GradeService {
         return gradeRepository.save(grade);
     }
 
-//    public Grade saveFinalGrade (Grade grade) {
-//        grade.setStudent(userRepository.findById(grade.getStudent().getId()).orElse(null));
-//        grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
-//        grade.setFinalValue(true);
-//
-//        boolean finalGradeExists = gradeRepository.existsByStudentAndIsFinalValue(grade.getStudent(), true);
-//
-//        if (finalGradeExists && grade.isFinalValue()) {
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można dodać drugiej oceny końcowej!!!!!!!");        }
-//        return gradeRepository.save(grade);
-//    }
+    public Grade saveFinalGrade (Grade grade) {
+        grade.setStudent(userRepository.findById(grade.getStudent().getId()).orElse(null));
+        grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
+        grade.setFinalValue(true);
+
+        boolean finalGradeExists = gradeRepository.existsByStudentAndIsFinalValue(grade.getStudent(), true);
+
+        if (finalGradeExists && grade.isFinalValue()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można dodać drugiej oceny końcowej!!!!!!!");        }
+        return gradeRepository.save(grade);
+    }
 
     public List<Grade> saveGrades (List <Grade> grades){
 
@@ -70,9 +70,6 @@ public class GradeService {
 //        return gradeRepository.findByStudentIdAndClassGroupeId(studentId, classGroupId);
 //    }
 
-//    public TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(Long gradeId) {
-//        return gradeRepository.findTypeOfTestingKnowledgeByGradeId(gradeId);
-//    }
 //
 //    public List<Grade> findAllByStudentAndClassGroup(Integer studentId, Integer classGroupId) {
 //        return gradeRepository.findAllByStudentAndClassGroup(studentId, classGroupId);

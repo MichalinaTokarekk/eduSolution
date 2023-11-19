@@ -22,10 +22,10 @@ public class GradeController {
         return gradeService.saveGrade(grade);
     }
 
-//    @PostMapping("/addFinalGrade")
-//    public Grade addFinalGrade (@RequestBody Grade grade) {
-//        return gradeService.saveFinalGrade(grade);
-//    }
+    @PostMapping("/addFinalGrade")
+    public Grade addFinalGrade (@RequestBody Grade grade) {
+        return gradeService.saveFinalGrade(grade);
+    }
 
     @PostMapping("/addGrades")
     public List<Grade> addGrades (@RequestBody List<Grade> grades){
@@ -53,10 +53,6 @@ public class GradeController {
 //        return grades;
 //    }
 //
-//    @GetMapping("/findTypeOfTestingKnowledgeByGradeId/{gradeId}")
-//    public TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(@PathVariable Long gradeId) {
-//        return gradeService.findTypeOfTestingKnowledgeByGradeId(gradeId);
-//    }
 //
 //    @GetMapping("/findAllByStudentAndCourse/{studentId}/{courseId}")
 //    public List<Grade> findAllByStudentAndCourse(@PathVariable Integer studentId, @PathVariable Integer courseId) {

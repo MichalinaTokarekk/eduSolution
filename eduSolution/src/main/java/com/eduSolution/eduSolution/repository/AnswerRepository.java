@@ -15,13 +15,6 @@ public interface AnswerRepository extends JpaRepository<Answer,Integer> {
 
     Answer findByHomeworkTestIdAndUserId(int homeworkTestId, int userId);
 
-//    @Query(value = "SELECT * FROM Answer a " +
-//            "INNER JOIN User u ON a.user_id = u.id " +
-//            "WHERE u.class_group_id = :classGroupId", nativeQuery = true)
-//    List<Answer> findByClassGroupId(@Param("classGroupId") int classGroupId);
-//
-//
-
 
     @Query("SELECT a FROM Answer a " +
             "INNER JOIN a.user u " +

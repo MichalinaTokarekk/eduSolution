@@ -71,9 +71,6 @@ public class ClassGroupService {
         existingClassGroup.setName(classGroup.getName());
         existingClassGroup.setSemester(semesterRepository.findById(classGroup.getSemester().getId()).orElse(null));
         existingClassGroup.setCourse(courseRepository.findById(classGroup.getCourse().getId()).orElse(null));
-
-
-
         return classgroupRepository.save(existingClassGroup);
     }
 
