@@ -29,7 +29,8 @@ public class Event {
 
     @Column(nullable = false, length = 100)
     private String name;
-    private LocalDate eventDate;
+    @Column
+    private String eventDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

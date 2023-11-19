@@ -12,6 +12,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -26,6 +27,8 @@ public class Lesson {
     @GeneratedValue
     private int id;
 
+    private LocalDate date;
+
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startLessonTime;
 
@@ -33,10 +36,6 @@ public class Lesson {
     private LocalTime endLessonTime;
 
     private String dayName;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "course_group_id")
-    private Course course;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "class_group_id")

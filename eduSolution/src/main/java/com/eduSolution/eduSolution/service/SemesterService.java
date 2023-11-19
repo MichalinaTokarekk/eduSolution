@@ -26,15 +26,6 @@ public class SemesterService {
     private CourseRepository courseRepository;
 
     public Semester saveSemester (Semester semester){
-        Set<Course> courses = new HashSet<>();
-        if(courses != null) {
-            for (Course course : semester.getCourses()) {
-                Iterable<Course> coursesById = courseRepository.findAllById(Collections.singleton(course.getId()));
-                coursesById.forEach(courses::add);
-
-            }
-        }
-        semester.setCourses(courses);
         return semesterRepository.save(semester);
     }
 
@@ -56,20 +47,10 @@ public class SemesterService {
     public Semester updateSemester (Semester semester){
         Semester existingSemester = semesterRepository.findById(semester.getId()).orElse(null);
         existingSemester.setName(semester.getName());
-        Set<Course> courses = new HashSet<>();
-        for (Course course : semester.getCourses()) {
-            Iterable<Course> coursesById = courseRepository.findAllById(Collections.singleton(course.getId()));
-            coursesById.forEach(courses::add);
-        }
-        existingSemester.setCourses(courses);
         return semesterRepository.save(existingSemester);
     }
 
     public DeleteResponseDTO deleteSemester(int id){
-        List<Course> coursesBySemesterId = courseRepository.findBySemesterId(id);
-        if (!coursesBySemesterId.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można usunąć tego pola. Istnieje kurs w tym semestrze");
-        }
         Semester semester = semesterRepository.findById(id).orElse(null);
         semesterRepository.deleteById(id);
 //        return "Semestr " + name + " został usunięty";

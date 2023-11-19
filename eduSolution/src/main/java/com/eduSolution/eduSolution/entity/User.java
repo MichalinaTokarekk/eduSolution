@@ -27,6 +27,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue
@@ -43,14 +44,11 @@ public class User implements UserDetails {
 
     @Column(length = 100)
     private String username;
-    @Column(nullable = false, length = 100)
-    private String streetName;
+
+
 
     @Column(nullable = false, length = 100)
-    private String buildingNumber;
-
-    @Column(length = 100)
-    private String apartmentNumber;
+    private String address;
 
     @Column(nullable = false, length = 100)
     private String city;
@@ -64,7 +62,6 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 100)
     private String country;
 
-    private String yearBook;
     @CreatedBy
     private String createdBy;
 
@@ -79,25 +76,30 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "class_group_id")
-    private ClassGroup classGroup;
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
 
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable (name = "users_to_teachingClassGroups",
+    @JoinTable (name = "users_to_classGroups",
             joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "teachingClassGroup_id")})
-    private Set<ClassGroup> teachingClassGroups = new HashSet<>();
+            inverseJoinColumns = {@JoinColumn(name = "classGroup_id")})
+    private Set<ClassGroup> classGroups = new HashSet<>();
+
+
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable (name = "users_to_teachingClassGroups",
+//            joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "teachingClassGroup_id")})
+//    private Set<ClassGroup> teachingClassGroups = new HashSet<>();
 
     public User() {
-        this.teachingClassGroups = new HashSet<>();
+        this.classGroups = new HashSet<>();
     }
 
     @PreRemove
     private void removeRelations() {
-        teachingClassGroups.clear();
+        classGroups.clear();
     }
 
 

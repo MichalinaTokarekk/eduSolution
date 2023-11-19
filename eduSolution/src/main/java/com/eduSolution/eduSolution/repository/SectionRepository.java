@@ -8,5 +8,5 @@ import java.util.List;
 public interface SectionRepository extends JpaRepository<Section,Integer> {
     Section findByName (String name);
 
-    List<Section> findByCourseId (int id);
+    List<Section> findByClassGroupId (int id);
 }

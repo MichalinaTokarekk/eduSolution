@@ -12,6 +12,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +33,15 @@ public class ClassGroup {
     @Column(nullable = false, length = 100)
     private String name;
 
+    private String description;
+
+    private int studentsLimit;
+
+    private String year;
+
+    @Enumerated(EnumType.STRING)
+    private ClassGroupStatus classGroupStatus;
+
     @CreatedBy
     private String createdBy;
 
@@ -44,37 +54,33 @@ public class ClassGroup {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classGroup")
-    private Set<User> users = new HashSet<>();
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable (name = "classGroups_to_users",
+//            joinColumns = {@JoinColumn(name = "classGroup_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+//    private Set<User> users = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "semester_id")
     private Semester semester;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable (name = "classGroups_to_courses",
-            joinColumns = {@JoinColumn(name = "classGroup_id")},
-            inverseJoinColumns = {@JoinColumn(name = "course_id")})
-    private Set<Course> courses = new HashSet<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_id")
+    private Course course;
 
-    @PreRemove
-    private void removeRelations() {
-        courses.clear();
-    }
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable (name = "classGroups_to_lessons",
+//            joinColumns = {@JoinColumn(name = "classGroup_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "lesson_id")})
+//    private Set<Lesson> lessons = new HashSet<>();
+
+
+//    @PreRemove
+//    private void removeRelations() {
+//        lessons.clear();
+//    }
 
     public ClassGroup(int id) {
         this.id = id;
     }
-
-
-//
-//    @Transient
-//    private List<Integer> userIds;
-//
-//    @PostLoad
-//    private void onLoad() {
-//        userIds = users.stream().map(User::getId).collect(Collectors.toList());
-//    }
 }

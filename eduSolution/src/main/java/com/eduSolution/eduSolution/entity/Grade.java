@@ -45,19 +45,14 @@ public class Grade {
     @JoinColumn(name = "typeOfTestingKnowledge_id")
     private TypeOfTestingKnowledge typeOfTestingKnowledge;
 
-    @ManyToOne
-    @JoinColumn(name = "semester_id")
-    private Semester semester;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @JoinColumn(name = "classGroup_id")
+    private ClassGroup classGroup;
 
     @OneToOne
     @JoinColumn(name = "answer_id")
     private Answer answer;
-
-
 
     @CreatedBy
     private String createdBy;

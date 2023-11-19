@@ -18,14 +18,7 @@ import java.util.Set;
 public class UserController {
     @Autowired
     private UserService userService;
-    @PostMapping("/addUser")
-    public User addUser (@RequestBody User user){
-        return userService.saveUser(user);
-    }
-    @PostMapping("/addUsers")
-    public List<User> addUsers (@RequestBody List<User> users){
-        return userService.saveUsers(users);
-    }
+
     @GetMapping("/users")
     public List<User> findAllUsers() {
         return userService.getUsers();
@@ -61,13 +54,19 @@ public class UserController {
         return userService.changeRole(user);
     }
 
-    @GetMapping("/teachingClassGroups/{userId}")
-    public Set<ClassGroup> getTeachingClassGroupsByUserId(@PathVariable Integer userId) {
-        return userService.findTeachingClassGroupsById(userId);
+    @GetMapping("/findClassGroupsById/{userId}")
+    public List<ClassGroup> findClassGroupsById(@PathVariable Integer userId) {
+        return userService.findClassGroupsById(userId);
     }
 
     @GetMapping("/findUsersByClassGroupId/{classGroupId}")
-    public List<User> findUsersByClassGroupId(@PathVariable int classGroupId) {
+    public List<User> findUsersByClassGroupId(@PathVariable Integer classGroupId){
         return userService.findUsersByClassGroupId(classGroupId);
     }
+
+//    @GetMapping("/teachingClassGroups/{userId}")
+//    public Set<ClassGroup> getTeachingClassGroupsByUserId(@PathVariable Integer userId) {
+//        return userService.findTeachingClassGroupsById(userId);
+//    }
+//
 }

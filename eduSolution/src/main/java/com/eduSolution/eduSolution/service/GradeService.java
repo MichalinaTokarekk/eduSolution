@@ -37,50 +37,22 @@ public class GradeService {
         grade.setStudent(userRepository.findById(grade.getStudent().getId()).orElse(null));
         grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
         grade.setTypeOfTestingKnowledge(typeOfTestingKnowledgeRespository.findById(grade.getTypeOfTestingKnowledge().getId()).orElse(null));
-        grade.setCourse(courseRepository.findById(grade.getCourse().getId()).orElse(null));
         grade.setFinalValue(false);
-        Course course = grade.getCourse();
-        Integer targetSemesterId = null;
-
-        // Iteruj przez wszystkie semestry
-        for (Semester semester : semesterService.getSemesters()) {
-            if (semester.getCourses().contains(course)) {
-                targetSemesterId = semester.getId();
-                Semester targetSemester = new Semester();
-                targetSemester.setId(targetSemesterId);
-                grade.setSemester(targetSemester);
-                break;
-            }
-        }
 
         return gradeRepository.save(grade);
     }
 
-    public Grade saveFinalGrade (Grade grade) {
-        grade.setStudent(userRepository.findById(grade.getStudent().getId()).orElse(null));
-        grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
-        grade.setCourse(courseRepository.findById(grade.getCourse().getId()).orElse(null));
-        grade.setFinalValue(true);
-        Course course = grade.getCourse();
-        Integer targetSemesterId = null;
-
-        // Iteruj przez wszystkie semestry
-        for (Semester semester : semesterService.getSemesters()) {
-            if (semester.getCourses().contains(course)) {
-                targetSemesterId = semester.getId();
-                Semester targetSemester = new Semester();
-                targetSemester.setId(targetSemesterId);
-                grade.setSemester(targetSemester);
-                break;
-            }
-        }
-
-        boolean finalGradeExists = gradeRepository.existsByStudentAndCourseAndIsFinalValue(grade.getStudent(), grade.getCourse(), true);
-
-        if (finalGradeExists && grade.isFinalValue()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można dodać drugiej oceny końcowej!!!!!!!");        }
-        return gradeRepository.save(grade);
-    }
+//    public Grade saveFinalGrade (Grade grade) {
+//        grade.setStudent(userRepository.findById(grade.getStudent().getId()).orElse(null));
+//        grade.setTeacher(userRepository.findById(grade.getTeacher().getId()).orElse(null));
+//        grade.setFinalValue(true);
+//
+//        boolean finalGradeExists = gradeRepository.existsByStudentAndIsFinalValue(grade.getStudent(), true);
+//
+//        if (finalGradeExists && grade.isFinalValue()) {
+//            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można dodać drugiej oceny końcowej!!!!!!!");        }
+//        return gradeRepository.save(grade);
+//    }
 
     public List<Grade> saveGrades (List <Grade> grades){
 
@@ -94,23 +66,23 @@ public class GradeService {
         return gradeRepository.findAll();
     }
 
-    public List<Grade> findByStudentIdAndCourseId(Integer studentId, Integer courseId) {
-        return gradeRepository.findByStudentIdAndCourseId(studentId, courseId);
-    }
+//    public List<Grade> findByStudentIdAndClassGroupeId(Integer studentId, Integer classGroupId) {
+//        return gradeRepository.findByStudentIdAndClassGroupeId(studentId, classGroupId);
+//    }
 
-    public TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(Long gradeId) {
-        return gradeRepository.findTypeOfTestingKnowledgeByGradeId(gradeId);
-    }
+//    public TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(Long gradeId) {
+//        return gradeRepository.findTypeOfTestingKnowledgeByGradeId(gradeId);
+//    }
+//
+//    public List<Grade> findAllByStudentAndClassGroup(Integer studentId, Integer classGroupId) {
+//        return gradeRepository.findAllByStudentAndClassGroup(studentId, classGroupId);
+//    }
 
-    public List<Grade> findAllByStudentAndCourse(Integer studentId, Integer courseUd) {
-        return gradeRepository.findAllByStudentAndCourse(studentId, courseUd);
-    }
-
-    public List<Grade> findAllByStudent(Integer studentId) {
-        return gradeRepository.findAllByStudent(studentId);
-
-    }
-
+//    public List<Grade> findAllByStudent(Integer studentId) {
+//        return gradeRepository.findAllByStudent(studentId);
+//
+//    }
+//
     public Grade getGradeByAnswerId(Integer answerId) {
         return gradeRepository.findByAnswerId(answerId);
     }

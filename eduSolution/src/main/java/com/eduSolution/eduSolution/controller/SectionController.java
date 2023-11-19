@@ -44,9 +44,9 @@ public class SectionController {
         return sectionService.getSectionByName(name);
     }
 
-    @GetMapping (value = "/sectionsByCourse/{courseId}")
-    public List<Section> findSectionsByCourseId(@PathVariable int courseId) {
-        return sectionService.getSectionsByCourse(courseId);
+    @GetMapping (value = "/sectionsByClassGroupId/{classGroupId}")
+    public List<Section> findSectionsByClassGroupId(@PathVariable int classGroupId) {
+        return sectionService.getSectionsByClassGroup(classGroupId);
     }
 
 

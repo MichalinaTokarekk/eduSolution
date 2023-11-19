@@ -16,16 +16,12 @@ public class RegisterRequest {
     private String password;
     private String firstName;
     private String lastName;
-    private String streetName;
-    private String buildingNumber;
-    private String apartmentNumber;
+    private String address;
     private String city;
     private String post;
     private String postCode;
     private String country;
 
-    private String yearBook;
-    private int classGroup;
-    private Set<Integer> teachingClassGroups;
+    private Set<Integer> classGroups;
 
 }

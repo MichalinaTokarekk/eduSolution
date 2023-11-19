@@ -34,15 +34,15 @@ public class ClassGroupController {
         return classGroupService.getClassGroupByName(name);
     }
 
-    @GetMapping("/findClassGroupsByCourseId/{courseId}")
-    public List<ClassGroup> findClassGroupsByCourseId(@PathVariable int courseId) {
-        return (List<ClassGroup>) classGroupService.findClassGroupsByCoursesId(courseId);
-    }
-
-    @GetMapping("/findClassGroupsByCourseAndUserId/{courseId}/{userId}")
-    public List<ClassGroup> findClassGroupsByCourseAndUserId(@PathVariable int courseId, @PathVariable int userId) {
-        return classGroupService.findClassGroupsByCourseAndUserId(courseId, userId);
-    }
+//    @GetMapping("/findClassGroupsByCourseId/{courseId}")
+//    public List<ClassGroup> findClassGroupsByCourseId(@PathVariable int courseId) {
+//        return (List<ClassGroup>) classGroupService.findClassGroupsByCoursesId(courseId);
+//    }
+//
+//    @GetMapping("/findClassGroupsByCourseAndUserId/{courseId}/{userId}")
+//    public List<ClassGroup> findClassGroupsByCourseAndUserId(@PathVariable int courseId, @PathVariable int userId) {
+//        return classGroupService.findClassGroupsByCourseAndUserId(courseId, userId);
+//    }
 
     @PutMapping("/updateGroup")
     public ClassGroup updateSemester (@RequestBody ClassGroup group) {

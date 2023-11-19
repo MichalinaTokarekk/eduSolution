@@ -3,6 +3,7 @@ package com.eduSolution.eduSolution.service;
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.EduMaterial;
 import com.eduSolution.eduSolution.entity.Section;
+import com.eduSolution.eduSolution.repository.ClassGroupRepository;
 import com.eduSolution.eduSolution.repository.CourseRepository;
 import com.eduSolution.eduSolution.repository.EduMaterialRepository;
 import com.eduSolution.eduSolution.repository.SectionRepository;
@@ -20,19 +21,13 @@ public class SectionService {
     private SectionRepository sectionRepository;
 
     @Autowired
-    private CourseRepository courseRepository;
+    private ClassGroupRepository classGroupRepository;
 
     @Autowired
     private EduMaterialRepository eduMaterialRepository;
 
     public Section saveSection(Section section) {
-        section.setCourse(courseRepository.findById(section.getCourse().getId()).orElse(null));
-//        Set<EduMaterial> eduMaterials = new HashSet<>();
-//        for (EduMaterial eduMaterial : section.getEduMaterials()) {
-//            Iterable<EduMaterial> authorsById = eduMaterialRepository.findAllById(Collections.singleton(eduMaterial.getId()));
-//            authorsById.forEach(eduMaterials::add);
-//        }
-//        section.setEduMaterials(eduMaterials);
+        section.setClassGroup(classGroupRepository.findById(section.getClassGroup().getId()).orElse(null));
         return sectionRepository.save(section);
     }
 
@@ -40,14 +35,6 @@ public class SectionService {
         return sectionRepository.saveAll(sections);
     }
 
-//    public void addEduMaterialToSection(int sectionId, EduMaterial eduMaterial) {
-//        Section section = sectionRepository.findById(sectionId).orElse(null);
-//        EduMaterial newMaterial = new EduMaterial();
-//        newMaterial.setName(eduMaterial.getName());
-//
-//        section.getEduMaterials().add(newMaterial);
-//        sectionRepository.save(section);
-//    }
 
     public Section getSectionById(int id) {
         return sectionRepository.findById(id).orElse(null);
@@ -61,30 +48,21 @@ public class SectionService {
         return sectionRepository.findByName(name);
     }
 
-    public List<Section> getSectionsByCourse(int courseId) {
-        return sectionRepository.findByCourseId(courseId);
+    public List<Section> getSectionsByClassGroup(int classGroupId) {
+        return sectionRepository.findByClassGroupId(classGroupId);
     }
 
 
     public Section updateSection (Section section){
         Section existingSection = sectionRepository.findById(section.getId()).orElse(null);
         existingSection.setName(section.getName());
-//        Set<EduMaterial> eduMaterials = new HashSet<>();
-//        for (EduMaterial author : section.getEduMaterials()) {
-//            Iterable<EduMaterial> authorsById = eduMaterialRepository.findAllById(Collections.singleton(author.getId()));
-//            authorsById.forEach(eduMaterials::add);
-//        }
+        existingSection.setClassGroup(classGroupRepository.findById(section.getClassGroup().getId()).orElse(null));
+
         return sectionRepository.save(existingSection);
     }
 
     public Section updateEduMaterial (Section section){
         Section existingSection = sectionRepository.findById(section.getId()).orElse(null);
-//        Set<EduMaterial> eduMaterials = new HashSet<>();
-//        for (EduMaterial author : section.getEduMaterials()) {
-//            Iterable<EduMaterial> authorsById = eduMaterialRepository.findAllById(Collections.singleton(author.getId()));
-//            authorsById.forEach(eduMaterials::add);
-//        }
-//        existingSection.setEduMaterials(eduMaterials);
         return sectionRepository.save(existingSection);
     }
 

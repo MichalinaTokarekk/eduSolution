@@ -57,13 +57,10 @@ public class AnswerService {
         return answerRepository.findByUserId(userId);
     }
 
-    public List<Answer> findByClassGroupId(int classGroupId) {
-        return answerRepository.findByClassGroupId(classGroupId);
-    }
-
-    public List<Answer> findByHomeworkTestAndClassGroup(int homeworkTestId, int classGroupId) {
-        return answerRepository.findByHomeworkTestAndClassGroup(homeworkTestId, classGroupId);
-    }
+//    public List<Answer> findByClassGroupId(int classGroupId) {
+//        return answerRepository.findByClassGroupId(classGroupId);
+//    }
+//
 
     public List<Answer> findByHomeworkTest(int homeworkTestId) {
         return answerRepository.findByHomeworkTest(homeworkTestId);

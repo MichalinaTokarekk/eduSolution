@@ -4,6 +4,7 @@ import com.eduSolution.eduSolution.config.JwtService;
 import com.eduSolution.eduSolution.entity.ClassGroup;
 import com.eduSolution.eduSolution.entity.Role;
 import com.eduSolution.eduSolution.entity.User;
+import com.eduSolution.eduSolution.entity.UserStatus;
 import com.eduSolution.eduSolution.repository.ClassGroupRepository;
 import com.eduSolution.eduSolution.repository.UserRepository;
 import com.eduSolution.eduSolution.token.Token;
@@ -17,10 +18,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
-        Set<ClassGroup> teachingClassGroups = new HashSet<>();
+//        Set<ClassGroup> teachingClassGroups = new HashSet<>();
 //        if (request.getTeachingClassGroups() != null && !request.getTeachingClassGroups().isEmpty()) {
 //            for (Integer classGroupId : request.getTeachingClassGroups()) {
 //                ClassGroup classGroup = classGroupRepository.findById(classGroupId)
@@ -46,38 +45,55 @@ public class AuthenticationService {
 //        ClassGroup classGroup = classGroupRepository.findById(classGroupId)
 //                .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono klasy o podanym ID: " + classGroupId));
 
-        if (request.getTeachingClassGroups() != null && !request.getTeachingClassGroups().isEmpty()) {
-            for (Integer classGroupId : request.getTeachingClassGroups()) {
+//        if (request.getTeachingClassGroups() != null && !request.getTeachingClassGroups().isEmpty()) {
+//            for (Integer classGroupId : request.getTeachingClassGroups()) {
+//                ClassGroup classGroup = classGroupRepository.findById(classGroupId)
+//                        .orElse(null); // Zamiast zgłaszania wyjątku, użyj null, jeśli klasa nie istnieje
+//                if (classGroup != null) {
+//                    teachingClassGroups.add(classGroup);
+//                }
+//            }
+//        }
+
+//        int classGroupId = request.getClassGroup();
+//        ClassGroup classGroup = classGroupRepository.findById(classGroupId)
+//                .orElse(null); // Zamiast zgłaszania wyjątku, użyj null, jeśli klasa nie istnieje
+
+        Random random = new Random();
+
+        int losowyIndex = random.nextInt(100);
+
+        Set<ClassGroup> classGroups = new HashSet<>();
+        if (request.getClassGroups() != null && !request.getClassGroups().isEmpty()) {
+            for (Integer classGroupId : request.getClassGroups()) {
                 ClassGroup classGroup = classGroupRepository.findById(classGroupId)
                         .orElse(null); // Zamiast zgłaszania wyjątku, użyj null, jeśli klasa nie istnieje
                 if (classGroup != null) {
-                    teachingClassGroups.add(classGroup);
+                    classGroups.add(classGroup);
                 }
             }
         }
 
-        int classGroupId = request.getClassGroup();
-        ClassGroup classGroup = classGroupRepository.findById(classGroupId)
-                .orElse(null); // Zamiast zgłaszania wyjątku, użyj null, jeśli klasa nie istnieje
+//        Set<ClassGroup> classGroups = request.getClassGroups().stream()
+//                .map(classGroupId -> classGroupRepository.findById(classGroupId)
+//                        .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono klasy o podanym ID: " + classGroupId)))
+//                .collect(Collectors.toSet());
 
 
 
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .streetName(request.getStreetName())
-                .buildingNumber(request.getBuildingNumber())
-                .apartmentNumber(request.getApartmentNumber())
+                .address(request.getAddress())
                 .city(request.getCity())
                 .post(request.getPost())
                 .postCode(request.getPostCode())
                 .country(request.getCountry())
-                .yearBook(request.getYearBook())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.STUDENT)
-                .classGroup(classGroup)
-                .teachingClassGroups(teachingClassGroups)
+                .role(Role.USER)
+                .userStatus(UserStatus.NIEAKTYWNY)
+                .classGroups(classGroups)
                 .build();
         String username2 = user.getFirstName() + " " + user.getLastName();
         user.setUsername(username2);

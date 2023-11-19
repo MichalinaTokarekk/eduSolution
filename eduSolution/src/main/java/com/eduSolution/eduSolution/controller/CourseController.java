@@ -35,15 +35,15 @@ public class CourseController {
         return courseService.getCourseByName(name);
     }
 
-    @GetMapping("/findCoursesByUserId/{userId}")
-    public List<Course> findCoursesByUserId(@PathVariable int userId) {
-        return courseService.findCoursesByUserId(userId);
-    }
-
-    @GetMapping("/findCoursesByStudentId/{userId}")
-    public List<Course> findCoursesByStudentId(@PathVariable int userId) {
-        return courseService.findCoursesByStudentId(userId);
-    }
+//    @GetMapping("/findCoursesByUserId/{userId}")
+//    public List<Course> findCoursesByUserId(@PathVariable int userId) {
+//        return courseService.findCoursesByUserId(userId);
+//    }
+//
+//    @GetMapping("/findCoursesByStudentId/{userId}")
+//    public List<Course> findCoursesByStudentId(@PathVariable int userId) {
+//        return courseService.findCoursesByStudentId(userId);
+//    }
 
     @PutMapping("/updateCourse")
     public Course updateCourse (@RequestBody Course course) {

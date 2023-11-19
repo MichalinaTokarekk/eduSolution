@@ -16,22 +16,22 @@ public interface GradeRepository extends JpaRepository<Grade,Long> {
 //    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId")
 //    List<Grade> findByStudentId(@Param("studentId") Integer studentId);
 
-    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.course.id = :courseId")
-    List<Grade> findByStudentIdAndCourseId(Integer studentId, Integer courseId);
-
-    @Query("SELECT g.typeOfTestingKnowledge FROM Grade g WHERE g.id = :gradeId")
-    TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(Long gradeId);
-
-    boolean existsByStudentAndCourseAndIsFinalValue(User student, Course course, boolean isFinalValue);
-
-    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.course.id = :courseId")
-    List<Grade> findAllByStudentAndCourse(Integer studentId, Integer courseId);
-
+//    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.classGroup.id = :classGroupId")
+//    List<Grade> findByStudentIdAndClassGroupeId(Integer studentId, Integer classGroupId);
+//
+//    @Query("SELECT g.typeOfTestingKnowledge FROM Grade g WHERE g.id = :gradeId")
+//    TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(Long gradeId);
+//
+//    boolean existsByStudentAndIsFinalValue(User student, boolean isFinalValue);
+//
+//    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.classGroup.id = :classGroupId")
+//    List<Grade> findAllByStudentAndClassGroup(Integer studentId, Integer classGroupId);
+//
     @Query("SELECT g FROM Grade g WHERE g.answer.id = :answerId")
     Grade findByAnswerId(Integer answerId);
-
-    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId")
-    List<Grade> findAllByStudent(Integer studentId);
+//
+//    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId")
+//    List<Grade> findAllByStudent(Integer studentId);
 
 
 }

@@ -22,10 +22,10 @@ public class GradeController {
         return gradeService.saveGrade(grade);
     }
 
-    @PostMapping("/addFinalGrade")
-    public Grade addFinalGrade (@RequestBody Grade grade) {
-        return gradeService.saveFinalGrade(grade);
-    }
+//    @PostMapping("/addFinalGrade")
+//    public Grade addFinalGrade (@RequestBody Grade grade) {
+//        return gradeService.saveFinalGrade(grade);
+//    }
 
     @PostMapping("/addGrades")
     public List<Grade> addGrades (@RequestBody List<Grade> grades){
@@ -45,33 +45,33 @@ public class GradeController {
 //        return gradeService.getGradesByStudentId(studentId);
 //    }
 
-    @GetMapping("/findByStudentIdAndCourseId/{studentId}/{courseId}")
-    public List<Grade> findByStudentIdAndCourseId(@PathVariable Integer studentId, @PathVariable Integer courseId) {
-        System.out.println("Received studentId: " + studentId);
-        List<Grade> grades = gradeService.findByStudentIdAndCourseId(studentId, courseId);
-        System.out.println("Number of grades found: " + grades.size());
-        return grades;
-    }
-
-    @GetMapping("/findTypeOfTestingKnowledgeByGradeId/{gradeId}")
-    public TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(@PathVariable Long gradeId) {
-        return gradeService.findTypeOfTestingKnowledgeByGradeId(gradeId);
-    }
-
-    @GetMapping("/findAllByStudentAndCourse/{studentId}/{courseId}")
-    public List<Grade> findAllByStudentAndCourse(@PathVariable Integer studentId, @PathVariable Integer courseId) {
-        return gradeService.findAllByStudentAndCourse(studentId, courseId);
-    }
-
+//    @GetMapping("/findByStudentIdAndCourseId/{studentId}/{courseId}")
+//    public List<Grade> findByStudentIdAndCourseId(@PathVariable Integer studentId, @PathVariable Integer courseId) {
+//        System.out.println("Received studentId: " + studentId);
+//        List<Grade> grades = gradeService.findByStudentIdAndClassGroupeId(studentId, courseId);
+//        System.out.println("Number of grades found: " + grades.size());
+//        return grades;
+//    }
+//
+//    @GetMapping("/findTypeOfTestingKnowledgeByGradeId/{gradeId}")
+//    public TypeOfTestingKnowledge findTypeOfTestingKnowledgeByGradeId(@PathVariable Long gradeId) {
+//        return gradeService.findTypeOfTestingKnowledgeByGradeId(gradeId);
+//    }
+//
+//    @GetMapping("/findAllByStudentAndCourse/{studentId}/{courseId}")
+//    public List<Grade> findAllByStudentAndCourse(@PathVariable Integer studentId, @PathVariable Integer courseId) {
+//        return gradeService.findAllByStudentAndClassGroup(studentId, courseId);
+//    }
+//
     @GetMapping("/gradeByAnswerId/{answerId}")
     public Grade getGradeByAnswerId(@PathVariable Integer answerId) {
         return gradeService.getGradeByAnswerId(answerId);
     }
-
-    @GetMapping("/findAllByStudentId/{studentId}")
-    public List<Grade> findAllByStudentId(@PathVariable Integer studentId) {
-        return gradeService.findAllByStudent(studentId);
-    }
+//
+//    @GetMapping("/findAllByStudentId/{studentId}")
+//    public List<Grade> findAllByStudentId(@PathVariable Integer studentId) {
+//        return gradeService.findAllByStudent(studentId);
+//    }
 
 
     @PutMapping("/updateGrade")

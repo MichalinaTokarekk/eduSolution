@@ -40,8 +40,8 @@ public class Section {
     private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @JoinColumn(name = "classGroup_id")
+    private ClassGroup classGroup;
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)

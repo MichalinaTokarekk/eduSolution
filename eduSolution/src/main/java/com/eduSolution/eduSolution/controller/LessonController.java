@@ -1,10 +1,7 @@
 package com.eduSolution.eduSolution.controller;
 
-import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.Lesson;
-import com.eduSolution.eduSolution.entity.Semester;
 import com.eduSolution.eduSolution.service.LessonService;
-import com.eduSolution.eduSolution.service.SemesterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,10 +35,15 @@ public class LessonController {
 //        return lessonService.findByClassGroupOrTeachingClassGroups(groupId, userId);
 //    }
 
-    @GetMapping("/findByClassGroupOrTeachingClassGroups/{userId}")
-    public List<Lesson> findByClassGroupOrTeachingClassGroups(@PathVariable(name = "userId") Integer userId) {
-        return lessonService.findByClassGroupOrTeachingClassGroups(userId);
-    }
+//    @GetMapping("/findByClassGroupOrTeachingClassGroups/{userId}")
+//    public List<Lesson> findByClassGroupOrTeachingClassGroups(@PathVariable(name = "userId") Integer userId) {
+//        return lessonService.findByClassGroupOrTeachingClassGroups(userId);
+//    }
+
+//    @GetMapping("/findByClassGroups/{userId}")
+//    public List<Lesson> findByClassGroups(@PathVariable(name = "userId") Integer userId) {
+//        return lessonService.findByClassGroups(userId);
+//    }
 
     @PutMapping("/updateLesson")
     public Lesson updateLesson (@RequestBody Lesson lesson) {
@@ -49,7 +51,7 @@ public class LessonController {
     }
 
     @DeleteMapping("/deleteLesson/{id}")
-    public DeleteResponseDTO deleteLesson(@PathVariable int id) {
+    public String deleteLesson(@PathVariable int id) {
         return lessonService.deleteLesson(id);
     }
 }

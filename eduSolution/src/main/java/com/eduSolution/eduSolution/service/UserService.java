@@ -20,19 +20,6 @@ public class UserService {
     @Autowired
     private ClassGroupRepository classGroupRepository;
 
-    public User saveUser (User user){
-        String username2 = user.getFirstName() + " " + user.getLastName();
-        user.setUsername(username2);
-
-        ClassGroup classGroup = classGroupRepository.findById(user.getClassGroup().getId()).orElse(null);
-        user.setClassGroup(classGroup);
-
-        return userRepository.save(user);
-    }
-
-    public List<User> saveUsers (List <User> users){
-        return userRepository.saveAll(users);
-    }
     public  User getUserById (int id){
         return userRepository.findById(id).orElse(null);
     }
@@ -49,9 +36,9 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public List<User> findUsersByClassGroupId(int classGroupId) {
-        return userRepository.findUsersByClassGroupId(classGroupId);
-    }
+//    public List<User> findUsersByClassGroupId(int classGroupId) {
+//        return userRepository.findUsersByClassGroupId(classGroupId);
+//    }
 
     public DeleteResponseDTO deleteUser(int id){
         //        List<Book> booksByGenreId = bookRepository.findByGenreId(id);
@@ -72,34 +59,23 @@ public class UserService {
             existingUser.setLastName(user.getLastName());
             existingUser.setCity(user.getCity());
             existingUser.setCountry(user.getCountry());
-            existingUser.setYearBook(user.getYearBook());
-            existingUser.setStreetName(user.getStreetName());
-            existingUser.setBuildingNumber(user.getBuildingNumber());
-            existingUser.setApartmentNumber(user.getApartmentNumber());
+            existingUser.setAddress(user.getAddress());
             existingUser.setPost(user.getPost());
             existingUser.setPostCode(user.getPostCode());
-//            existingUser.setClassGroup(user.getClassGroup());
             changeRole(user);
-
-            if (user.getClassGroup() != null) {
-                ClassGroup classGroup = classGroupRepository.findById(user.getClassGroup().getId()).orElse(null);
-                existingUser.setClassGroup(classGroup);
-            }
-
-
 
 
             // Aktualizuj teachingClassGroups
-            Set<ClassGroup> teachingClassGroups = new HashSet<>();
-            if (user.getTeachingClassGroups() != null) {
-                for (ClassGroup teachingClassGroup : user.getTeachingClassGroups()) {
-                    ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
-                    if (existingTeachingClassGroup != null) {
-                        teachingClassGroups.add(existingTeachingClassGroup);
-                    }
-                }
-            }
-            existingUser.setTeachingClassGroups(teachingClassGroups);
+//            Set<ClassGroup> teachingClassGroups = new HashSet<>();
+//            if (user.getClassGroups() != null) {
+//                for (ClassGroup teachingClassGroup : user.getClassGroups()) {
+//                    ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
+//                    if (existingTeachingClassGroup != null) {
+//                        teachingClassGroups.add(existingTeachingClassGroup);
+//                    }
+//                }
+//            }
+//            existingUser.setClassGroups(teachingClassGroups);
         }
 //        autenticationService.revokeAllUserTokens(user);
 
@@ -112,11 +88,20 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public Set<ClassGroup> findTeachingClassGroupsById(Integer userId) {
-        return userRepository.findTeachingClassGroupsById(userId);
-    }
+//    public Set<ClassGroup> findTeachingClassGroupsById(Integer userId) {
+//        return userRepository.findTeachingClassGroupsById(userId);
+//    }
 
     public List<User> getUsersByRole(Role role) {
         return userRepository.findByRole(role);
+    }
+
+    public List<ClassGroup> findClassGroupsById(Integer userId) {
+        return userRepository.findClassGroupsById(userId);
+
+    }
+
+    public List<User> findUsersByClassGroupId(Integer classGroupId) {
+        return userRepository.findUsersByClassGroupId(classGroupId);
     }
 }

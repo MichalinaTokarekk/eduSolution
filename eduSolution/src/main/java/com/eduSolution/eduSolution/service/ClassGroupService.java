@@ -34,12 +34,12 @@ public class ClassGroupService {
             group.setSemester(semester);
         }
 
-        Set<Course> courses = new HashSet<>();
-        for (Course course : group.getCourses()) {
-            Iterable<Course> sectionsById = courseRepository.findAllById(Collections.singleton(course.getId()));
-            sectionsById.forEach(courses::add);
+        Course course = group.getCourse();
+        if(course != null) {
+            course = courseRepository.findById(course.getId()).orElse(null);
+            group.setCourse(course);
         }
-        group.setCourses(courses);
+
         return classgroupRepository.save(group);
     }
 
@@ -58,34 +58,22 @@ public class ClassGroupService {
         return classgroupRepository.findByName(name);
     }
 
-    public List<ClassGroup> findClassGroupsByCoursesId(int courseId) {
-        return (List<ClassGroup>) classgroupRepository.findClassGroupsByCoursesId(courseId);
-    }
-
-    public List<ClassGroup> findClassGroupsByCourseAndUserId(int courseId, int userId) {
-        return classgroupRepository.findClassGroupsByCourseAndUserId(courseId, userId);
-    }
+//    public List<ClassGroup> findClassGroupsByCoursesId(int courseId) {
+//        return (List<ClassGroup>) classgroupRepository.findClassGroupsByCoursesId(courseId);
+//    }
+//
+//    public List<ClassGroup> findClassGroupsByCourseAndUserId(int courseId, int userId) {
+//        return classgroupRepository.findClassGroupsByCourseAndUserId(courseId, userId);
+//    }
 
     public ClassGroup updateClassGroup (ClassGroup classGroup){
         ClassGroup existingClassGroup = classgroupRepository.findById(classGroup.getId()).orElse(null);
         existingClassGroup.setName(classGroup.getName());
         existingClassGroup.setSemester(semesterRepository.findById(classGroup.getSemester().getId()).orElse(null));
+        existingClassGroup.setCourse(courseRepository.findById(classGroup.getCourse().getId()).orElse(null));
 
-//        Set<Course> courses = new HashSet<>();
-//        for (Course course : classGroup.getCourses()) {
-//            Iterable<Course> sectionsById = courseRepository.findAllById(Collections.singleton(course.getId()));
-//            sectionsById.forEach(courses::add);
-//        }
-//        existingClassGroup.setCourses(courses);
 
-        if (classGroup.getCourses() != null && !classGroup.getCourses().isEmpty()) {
-            Set<Course> courses = new HashSet<>();
-            for (Course course : classGroup.getCourses()) {
-                Iterable<Course> coursesById = courseRepository.findAllById(Collections.singleton(course.getId()));
-                coursesById.forEach(courses::add);
-            }
-            existingClassGroup.setCourses(courses);
-        }
+
         return classgroupRepository.save(existingClassGroup);
     }
 

@@ -26,6 +26,11 @@ public class Course {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Column(nullable = false)
+    private double amountToPay;
+
+    private double cashAdvance;
+
     @Column(length = 1000)
     private String description;
 
@@ -40,10 +45,6 @@ public class Course {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private Set<Section> sections = new HashSet<>();
 
     public Course() {
     }

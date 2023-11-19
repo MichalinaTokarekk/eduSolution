@@ -54,17 +54,13 @@ public class AnswerController {
         return answerService.getAnswerByHomeworkTestIdAndUserId(homeworkTestId, userId);
     }
 
-    @GetMapping(value = "/findByClassGroupId/{classGroupId}")
-    public List<Answer> findByClassGroupId(@PathVariable int classGroupId) {
-        return answerService.findByClassGroupId(classGroupId);
-    }
+//    @GetMapping(value = "/findByClassGroupId/{classGroupId}")
+//    public List<Answer> findByClassGroupId(@PathVariable int classGroupId) {
+//        return answerService.findByClassGroupId(classGroupId);
+//    }
+//
 
-    @GetMapping(value = "/findByHomeworkTestAndClassGroup/homeworkTest/{homeworkTestId}/classGroup/{classGroupId}")
-    public List<Answer> findByHomeworkTestAndClassGroup(@PathVariable int homeworkTestId, @PathVariable int classGroupId) {
-        return answerService.findByHomeworkTestAndClassGroup(homeworkTestId, classGroupId);
-    }
-
-    @GetMapping(value = "/findByHomeworkTest/homeworkTest/{homeworkTestId}")
+    @GetMapping(value = "/findByHomeworkTest/{homeworkTestId}")
     public List<Answer> findByHomeworkTest(@PathVariable int homeworkTestId) {
         return answerService.findByHomeworkTest(homeworkTestId);
     }

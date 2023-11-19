@@ -37,18 +37,20 @@ public class CourseService {
         return courseRepository.findByName(name);
     }
 
-    public List<Course> findCoursesByUserId(int userId) {
-        return courseRepository.findCoursesByUserId(userId);
-    }
-
-    public List<Course> findCoursesByStudentId(int userId) {
-        return userRepository.findCoursesByUserId(userId);
-    }
+//    public List<Course> findCoursesByUserId(int userId) {
+//        return courseRepository.findCoursesByUserId(userId);
+//    }
+//
+//    public List<Course> findCoursesByStudentId(int userId) {
+//        return userRepository.findCoursesByUserId(userId);
+//    }
 
     public Course updateCourse (Course course){
         Course existingCourse = courseRepository.findById(course.getId()).orElse(null);
         existingCourse.setName(course.getName());
         existingCourse.setDescription(course.getDescription());
+        existingCourse.setAmountToPay(course.getAmountToPay());
+        existingCourse.setCashAdvance(course.getCashAdvance());
         return courseRepository.save(existingCourse);
     }
 
