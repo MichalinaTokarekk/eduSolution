@@ -71,9 +71,9 @@ public class GradeService {
 //    }
 
 //
-//    public List<Grade> findAllByStudentAndClassGroup(Integer studentId, Integer classGroupId) {
-//        return gradeRepository.findAllByStudentAndClassGroup(studentId, classGroupId);
-//    }
+    public List<Grade> findAllByStudentAndClassGroup(Integer studentId, Integer classGroupId) {
+        return gradeRepository.findAllByStudentAndClassGroup(studentId, classGroupId);
+    }
 
 //    public List<Grade> findAllByStudent(Integer studentId) {
 //        return gradeRepository.findAllByStudent(studentId);

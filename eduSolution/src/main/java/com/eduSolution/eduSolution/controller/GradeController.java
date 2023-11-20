@@ -54,11 +54,11 @@ public class GradeController {
 //    }
 //
 //
-//    @GetMapping("/findAllByStudentAndCourse/{studentId}/{courseId}")
-//    public List<Grade> findAllByStudentAndCourse(@PathVariable Integer studentId, @PathVariable Integer courseId) {
-//        return gradeService.findAllByStudentAndClassGroup(studentId, courseId);
-//    }
-//
+    @GetMapping("/findAllByStudentAndClassGroup/{studentId}/{classGroupId}")
+    public List<Grade> findAllByStudentAndClassGroup(@PathVariable Integer studentId, @PathVariable Integer classGroupId) {
+        return gradeService.findAllByStudentAndClassGroup(studentId, classGroupId);
+    }
+
     @GetMapping("/gradeByAnswerId/{answerId}")
     public Grade getGradeByAnswerId(@PathVariable Integer answerId) {
         return gradeService.getGradeByAnswerId(answerId);

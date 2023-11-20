@@ -22,9 +22,9 @@ public interface GradeRepository extends JpaRepository<Grade,Long> {
 //
     boolean existsByStudentAndIsFinalValue(User student, boolean isFinalValue);
 //
-//    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.classGroup.id = :classGroupId")
-//    List<Grade> findAllByStudentAndClassGroup(Integer studentId, Integer classGroupId);
-//
+    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.classGroup.id = :classGroupId")
+    List<Grade> findAllByStudentAndClassGroup(Integer studentId, Integer classGroupId);
+
     @Query("SELECT g FROM Grade g WHERE g.answer.id = :answerId")
     Grade findByAnswerId(Integer answerId);
 //
