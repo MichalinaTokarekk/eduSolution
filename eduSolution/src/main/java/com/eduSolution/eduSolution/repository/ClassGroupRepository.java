@@ -20,4 +20,6 @@ public interface ClassGroupRepository extends JpaRepository<ClassGroup,Integer> 
 //            "AND cg.id IN (SELECT tcg.id FROM User u JOIN u.teachingClassGroups tcg WHERE u.id = :userId)")
 //    List<ClassGroup> findClassGroupsByCourseAndUserId(int courseId, int userId);
 
+    List<ClassGroup> findByCourseId(Integer courseId);
+
 }

@@ -1,5 +1,6 @@
 package com.eduSolution.eduSolution.service;
 
+import com.eduSolution.eduSolution.config.ApplicationConfig;
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.ClassGroup;
 import com.eduSolution.eduSolution.entity.Role;
@@ -19,6 +20,15 @@ public class UserService {
 
     @Autowired
     private ClassGroupRepository classGroupRepository;
+
+    private ApplicationConfig applicationConfig;
+
+    @Autowired
+    public UserService(UserRepository userRepository, ClassGroupRepository classGroupRepository, ApplicationConfig applicationConfig) {
+        this.userRepository = userRepository;
+        this.classGroupRepository = classGroupRepository;
+        this.applicationConfig = applicationConfig;
+    }
 
     public  User getUserById (int id){
         return userRepository.findById(id).orElse(null);
@@ -54,7 +64,8 @@ public class UserService {
         User existingUser = userRepository.findById(user.getId()).orElse(null);
         if (existingUser != null) {
             existingUser.setEmail(user.getEmail());
-            existingUser.setPassword(user.getPassword());
+//            existingUser.setPassword(user.getPassword());
+            existingUser.setPassword(applicationConfig.passwordEncoder().encode(user.getPassword()));
             existingUser.setFirstName(user.getFirstName());
             existingUser.setLastName(user.getLastName());
             existingUser.setCity(user.getCity());
@@ -62,20 +73,20 @@ public class UserService {
             existingUser.setAddress(user.getAddress());
             existingUser.setPost(user.getPost());
             existingUser.setPostCode(user.getPostCode());
-            changeRole(user);
+            existingUser.setRole(user.getRole());
+//            changeRole(user);
 
 
-            // Aktualizuj teachingClassGroups
-//            Set<ClassGroup> teachingClassGroups = new HashSet<>();
-//            if (user.getClassGroups() != null) {
-//                for (ClassGroup teachingClassGroup : user.getClassGroups()) {
-//                    ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
-//                    if (existingTeachingClassGroup != null) {
-//                        teachingClassGroups.add(existingTeachingClassGroup);
-//                    }
-//                }
-//            }
-//            existingUser.setClassGroups(teachingClassGroups);
+            Set<ClassGroup> classGroups = new HashSet<>();
+            if (user.getClassGroups() != null) {
+                for (ClassGroup teachingClassGroup : user.getClassGroups()) {
+                    ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
+                    if (existingTeachingClassGroup != null) {
+                        classGroups.add(existingTeachingClassGroup);
+                    }
+                }
+            }
+            existingUser.setClassGroups(classGroups);
         }
 //        autenticationService.revokeAllUserTokens(user);
 

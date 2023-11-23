@@ -39,6 +39,16 @@ public class ApplicationConfig {
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+//        return new BCryptPasswordEncoder();
+
+        System.out.println("Initializing password encoder bean");
+        return new BCryptPasswordEncoder() {
+            @Override
+            public String encode(CharSequence rawPassword) {
+                String encodedPassword = super.encode(rawPassword);
+                System.out.println("Encoded Password: " + encodedPassword);
+                return encodedPassword;
+            }
+        };
     }
 }

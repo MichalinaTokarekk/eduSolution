@@ -58,6 +58,10 @@ public class ClassGroupService {
         return classgroupRepository.findByName(name);
     }
 
+    public List<ClassGroup> findByCourseId(Integer courseId) {
+        return classgroupRepository.findByCourseId(courseId);
+    }
+
 //    public List<ClassGroup> findClassGroupsByCoursesId(int courseId) {
 //        return (List<ClassGroup>) classgroupRepository.findClassGroupsByCoursesId(courseId);
 //    }
