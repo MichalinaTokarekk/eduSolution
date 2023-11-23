@@ -69,6 +69,10 @@ public class ClassGroupService {
     public ClassGroup updateClassGroup (ClassGroup classGroup){
         ClassGroup existingClassGroup = classgroupRepository.findById(classGroup.getId()).orElse(null);
         existingClassGroup.setName(classGroup.getName());
+        existingClassGroup.setDescription(classGroup.getDescription());
+        existingClassGroup.setYear(classGroup.getYear());
+        existingClassGroup.setAddress(classGroup.getAddress());
+        existingClassGroup.setMode(classGroup.getMode());
         existingClassGroup.setSemester(semesterRepository.findById(classGroup.getSemester().getId()).orElse(null));
         existingClassGroup.setCourse(courseRepository.findById(classGroup.getCourse().getId()).orElse(null));
         return classgroupRepository.save(existingClassGroup);

@@ -31,6 +31,9 @@ public class Course {
 
     private double cashAdvance;
 
+    @Enumerated(EnumType.STRING)
+    private DifficultyLevel difficultyLevel;
+
     @Column(length = 1000)
     private String description;
 

@@ -39,6 +39,11 @@ public class ClassGroup {
 
     private String year;
 
+    private String address;
+
+    @Enumerated(EnumType.STRING)
+    private Mode mode;
+
     @Enumerated(EnumType.STRING)
     private ClassGroupStatus classGroupStatus;
 
@@ -54,12 +59,6 @@ public class ClassGroup {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable (name = "classGroups_to_users",
-//            joinColumns = {@JoinColumn(name = "classGroup_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "user_id")})
-//    private Set<User> users = new HashSet<>();
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "semester_id")
     private Semester semester;
@@ -67,18 +66,6 @@ public class ClassGroup {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id")
     private Course course;
-
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable (name = "classGroups_to_lessons",
-//            joinColumns = {@JoinColumn(name = "classGroup_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "lesson_id")})
-//    private Set<Lesson> lessons = new HashSet<>();
-
-
-//    @PreRemove
-//    private void removeRelations() {
-//        lessons.clear();
-//    }
 
     public ClassGroup(int id) {
         this.id = id;

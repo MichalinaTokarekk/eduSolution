@@ -51,6 +51,7 @@ public class CourseService {
         existingCourse.setDescription(course.getDescription());
         existingCourse.setAmountToPay(course.getAmountToPay());
         existingCourse.setCashAdvance(course.getCashAdvance());
+        existingCourse.setDifficultyLevel(course.getDifficultyLevel());
         return courseRepository.save(existingCourse);
     }
 

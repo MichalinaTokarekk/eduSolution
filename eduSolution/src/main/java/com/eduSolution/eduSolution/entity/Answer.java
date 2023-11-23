@@ -26,7 +26,6 @@ public class Answer {
     @Column(nullable = false)
     private String answerContent;
     private String comment;
-    private LocalDateTime answerSentDate;
     @CreatedBy
     private String createdBy;
     @CreatedDate
