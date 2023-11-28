@@ -12,14 +12,6 @@ import java.util.List;
 
 public interface GradeRepository extends JpaRepository<Grade,Long> {
     List<Grade> findByValue(double value);
-
-//    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId")
-//    List<Grade> findByStudentId(@Param("studentId") Integer studentId);
-
-//    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.classGroup.id = :classGroupId")
-//    List<Grade> findByStudentIdAndClassGroupeId(Integer studentId, Integer classGroupId);
-//
-//
     boolean existsByStudentAndIsFinalValue(User student, boolean isFinalValue);
 //
     @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId AND g.classGroup.id = :classGroupId")
@@ -27,9 +19,5 @@ public interface GradeRepository extends JpaRepository<Grade,Long> {
 
     @Query("SELECT g FROM Grade g WHERE g.answer.id = :answerId")
     Grade findByAnswerId(Integer answerId);
-//
-//    @Query("SELECT g FROM Grade g WHERE g.student.id = :studentId")
-//    List<Grade> findAllByStudent(Integer studentId);
-
 
 }

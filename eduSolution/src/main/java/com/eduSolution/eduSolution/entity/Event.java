@@ -32,22 +32,6 @@ public class Event {
     @Column
     private String eventDate;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable (name = "events_to_courses",
-            joinColumns = {@JoinColumn(name = "event_id")},
-            inverseJoinColumns = {@JoinColumn(name = "course_id")})
-    private Set<Course> courses = new HashSet<>();
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable (name = "events_to_classGroups",
-            joinColumns = {@JoinColumn(name = "event_id")},
-            inverseJoinColumns = {@JoinColumn(name = "classGroup_id")})
-    private Set<ClassGroup> classGroups = new HashSet<>();
-
     @CreatedBy
     private String createdBy;
 
@@ -59,12 +43,6 @@ public class Event {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    @PreRemove
-    private void removeRelations() {
-        courses.clear();
-        classGroups.clear();
-    }
 
     public Event(int id) {
         this.id = id;

@@ -30,10 +30,6 @@ public class LessonController {
         return lessonService.getLessonById(id);
     }
 
-//    @GetMapping("/findByClassGroupOrTeachingClassGroups/{groupId}/{userId}")
-//    public List<Lesson> findByClassGroupOrTeachingClassGroups(@PathVariable(name = "groupId") Integer groupId, @PathVariable(name = "userId") Integer userId) {
-//        return lessonService.findByClassGroupOrTeachingClassGroups(groupId, userId);
-//    }
 
 //    @GetMapping("/findByClassGroupOrTeachingClassGroups/{userId}")
 //    public List<Lesson> findByClassGroupOrTeachingClassGroups(@PathVariable(name = "userId") Integer userId) {
@@ -44,6 +40,11 @@ public class LessonController {
 //    public List<Lesson> findByClassGroups(@PathVariable(name = "userId") Integer userId) {
 //        return lessonService.findByClassGroups(userId);
 //    }
+
+    @GetMapping("/findLessonsForUserInClassGroups/{userId}")
+    public List<Lesson> findLessonsForUserInClassGroups(@PathVariable Integer userId) {
+        return lessonService.findLessonsForUserInClassGroups(userId);
+    }
 
     @PutMapping("/updateLesson")
     public Lesson updateLesson (@RequestBody Lesson lesson) {

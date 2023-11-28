@@ -8,13 +8,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface LessonRepository extends JpaRepository<Lesson,Integer> {
-//    @Query("SELECT l FROM Lesson l WHERE l.classGroup.semester.id = :semesterId")
-//    List<Lesson> findByClassGroupSemesterId(@Param("semesterId") Integer semesterId);
+//    List<Lesson> findByClassGroup_IdIn(List<Integer> classGroupIds);
 
-
-//    @Query("SELECT l FROM Lesson l WHERE l.classGroup.semester.id IN :semesterIds")
-//    List<Lesson> findByClassGroupSemesterIds(@Param("semesterIds") List<Integer> semesterIds);
-
-
+    @Query("SELECT l FROM Lesson l " +
+            "JOIN l.classGroup cg " +
+            "WHERE cg IN (SELECT cu.classGroups FROM User cu WHERE cu.id = :userId)")
+    List<Lesson> findLessonsForUserInClassGroups(@Param("userId") Integer userId);
 
 }

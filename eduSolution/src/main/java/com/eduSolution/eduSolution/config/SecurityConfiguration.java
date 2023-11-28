@@ -51,8 +51,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                                 authorizeHttpRequests
                                         .requestMatchers("/auth/**").permitAll()
-//                                        .requestMatchers("/user-controller/users").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
-//                                        .requestMatchers("/user-controller/user/{id}").hasAnyAuthority("USER","LIBRARIAN","ADMIN")
+//                                        .requestMatchers("/user-controller/users").hasAnyAuthority("USER","TEACHER","ADMIN")
+//                                        .requestMatchers("/user-controller/user/{id}").hasAnyAuthority("USER","TEACHER","ADMIN")
 //                                        .requestMatchers("/user-controller/**").hasAuthority("ADMIN")
                                         .requestMatchers("/user-controller/**").permitAll()
 

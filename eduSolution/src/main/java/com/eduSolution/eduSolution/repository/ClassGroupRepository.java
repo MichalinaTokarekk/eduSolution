@@ -11,9 +11,6 @@ import java.util.Set;
 public interface ClassGroupRepository extends JpaRepository<ClassGroup,Integer> {
     ClassGroup findByName (String name);
 
-
-//    List<ClassGroup> findClassGroupsByCoursesId(int courseId);
-
 //    @Query("SELECT DISTINCT cg FROM ClassGroup cg " +
 //            "JOIN cg.courses c " +
 //            "WHERE c.id = :courseId " +

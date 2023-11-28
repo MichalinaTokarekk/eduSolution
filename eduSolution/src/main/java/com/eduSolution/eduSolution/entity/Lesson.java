@@ -15,6 +15,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,8 +28,14 @@ public class Lesson {
     @Id
     @GeneratedValue
     private int id;
+    private String name;
 
-    private LocalDate date;
+//    private ArrayList<String> dates;
+
+    @ElementCollection
+    @CollectionTable(name = "lesson_dates", joinColumns = @JoinColumn(name = "lesson_id"))
+    @Column(name = "lesson_date")
+    private List<String> dates;
 
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startLessonTime;

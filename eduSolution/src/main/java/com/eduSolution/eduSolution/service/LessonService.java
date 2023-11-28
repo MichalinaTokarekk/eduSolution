@@ -54,14 +54,19 @@ public class LessonService {
 //        return lessonRepository.findByClassGroupSemesterIds(user.getClassGroups().stream().map(classGroup -> classGroup.getId()).collect(Collectors.toList()));
 //    }
 
+    public List<Lesson> findLessonsForUserInClassGroups(Integer userId) {
+        return lessonRepository.findLessonsForUserInClassGroups(userId);
+    }
+
 
     public Lesson updateLesson (Lesson lesson){
         Lesson existingLesson = lessonRepository.findById(lesson.getId()).orElse(null);
+        existingLesson.setName(lesson.getName());
+        existingLesson.setDates(lesson.getDates());
         existingLesson.setStartLessonTime(lesson.getStartLessonTime());
         existingLesson.setEndLessonTime(lesson.getEndLessonTime());
         existingLesson.setDayName(lesson.getDayName());
         existingLesson.setClassGroup(classGroupRepository.findById(lesson.getClassGroup().getId()).orElse(null));
-
 
         return lessonRepository.save(existingLesson);
     }
@@ -73,7 +78,7 @@ public class LessonService {
 //        }
         Lesson lesson = lessonRepository.findById(id).orElse(null);
         lessonRepository.deleteById(id);
-        return "Lekcja z grupu" + lesson.getClassGroup() + "z dnia" + lesson.getDate() + " została usunięta";
+        return "Lekcja z grupu" + lesson.getClassGroup() + "z dnia" + lesson.getDates() + " została usunięta";
 //        return lesson != null ? new DeleteResponseDTO(lesson.getId(), lesson.getDate()) : null;
     }
 

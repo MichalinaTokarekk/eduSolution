@@ -26,25 +26,6 @@ public class EventService {
     private UserRepository userRepository;
 
     public Event saveEvent (Event event){
-        User user = event.getUser();
-        if(user != null) {
-            user = userRepository.findById(user.getId()).orElse(null);
-            event.setUser(user);
-        }
-
-        Set<Course> courses = new HashSet<>();
-        for (Course course : event.getCourses()) {
-            Iterable<Course> sectionsById = courseRepository.findAllById(Collections.singleton(course.getId()));
-            sectionsById.forEach(courses::add);
-        }
-        event.setCourses(courses);
-
-        Set<ClassGroup> classGroups = new HashSet<>();
-        for (ClassGroup classGroup : event.getClassGroups()) {
-            Iterable<ClassGroup> sectionsById = classGroupRepository.findAllById(Collections.singleton(classGroup.getId()));
-            sectionsById.forEach(classGroups::add);
-        }
-        event.setClassGroups(classGroups);
 
         return eventRepository.save(event);
     }
@@ -67,22 +48,6 @@ public class EventService {
     public Event updateEvent (Event event){
         Event existingEvent = eventRepository.findById(event.getId()).orElse(null);
         existingEvent.setName(event.getName());
-        existingEvent.setUser(userRepository.findById(event.getUser().getId()).orElse(null));
-
-        Set<Course> courses = new HashSet<>();
-        for (Course course : event.getCourses()) {
-            Iterable<Course> sectionsById = courseRepository.findAllById(Collections.singleton(course.getId()));
-            sectionsById.forEach(courses::add);
-        }
-        existingEvent.setCourses(courses);
-
-        Set<ClassGroup> classGroups = new HashSet<>();
-        for (ClassGroup classGroup : event.getClassGroups()) {
-            Iterable<ClassGroup> sectionsById = classGroupRepository.findAllById(Collections.singleton(classGroup.getId()));
-            sectionsById.forEach(classGroups::add);
-        }
-        existingEvent.setClassGroups(classGroups);
-
 
         return eventRepository.save(existingEvent);
     }
