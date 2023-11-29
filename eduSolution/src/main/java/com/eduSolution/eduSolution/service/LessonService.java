@@ -72,14 +72,13 @@ public class LessonService {
     }
 
     public String deleteLesson(int id){
-//        List<Book> booksByGenreId = bookRepository.findByGenreId(id);
-//        if (!booksByGenreId.isEmpty()) {
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można usunąć tego pola. Istnieje książa o takim gatunku");
-//        }
         Lesson lesson = lessonRepository.findById(id).orElse(null);
+        if (lesson == null) {
+            return "Nie można znaleźć lekcji o identyfikatorze " + id;
+        }
         lessonRepository.deleteById(id);
+
         return "Lekcja z grupu" + lesson.getClassGroup() + "z dnia" + lesson.getDates() + " została usunięta";
-//        return lesson != null ? new DeleteResponseDTO(lesson.getId(), lesson.getDate()) : null;
     }
 
 }

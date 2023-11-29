@@ -1,11 +1,14 @@
 package com.eduSolution.eduSolution.controller;
 
 import com.eduSolution.eduSolution.entity.Lesson;
+import com.eduSolution.eduSolution.entity.WeekDays;
 import com.eduSolution.eduSolution.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestMapping("/lesson-controller")
 @RestController
@@ -54,5 +57,12 @@ public class LessonController {
     @DeleteMapping("/deleteLesson/{id}")
     public String deleteLesson(@PathVariable int id) {
         return lessonService.deleteLesson(id);
+    }
+
+    @GetMapping("/weekDays")
+    public List<String> getAllWeekDays() {
+        return Arrays.stream(WeekDays.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
     }
 }
