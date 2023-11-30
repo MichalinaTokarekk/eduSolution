@@ -83,13 +83,9 @@ public class ClassGroupService {
     }
 
     public DeleteResponseDTO deleteClassGroup(int id){
-//        List<Book> booksByGenreId = bookRepository.findByGenreId(id);
-//        if (!booksByGenreId.isEmpty()) {
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, "Nie można usunąć tego pola. Istnieje książa o takim gatunku");
-//        }
+
         ClassGroup classGroup = classgroupRepository.findById(id).orElse(null);
         classgroupRepository.deleteById(id);
-//        return "Grupa " + name + " został usunięty";
         return classGroup != null ? new DeleteResponseDTO(classGroup.getId(), classGroup.getName()) : null;
     }
 }

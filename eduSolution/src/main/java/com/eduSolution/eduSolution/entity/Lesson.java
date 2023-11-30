@@ -49,6 +49,11 @@ public class Lesson {
     @JoinColumn(name = "class_group_id")
     private ClassGroup classGroup;
 
+    @Transient
+    public String getClassGroupName() {
+        return classGroup != null ? classGroup.getName() : null;
+    }
+
     @CreatedBy
     private String createdBy;
     @CreatedDate

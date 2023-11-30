@@ -19,7 +19,6 @@ import java.util.Set;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 public class Semester {
-
     @Id
     @GeneratedValue
     private int id;
