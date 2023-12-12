@@ -6,15 +6,23 @@ import com.eduSolution.eduSolution.entity.ClassGroup;
 import com.eduSolution.eduSolution.entity.Role;
 import com.eduSolution.eduSolution.entity.Semester;
 import com.eduSolution.eduSolution.entity.User;
+import com.eduSolution.eduSolution.exception.ErrorObject;
 import com.eduSolution.eduSolution.repository.ClassGroupRepository;
 import com.eduSolution.eduSolution.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.util.*;
 
 @Service
 public class UserService {
+
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private UserRepository userRepository;
 
@@ -22,6 +30,7 @@ public class UserService {
     private ClassGroupRepository classGroupRepository;
 
     private ApplicationConfig applicationConfig;
+
 
     @Autowired
     public UserService(UserRepository userRepository, ClassGroupRepository classGroupRepository, ApplicationConfig applicationConfig) {
@@ -99,9 +108,6 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-//    public Set<ClassGroup> findTeachingClassGroupsById(Integer userId) {
-//        return userRepository.findTeachingClassGroupsById(userId);
-//    }
 
     public List<User> getUsersByRole(Role role) {
         return userRepository.findByRole(role);
@@ -114,5 +120,31 @@ public class UserService {
 
     public List<User> findUsersByClassGroupId(Integer classGroupId) {
         return userRepository.findUsersByClassGroupId(classGroupId);
+    }
+
+    public ResponseEntity<?> changePassword (User user, String oldPassword, String newPassword, String newPasswordConfirm) throws Exception {
+
+        User existingUser = userRepository.findById(user.getId()).orElse(null);
+        ErrorObject error;
+        if(existingUser!=null){
+            if(passwordEncoder.matches(oldPassword,existingUser.getPassword()))
+            {
+                if(oldPassword.equals(newPassword)) {
+                    error = new ErrorObject("NOWE HASŁO NIE MOŻE BYĆ TAKIE SAMO JAK OBECNE");
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+                }
+                else if(newPassword.equals(newPasswordConfirm))
+                    existingUser.setPassword(passwordEncoder.encode(newPassword));
+                else{
+                    error = new ErrorObject("POLA HASŁO I POTWIERDŹ HASŁO NIE SĄ TAKIE SAME");
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+                }
+                return  ResponseEntity.ok(userRepository.save(existingUser));
+            }else{
+                error = new ErrorObject("OBECNE HASŁO NIE JEST POPRAWNE");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+            }
+        }
+        throw new Exception("NIE ZNALEZIONO UŻYTKOWNIKA");
     }
 }

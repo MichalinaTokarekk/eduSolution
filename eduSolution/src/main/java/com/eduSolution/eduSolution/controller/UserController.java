@@ -1,11 +1,13 @@
 package com.eduSolution.eduSolution.controller;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
+import com.eduSolution.eduSolution.dto.PasswordDTO;
 import com.eduSolution.eduSolution.entity.ClassGroup;
 import com.eduSolution.eduSolution.entity.Role;
 import com.eduSolution.eduSolution.entity.User;
 import com.eduSolution.eduSolution.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,9 +66,14 @@ public class UserController {
         return userService.findUsersByClassGroupId(classGroupId);
     }
 
-//    @GetMapping("/teachingClassGroups/{userId}")
-//    public Set<ClassGroup> getTeachingClassGroupsByUserId(@PathVariable Integer userId) {
-//        return userService.findTeachingClassGroupsById(userId);
-//    }
-//
+
+    @PutMapping("/changePassword")
+    public ResponseEntity <?> changePassword (@RequestBody PasswordDTO passwordDTO) throws Exception {
+        User user = new User();
+        user.setId(passwordDTO.getId());
+        String oldPassword = passwordDTO.getOldPassword();
+        String newPassword = passwordDTO.getNewPassword();
+        String newPasswordConfirm= passwordDTO.getNewPasswordConfirm();
+        return userService.changePassword(user,oldPassword,newPassword,newPasswordConfirm);
+    }
 }
