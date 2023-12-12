@@ -70,6 +70,10 @@ public class ClassGroupService {
 //        return classgroupRepository.findClassGroupsByCourseAndUserId(courseId, userId);
 //    }
 
+    public List<ClassGroup> findClassGroupsByCourseAndUser(Integer courseId, Integer userId) {
+        return classgroupRepository.findClassGroupsByCourseAndUser(courseId, userId);
+    }
+
     public ClassGroup updateClassGroup (ClassGroup classGroup){
         ClassGroup existingClassGroup = classgroupRepository.findById(classGroup.getId()).orElse(null);
         existingClassGroup.setName(classGroup.getName());

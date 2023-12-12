@@ -19,4 +19,24 @@ public interface ClassGroupRepository extends JpaRepository<ClassGroup,Integer> 
 
     List<ClassGroup> findByCourseId(Integer courseId);
 
+    @Query("SELECT DISTINCT cg FROM ClassGroup cg " +
+            "JOIN cg.course c " +
+            "JOIN User u ON u.id = :userId " +
+            "WHERE c.id = :courseId AND cg MEMBER OF u.classGroups")
+    List<ClassGroup> findClassGroupsByCourseAndUser(@Param("courseId") Integer courseId, @Param("userId") Integer userId);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

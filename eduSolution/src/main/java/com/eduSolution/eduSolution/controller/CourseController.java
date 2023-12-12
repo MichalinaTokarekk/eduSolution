@@ -45,6 +45,11 @@ public class CourseController {
 //        return courseService.findCoursesByStudentId(userId);
 //    }
 
+    @GetMapping("/findCoursesByUserId/{userId}")
+    public List<Course> findCoursesByUserId(@PathVariable Integer userId) {
+        return courseService.findCoursesByUserId(userId);
+    }
+
     @PutMapping("/updateCourse")
     public Course updateCourse (@RequestBody Course course) {
         return courseService.updateCourse(course);

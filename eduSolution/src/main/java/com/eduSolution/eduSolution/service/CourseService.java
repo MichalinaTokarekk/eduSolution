@@ -45,6 +45,10 @@ public class CourseService {
 //        return userRepository.findCoursesByUserId(userId);
 //    }
 
+    public List<Course> findCoursesByUserId(Integer userId) {
+        return courseRepository.findCoursesByUserId(userId);
+    }
+
     public Course updateCourse (Course course){
         Course existingCourse = courseRepository.findById(course.getId()).orElse(null);
         existingCourse.setName(course.getName());

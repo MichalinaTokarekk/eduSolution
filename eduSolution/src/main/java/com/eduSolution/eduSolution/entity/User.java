@@ -80,7 +80,7 @@ public class User implements UserDetails {
     private UserStatus userStatus;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable (name = "users_to_classGroups",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "classGroup_id")})
