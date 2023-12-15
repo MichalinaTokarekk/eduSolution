@@ -95,6 +95,8 @@ public class SecurityConfiguration {
 
                             .requestMatchers("/event-controller/**").permitAll()
 
+                            .requestMatchers("/certificateConfirmation-controller/**").permitAll()
+
 
 
 
