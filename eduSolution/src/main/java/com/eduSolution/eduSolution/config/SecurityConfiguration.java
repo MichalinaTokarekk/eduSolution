@@ -97,6 +97,10 @@ public class SecurityConfiguration {
 
                             .requestMatchers("/certificateConfirmation-controller/**").permitAll()
 
+                            .requestMatchers("/cart-controller/**").permitAll()
+
+                            .requestMatchers("/record-controller/**").permitAll()
+
 
 
 
