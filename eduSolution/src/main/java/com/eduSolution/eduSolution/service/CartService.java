@@ -6,6 +6,7 @@ import com.eduSolution.eduSolution.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -51,5 +52,17 @@ public class CartService {
     public String deleteCart(int id){
         cartRepository.deleteById(id);
         return "Pozycja została usunięta";
+    }
+
+//    public boolean existsByClassGroupAndUser(Integer classGroupId, Integer userId) {
+//        return cartRepository.existsByClassGroupAndUser(classGroupId, userId);
+//    }
+
+    public int countByUserId(int userId) {
+        return cartRepository.countByUserId(userId);
+    }
+
+    public BigDecimal getTotalAmountForUser(int userId) {
+        return cartRepository.getTotalAmountForUser(userId);
     }
 }

@@ -8,6 +8,7 @@ import com.eduSolution.eduSolution.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RequestMapping("/cart-controller")
@@ -43,5 +44,20 @@ public class CartController {
     @DeleteMapping("/deleteCart/{id}")
     public String deleteCart(@PathVariable int id) {
         return cartService.deleteCart(id);
+    }
+
+//    @GetMapping("/isClassGroupAssignedToUser/{classGroupId}/{userId}")
+//    public Boolean existsByClassGroupAndUser(@PathVariable Integer classGroupId, @PathVariable Integer userId) {
+//        return cartService.existsByClassGroupAndUser(classGroupId, userId);
+//    }
+
+    @GetMapping("/countByUserId/{userId}")
+    public int countByUserId(@PathVariable int userId) {
+        return cartService.countByUserId(userId);
+    }
+
+    @GetMapping("/getTotalAmountForUser/{userId}")
+    public BigDecimal getTotalAmountForUser(@PathVariable int userId) {
+        return cartService.getTotalAmountForUser(userId);
     }
 }
