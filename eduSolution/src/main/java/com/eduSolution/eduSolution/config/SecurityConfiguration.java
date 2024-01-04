@@ -101,6 +101,14 @@ public class SecurityConfiguration {
 
                             .requestMatchers("/record-controller/**").permitAll()
 
+                            .requestMatchers("/payment-controller/**").permitAll()
+
+                            .requestMatchers("/homePageElement-controller/**").permitAll()
+
+                            .requestMatchers("/homePageImage-controller/**").permitAll()
+
+                            .requestMatchers("/institution-controller/**").permitAll()
+
 
 
 
