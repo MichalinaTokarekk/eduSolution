@@ -4,9 +4,13 @@ import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.ClassGroup;
 import com.eduSolution.eduSolution.service.ClassGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/class-group-controller")
 @RestController
@@ -53,6 +57,21 @@ public class ClassGroupController {
     public List<ClassGroup> findClassGroupsByCourseAndUser(@PathVariable Integer courseId, @PathVariable Integer userId) {
         return classGroupService.findClassGroupsByCourseAndUser(courseId, userId);
     }
+
+    @GetMapping("/findNameById/{id}")
+    public ResponseEntity<String> findNameById(@PathVariable Optional<Integer> id) {
+        if (id.isPresent()) {
+            String className = classGroupService.findNameById(id.get());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "application/json");
+            return new ResponseEntity<>(className, headers, HttpStatus.OK);
+        } else {
+            // Obsługa przypadku, gdy id nie jest dostarczane
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID is missing");
+        }
+    }
+
+
 
     @PutMapping("/updateGroup")
     public ClassGroup updateSemester (@RequestBody ClassGroup group) {
