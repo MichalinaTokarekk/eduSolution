@@ -26,6 +26,14 @@ public class Semester {
     @Column(nullable = false, length = 100, unique = true)
     private String name;
 
+    public Semester() {
+        // Pusty konstruktor potrzebny dla deserializacji JSON
+    }
+
+    public Semester(String name) {
+        this.name = name;
+    }
+
     private String startDate;
 
     private String endDate;
