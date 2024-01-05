@@ -76,4 +76,13 @@ public class UserController {
         String newPasswordConfirm= passwordDTO.getNewPasswordConfirm();
         return userService.changePassword(user,oldPassword,newPassword,newPasswordConfirm);
     }
+
+    @GetMapping("/confirm/{userId}")
+    public ResponseEntity<String> confirmRegistration(@PathVariable int userId) {
+        if (userService.confirmUserRegistration(userId)) {
+            return ResponseEntity.ok("Rejestracja została pomyślnie potwierdzona.");
+        } else {
+            return ResponseEntity.badRequest().body("Błąd podczas potwierdzania rejestracji. Użytkownik nie istnieje.");
+        }
+    }
 }

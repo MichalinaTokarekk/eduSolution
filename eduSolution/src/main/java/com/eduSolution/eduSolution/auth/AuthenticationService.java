@@ -7,11 +7,13 @@ import com.eduSolution.eduSolution.entity.User;
 import com.eduSolution.eduSolution.entity.UserStatus;
 import com.eduSolution.eduSolution.repository.ClassGroupRepository;
 import com.eduSolution.eduSolution.repository.UserRepository;
+import com.eduSolution.eduSolution.service.EmailService;
 import com.eduSolution.eduSolution.token.Token;
 import com.eduSolution.eduSolution.token.TokenRepository;
 import com.eduSolution.eduSolution.token.TokenType;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +33,8 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    @Autowired
+    private EmailService emailService;
     public AuthenticationResponse register(RegisterRequest request) {
 //        Set<ClassGroup> teachingClassGroups = new HashSet<>();
 //        if (request.getTeachingClassGroups() != null && !request.getTeachingClassGroups().isEmpty()) {
@@ -103,9 +107,18 @@ public class AuthenticationService {
         claimsMap.put("id", user.getId());
         var jwtToken = jwtService.generateToken(claimsMap, user);
         saveUserToken(savedUser, jwtToken);
+
+        String confirmationLink = "http://localhost:9191/confirm/" + savedUser.getId();
+        String subject = "Potwierdzenie rejestracji";
+        String body = "Dziękujemy za rejestrację! Kliknij poniższy link, aby potwierdzić rejestrację:\n" + confirmationLink;
+
+        emailService.sendConfirmationEmail(user.getEmail(), subject, body);
+
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+
     }
 
 

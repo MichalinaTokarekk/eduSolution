@@ -2,10 +2,7 @@ package com.eduSolution.eduSolution.service;
 
 import com.eduSolution.eduSolution.config.ApplicationConfig;
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
-import com.eduSolution.eduSolution.entity.ClassGroup;
-import com.eduSolution.eduSolution.entity.Role;
-import com.eduSolution.eduSolution.entity.Semester;
-import com.eduSolution.eduSolution.entity.User;
+import com.eduSolution.eduSolution.entity.*;
 import com.eduSolution.eduSolution.exception.ErrorObject;
 import com.eduSolution.eduSolution.repository.ClassGroupRepository;
 import com.eduSolution.eduSolution.repository.UserRepository;
@@ -146,5 +143,19 @@ public class UserService {
             }
         }
         throw new Exception("NIE ZNALEZIONO UŻYTKOWNIKA");
+    }
+
+
+    public boolean confirmUserRegistration(int userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setUserStatus(UserStatus.AKTYWNY);
+            userRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
