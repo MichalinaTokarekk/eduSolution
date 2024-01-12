@@ -14,6 +14,7 @@ public class CertificateConfirmation {
     @GeneratedValue
     private Long id;
     boolean gained;
+    private double percentageScore;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

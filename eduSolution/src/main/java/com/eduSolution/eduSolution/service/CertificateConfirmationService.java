@@ -57,6 +57,7 @@ public class CertificateConfirmationService {
     public CertificateConfirmation updateCertificateConfirmation (CertificateConfirmation certificateConfirmation){
         CertificateConfirmation existingCertificateConfirmation = certificateConfirmationRepository.findById(certificateConfirmation.getId()).orElse(null);
         existingCertificateConfirmation.setGained(certificateConfirmation.isGained());
+        existingCertificateConfirmation.setPercentageScore(certificateConfirmation.getPercentageScore());
 
         User user = certificateConfirmation.getUser();
         if(user != null) {
