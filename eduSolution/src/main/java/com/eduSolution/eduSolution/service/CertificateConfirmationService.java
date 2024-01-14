@@ -34,7 +34,7 @@ public class CertificateConfirmationService {
             classGroup = classGroupRepository.findById(classGroup.getId()).orElse(null);
             certificateConfirmation.setClassGroup(classGroup);
         }
-        certificateConfirmation.setGained(false);
+//        certificateConfirmation.setGained(false);
         return certificateConfirmationRepository.save(certificateConfirmation);
     }
 
