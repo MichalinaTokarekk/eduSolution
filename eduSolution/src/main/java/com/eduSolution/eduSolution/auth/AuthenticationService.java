@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -96,7 +97,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
-                .userStatus(UserStatus.NIEAKTYWNY)
+                .userStatus(UserStatus.AKTYWNY)
                 .classGroups(classGroups)
                 .build();
         String username2 = user.getFirstName() + " " + user.getLastName();
@@ -111,6 +112,76 @@ public class AuthenticationService {
         String confirmationLink = "http://localhost:9191/confirm/" + savedUser.getId();
         String subject = "Potwierdzenie rejestracji";
         String body = "Dziękujemy za rejestrację! Kliknij poniższy link, aby potwierdzić rejestrację:\n" + confirmationLink;
+
+        emailService.sendConfirmationEmail(user.getEmail(), subject, body);
+
+
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
+
+    }
+
+
+    private String generateRandomPassword() {
+        int passwordLength = 10;
+        String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        SecureRandom secureRandom = new SecureRandom();
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < passwordLength; i++) {
+            int randomIndex = secureRandom.nextInt(allowedChars.length());
+            password.append(allowedChars.charAt(randomIndex));
+        }
+
+        return password.toString();
+    }
+
+    public AuthenticationResponse registerCreate(RegisterRequest request) {
+
+        Random random = new Random();
+
+        int losowyIndex = random.nextInt(100);
+
+        Set<ClassGroup> classGroups = new HashSet<>();
+        if (request.getClassGroups() != null && !request.getClassGroups().isEmpty()) {
+            for (Integer classGroupId : request.getClassGroups()) {
+                ClassGroup classGroup = classGroupRepository.findById(classGroupId)
+                        .orElse(null); // Zamiast zgłaszania wyjątku, użyj null, jeśli klasa nie istnieje
+                if (classGroup != null) {
+                    classGroups.add(classGroup);
+                }
+            }
+        }
+
+        String generatedPassword = generateRandomPassword();
+
+        var user = User.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .address(request.getAddress())
+                .city(request.getCity())
+                .post(request.getPost())
+                .postCode(request.getPostCode())
+                .country(request.getCountry())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(generatedPassword))
+                .role(Role.USER)
+                .userStatus(UserStatus.AKTYWNY)
+                .classGroups(classGroups)
+                .build();
+        String username2 = user.getFirstName() + " " + user.getLastName();
+        user.setUsername(username2);
+        var savedUser = userRepository.save(user);
+        var claimsMap = new HashMap<String,Object>();
+        claimsMap.put("role", user.getRole().toString().toLowerCase());
+        claimsMap.put("id", user.getId());
+        var jwtToken = jwtService.generateToken(claimsMap, user);
+        saveUserToken(savedUser, jwtToken);
+
+        String subject = "Potwierdzenie rejestracji";
+        String body = "Dziękujemy za rejestrację! Tu twoje hasło:" + generatedPassword + "Zalecana zmiana hasła na własne";
 
         emailService.sendConfirmationEmail(user.getEmail(), subject, body);
 
