@@ -6,9 +6,13 @@ import com.eduSolution.eduSolution.entity.Section;
 import com.eduSolution.eduSolution.repository.SectionRepository;
 import com.eduSolution.eduSolution.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/section-controller")
 @RestController
@@ -47,6 +51,18 @@ public class SectionController {
     @GetMapping (value = "/sectionsByClassGroupId/{classGroupId}")
     public List<Section> findSectionsByClassGroupId(@PathVariable int classGroupId) {
         return sectionService.getSectionsByClassGroup(classGroupId);
+    }
+    @GetMapping("/findNameById/{id}")
+    public ResponseEntity<String> findNameById(@PathVariable Optional<Integer> id) {
+        if (id.isPresent()) {
+            String sectionName = sectionService.findNameById(id.get());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "application/json");
+            return new ResponseEntity<>(sectionName, headers, HttpStatus.OK);
+        } else {
+            // Obsługa przypadku, gdy id nie jest dostarczane
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ID is missing");
+        }
     }
 
 

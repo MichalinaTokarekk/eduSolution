@@ -52,6 +52,10 @@ public class SectionService {
         return sectionRepository.findByClassGroupId(classGroupId);
     }
 
+    public String findNameById(int id) {
+        return sectionRepository.findNameById(id);
+    }
+
 
     public Section updateSection (Section section){
         Section existingSection = sectionRepository.findById(section.getId()).orElse(null);

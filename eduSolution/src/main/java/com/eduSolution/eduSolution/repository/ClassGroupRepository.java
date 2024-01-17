@@ -27,7 +27,6 @@ public interface ClassGroupRepository extends JpaRepository<ClassGroup,Integer> 
 
     @Query("SELECT cg.name FROM ClassGroup cg WHERE cg.id = :id")
     String findNameById(@Param("id") int id);
-    ;
 
 
 
