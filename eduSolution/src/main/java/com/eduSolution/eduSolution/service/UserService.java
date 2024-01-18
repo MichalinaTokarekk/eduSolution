@@ -99,23 +99,55 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public User updateUserClassGroup (User user){
+//    public User updateUserClassGroup (User user){
+//        User existingUser = userRepository.findById(user.getId()).orElse(null);
+//        if (existingUser != null) {
+//            Set<ClassGroup> classGroups = new HashSet<>();
+//            if (user.getClassGroups() != null) {
+//                for (ClassGroup teachingClassGroup : user.getClassGroups()) {
+//                    ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
+//                    if (existingTeachingClassGroup != null) {
+//                        classGroups.add(existingTeachingClassGroup);
+//                    }
+//                }
+//            }
+//            existingUser.setClassGroups(classGroups);
+//        }
+//
+//        return userRepository.save(existingUser);
+//    }
+
+    public User updateUserClassGroup(User user) {
         User existingUser = userRepository.findById(user.getId()).orElse(null);
+
         if (existingUser != null) {
             Set<ClassGroup> classGroups = new HashSet<>();
+
             if (user.getClassGroups() != null) {
                 for (ClassGroup teachingClassGroup : user.getClassGroups()) {
                     ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
+
                     if (existingTeachingClassGroup != null) {
-                        classGroups.add(existingTeachingClassGroup);
+                        // Check if the assignment does not exceed the limit
+                        int currentStudentsCount = classGroupRepository.getStudentsCountInClassGroup(existingTeachingClassGroup.getId());
+
+                        if (currentStudentsCount < existingTeachingClassGroup.getStudentsLimit()) {
+                            classGroups.add(existingTeachingClassGroup);
+                        } else {
+                            // Handle exceeding the limit (throw an exception or return an appropriate message)
+                            throw new IllegalArgumentException("Exceeded the limit of students in the group.");
+                        }
                     }
                 }
             }
+
             existingUser.setClassGroups(classGroups);
         }
 
         return userRepository.save(existingUser);
     }
+
+
 
     public User changeRole (User user){
         User existingUser = userRepository.findById(user.getId()).orElse(null);
