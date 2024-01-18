@@ -58,6 +58,16 @@ public class UserController {
         return userService.updateUserClassGroup(user);
     }
 
+    @PutMapping("/updateUserWithoutPassword")
+    public User updateUserWithoutPassword(@RequestBody User user) {
+        return userService.updateUserWithoutPassword(user);
+    }
+
+    @PutMapping("/updateUserWithoutPasswordNoLimitCheck")
+    public User updateUserWithoutPasswordNoLimitCheck(@RequestBody User user) {
+        return userService.updateUserWithoutPasswordNoLimitCheck(user);
+    }
+
     @PutMapping("/changeRole")
     public User changeRole (@RequestBody User user) {
         return userService.changeRole(user);

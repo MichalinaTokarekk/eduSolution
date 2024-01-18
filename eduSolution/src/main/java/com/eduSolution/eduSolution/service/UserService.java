@@ -147,6 +147,79 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
+    public User updateUserWithoutPasswordNoLimitCheck (User user){
+        User existingUser = userRepository.findById(user.getId()).orElse(null);
+        if (existingUser != null) {
+            existingUser.setEmail(user.getEmail());
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastName(user.getLastName());
+            existingUser.setCity(user.getCity());
+            existingUser.setCountry(user.getCountry());
+            existingUser.setAddress(user.getAddress());
+            existingUser.setPost(user.getPost());
+            existingUser.setPostCode(user.getPostCode());
+            existingUser.setRole(user.getRole());
+
+            Set<ClassGroup> classGroups = new HashSet<>();
+            if (user.getClassGroups() != null) {
+                for (ClassGroup teachingClassGroup : user.getClassGroups()) {
+                    ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
+                    if (existingTeachingClassGroup != null) {
+                        classGroups.add(existingTeachingClassGroup);
+                    }
+                }
+            }
+            existingUser.setClassGroups(classGroups);
+        }
+
+        return userRepository.save(existingUser);
+    }
+
+    public User updateUserWithoutPassword(User user) {
+        User existingUser = userRepository.findById(user.getId()).orElse(null);
+        existingUser.setEmail(user.getEmail());
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setCity(user.getCity());
+        existingUser.setCountry(user.getCountry());
+        existingUser.setAddress(user.getAddress());
+        existingUser.setPost(user.getPost());
+        existingUser.setPostCode(user.getPostCode());
+        existingUser.setRole(user.getRole());
+
+        if (existingUser != null) {
+            Set<ClassGroup> classGroups = new HashSet<>();
+
+            if (user.getClassGroups() != null && !user.getClassGroups().isEmpty()) {
+                for (ClassGroup teachingClassGroup : user.getClassGroups()) {
+                    ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
+
+                    if (existingTeachingClassGroup != null) {
+                        // Sprawdzenie czy przypisanie nie przekroczy limitu tylko, gdy dodajesz nową grupę
+                        if (!existingUser.getClassGroups().contains(existingTeachingClassGroup)) {
+                            int currentStudentsCount = classGroupRepository.getStudentsCountInClassGroup(existingTeachingClassGroup.getId());
+
+                            if (currentStudentsCount < existingTeachingClassGroup.getStudentsLimit()) {
+                                classGroups.add(existingTeachingClassGroup);
+                            } else {
+                                // Handle exceeding the limit (możesz też pominąć zapis i poinformować użytkownika)
+                                throw new IllegalArgumentException("Przekroczono limit użytkowników w grupie.");
+                            }
+                        } else {
+                            // Jeśli grupa jest już przypisana, nie sprawdzaj limitu
+                            classGroups.add(existingTeachingClassGroup);
+                        }
+                    }
+                }
+            }
+
+
+            existingUser.setClassGroups(classGroups);
+        }
+
+        return userRepository.save(existingUser);
+    }
+
 
 
     public User changeRole (User user){
