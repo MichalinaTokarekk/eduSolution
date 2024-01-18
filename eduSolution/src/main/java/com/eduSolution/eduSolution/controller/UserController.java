@@ -51,6 +51,13 @@ public class UserController {
     public User updateUser (@RequestBody User user) {
         return userService.updateUser(user);
     }
+
+
+    @PutMapping("/updateUserClassGroup")
+    public User updateUserClassGroup (@RequestBody User user) {
+        return userService.updateUserClassGroup(user);
+    }
+
     @PutMapping("/changeRole")
     public User changeRole (@RequestBody User user) {
         return userService.changeRole(user);

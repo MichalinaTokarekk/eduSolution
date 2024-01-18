@@ -99,6 +99,24 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
+    public User updateUserClassGroup (User user){
+        User existingUser = userRepository.findById(user.getId()).orElse(null);
+        if (existingUser != null) {
+            Set<ClassGroup> classGroups = new HashSet<>();
+            if (user.getClassGroups() != null) {
+                for (ClassGroup teachingClassGroup : user.getClassGroups()) {
+                    ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
+                    if (existingTeachingClassGroup != null) {
+                        classGroups.add(existingTeachingClassGroup);
+                    }
+                }
+            }
+            existingUser.setClassGroups(classGroups);
+        }
+
+        return userRepository.save(existingUser);
+    }
+
     public User changeRole (User user){
         User existingUser = userRepository.findById(user.getId()).orElse(null);
         existingUser.setRole(user.getRole());
