@@ -26,7 +26,12 @@ public class EventService {
     private UserRepository userRepository;
 
     public Event saveEvent (Event event){
-
+        Set<ClassGroup> classGroups = new HashSet<>();
+        for (ClassGroup classGroup : event.getClassGroups()) {
+            Iterable<ClassGroup> classGroupsById = classGroupRepository.findAllById(Collections.singleton(classGroup.getId()));
+            classGroupsById.forEach(classGroups::add);
+        }
+        event.setClassGroups(classGroups);
         return eventRepository.save(event);
     }
 
@@ -49,6 +54,13 @@ public class EventService {
         Event existingEvent = eventRepository.findById(event.getId()).orElse(null);
         existingEvent.setName(event.getName());
         existingEvent.setEventDate(event.getEventDate());
+
+        Set<ClassGroup> classGroups = new HashSet<>();
+        for (ClassGroup classGroup : event.getClassGroups()) {
+            Iterable<ClassGroup> classGroupsById = classGroupRepository.findAllById(Collections.singleton(classGroup.getId()));
+            classGroupsById.forEach(classGroups::add);
+        }
+        existingEvent.setClassGroups(classGroups);
 
         return eventRepository.save(existingEvent);
     }

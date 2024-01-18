@@ -47,4 +47,13 @@ public class Event {
     public Event(int id) {
         this.id = id;
     }
+
+    //    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable (name = "sections_to_eduMaterials",
+//            joinColumns = {@JoinColumn(name = "section_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "eduMaterial_id")})
+//    private Set<EduMaterial> eduMaterials = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "event_classgroup", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "classgroup_id"))
+    private Set<ClassGroup> classGroups = new HashSet<>();
 }
