@@ -68,10 +68,15 @@ public class UserController {
         return userService.findClassGroupsById(userId);
     }
 
-    @GetMapping("/findUsersByClassGroupId/{classGroupId}")
-    public List<User> findUsersByClassGroupId(@PathVariable Integer classGroupId){
-        return userService.findUsersByClassGroupId(classGroupId);
+    @GetMapping("/findUsersByClassGroupIdAndRole/{classGroupId}/{userRole}")
+    public List<User> findUsersByClassGroupIdAndRole(
+            @PathVariable Integer classGroupId,
+            @PathVariable String userRole) {
+
+        Role roleEnum = Role.valueOf(userRole); // Konwersja ciągu znaków na enum
+        return userService.findUsersByClassGroupIdAndRole(classGroupId, roleEnum);
     }
+
 
 
     @PutMapping("/changePassword")

@@ -28,8 +28,12 @@ public interface ClassGroupRepository extends JpaRepository<ClassGroup,Integer> 
     @Query("SELECT cg.name FROM ClassGroup cg WHERE cg.id = :id")
     String findNameById(@Param("id") int id);
 
-    @Query("SELECT COUNT(u) FROM User u JOIN u.classGroups cg WHERE cg.id = :classGroupId")
+//    @Query("SELECT COUNT(u) FROM User u JOIN u.classGroups cg WHERE cg.id = :classGroupId")
+//    Integer getStudentsCountInClassGroup(@Param("classGroupId") Integer classGroupId);
+
+    @Query("SELECT COUNT(u) FROM User u JOIN u.classGroups cg WHERE cg.id = :classGroupId AND u.role = com.eduSolution.eduSolution.entity.Role.USER")
     Integer getStudentsCountInClassGroup(@Param("classGroupId") Integer classGroupId);
+
 
 
 

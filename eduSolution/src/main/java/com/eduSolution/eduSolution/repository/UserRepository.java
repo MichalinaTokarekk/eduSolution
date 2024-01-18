@@ -36,5 +36,9 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Query("SELECT u FROM User u JOIN u.classGroups cg WHERE cg.id = :classGroupId")
     List<User> findUsersByClassGroupId(@Param("classGroupId") Integer classGroupId);
 
+    @Query("SELECT u FROM User u JOIN u.classGroups cg WHERE cg.id = :classGroupId AND u.role = :userRole")
+    List<User> findUsersByClassGroupIdAndRole(@Param("classGroupId") Integer classGroupId, @Param("userRole") Role userRole);
+
+
 
 }

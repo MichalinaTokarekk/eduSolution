@@ -165,8 +165,8 @@ public class UserService {
 
     }
 
-    public List<User> findUsersByClassGroupId(Integer classGroupId) {
-        return userRepository.findUsersByClassGroupId(classGroupId);
+    public List<User> findUsersByClassGroupIdAndRole(Integer classGroupId, Role userRole) {
+        return userRepository.findUsersByClassGroupIdAndRole(classGroupId, userRole);
     }
 
     public ResponseEntity<?> changePassword (User user, String oldPassword, String newPassword, String newPasswordConfirm) throws Exception {
