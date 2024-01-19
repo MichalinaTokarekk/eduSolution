@@ -1,14 +1,13 @@
 package com.eduSolution.eduSolution.auth;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
 @Data
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterRequest {
@@ -21,7 +20,6 @@ public class RegisterRequest {
     private String post;
     private String postCode;
     private String country;
-
     private Set<Integer> classGroups;
 
 }
