@@ -66,4 +66,12 @@ public class Grade {
     public Grade(int id) {
         this.id = id;
     }
+
+    public void setValue(double value) {
+        if (value > 0 && value < 7) {
+            this.value = value;
+        } else {
+            throw new IllegalArgumentException("Wartość 'value' musi być większa od 0 i mniejsza od 7.");
+        }
+    }
 }
