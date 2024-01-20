@@ -78,6 +78,11 @@ public class UserController {
         return userService.findClassGroupsById(userId);
     }
 
+    @GetMapping("/findUsersByClassGroupId/{classGroupId}")
+    public List<User> findUsersByClassGroupId(@PathVariable Integer classGroupId) {
+        return userService.findUsersByClassGroupId(classGroupId);
+    }
+
     @GetMapping("/findUsersByClassGroupIdAndRole/{classGroupId}/{userRole}")
     public List<User> findUsersByClassGroupIdAndRole(
             @PathVariable Integer classGroupId,

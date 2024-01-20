@@ -52,9 +52,9 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-//    public List<User> findUsersByClassGroupId(int classGroupId) {
-//        return userRepository.findUsersByClassGroupId(classGroupId);
-//    }
+    public List<User> findUsersByClassGroupId(int classGroupId) {
+        return userRepository.findUsersByClassGroupId(classGroupId);
+    }
 
     public DeleteResponseDTO deleteUser(int id){
         //        List<Book> booksByGenreId = bookRepository.findByGenreId(id);

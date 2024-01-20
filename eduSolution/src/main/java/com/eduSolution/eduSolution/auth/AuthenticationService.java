@@ -179,7 +179,7 @@ public class AuthenticationService {
         saveUserToken(savedUser, jwtToken);
 
         String subject = "Potwierdzenie rejestracji";
-        String body = "Dziękujemy za rejestrację! Tu twoje hasło:" + generatedPassword + "Zalecana zmiana hasła na własne";
+        String body = "Dziękujemy za rejestrację! Tu twoje hasło:" + generatedPassword;
 
         emailService.sendConfirmationEmail(user.getEmail(), subject, body);
 
