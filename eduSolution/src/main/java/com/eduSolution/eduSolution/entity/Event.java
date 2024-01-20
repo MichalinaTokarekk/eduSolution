@@ -1,5 +1,6 @@
 package com.eduSolution.eduSolution.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +31,16 @@ public class Event {
 
     @Column(nullable = false, length = 100)
     private String name;
+
+    @Lob
+    @Column(name="CONTENT", length=1000)
+    private String description;
+
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime startEventTime;
+
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime endEventTime;
     @Column
     private String eventDate;
 

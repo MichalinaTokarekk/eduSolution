@@ -53,7 +53,10 @@ public class EventService {
     public Event updateEvent (Event event){
         Event existingEvent = eventRepository.findById(event.getId()).orElse(null);
         existingEvent.setName(event.getName());
+        existingEvent.setDescription(event.getDescription());
         existingEvent.setEventDate(event.getEventDate());
+        existingEvent.setStartEventTime(event.getStartEventTime());
+        existingEvent.setEndEventTime(event.getEndEventTime());
 
         Set<ClassGroup> classGroups = new HashSet<>();
         for (ClassGroup classGroup : event.getClassGroups()) {
