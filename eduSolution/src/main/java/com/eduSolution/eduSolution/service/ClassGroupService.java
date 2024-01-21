@@ -78,6 +78,10 @@ public class ClassGroupService {
         return classgroupRepository.findNameById(id);
     }
 
+    public List<ClassGroup> findPendingClassGroupsByCourseId(Integer classGroupId) {
+        return classgroupRepository.findPendingClassGroupsByCourseId(classGroupId);
+    }
+
     public ClassGroup updateClassGroup (ClassGroup classGroup){
         ClassGroup existingClassGroup = classgroupRepository.findById(classGroup.getId()).orElse(null);
         existingClassGroup.setName(classGroup.getName());

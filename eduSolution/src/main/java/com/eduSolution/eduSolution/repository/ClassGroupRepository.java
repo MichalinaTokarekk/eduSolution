@@ -35,7 +35,8 @@ public interface ClassGroupRepository extends JpaRepository<ClassGroup,Integer> 
     Integer getStudentsCountInClassGroup(@Param("classGroupId") Integer classGroupId);
 
 
-
+    @Query("SELECT cg FROM ClassGroup cg WHERE cg.classGroupStatus = 'OCZEKUJĄCY' AND cg.course.id = :courseId")
+    List<ClassGroup> findPendingClassGroupsByCourseId(@Param("courseId") Integer courseId);
 
 
 

@@ -71,6 +71,12 @@ public class ClassGroupController {
         }
     }
 
+    @GetMapping("/findPendingClassGroupsByCourseId/{courseId}")
+    public List<ClassGroup> findPendingClassGroupsByCourseId(@PathVariable Integer courseId) {
+        return classGroupService.findPendingClassGroupsByCourseId(courseId);
+    }
+
+
 
 
     @PutMapping("/updateGroup")
