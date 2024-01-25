@@ -58,6 +58,10 @@ public class LessonService {
         return lessonRepository.findLessonsForUserInClassGroups(userId);
     }
 
+    public List<Lesson> findLessonsByClassGroupId(Integer classGroupId) {
+        return lessonRepository.findLessonsByClassGroupId(classGroupId);
+    }
+
 
     public Lesson updateLesson (Lesson lesson){
         Lesson existingLesson = lessonRepository.findById(lesson.getId()).orElse(null);

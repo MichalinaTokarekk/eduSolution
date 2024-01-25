@@ -49,6 +49,11 @@ public class LessonController {
         return lessonService.findLessonsForUserInClassGroups(userId);
     }
 
+    @GetMapping("/findLessonsByClassGroupId/{classGroupId}")
+    public List<Lesson> findLessonsByClassGroupId(@PathVariable Integer classGroupId) {
+        return lessonService.findLessonsByClassGroupId(classGroupId);
+    }
+
     @PutMapping("/updateLesson")
     public Lesson updateLesson (@RequestBody Lesson lesson) {
         return lessonService.updateLesson(lesson);

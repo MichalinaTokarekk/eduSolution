@@ -18,17 +18,17 @@ public class HomePageElementService {
     private HomePageImageRepository homePageImageRepository;
 
     public HomePageElement saveHomePageElement(HomePageElement homePageElement, List<HomePageImage> selectedImages) {
-        if (selectedImages != null) {
-            for (HomePageImage image : selectedImages) {
-                image.setHomePageElement(homePageElement);
-            }
-
-            // Zapisz tylko wybrane obrazy
-            homePageImageRepository.saveAll(selectedImages);
-
-            // Ustaw wybrane obrazy w elemencie
-            homePageElement.setImages(selectedImages);
-        }
+//        if (selectedImages != null) {
+//            for (HomePageImage image : selectedImages) {
+//                image.setHomePageElement(homePageElement);
+//            }
+//
+//            // Zapisz tylko wybrane obrazy
+//            homePageImageRepository.saveAll(selectedImages);
+//
+//            // Ustaw wybrane obrazy w elemencie
+//            homePageElement.setImages(selectedImages);
+//        }
 
         // Następnie zapisz element, który teraz ma ustawione wybrane obrazy
         return homePageElementRepository.save(homePageElement);

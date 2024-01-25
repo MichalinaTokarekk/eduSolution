@@ -20,7 +20,7 @@ public class HomePageImage {
 
     private String url;
 
-    @ManyToOne
-    @JoinColumn(name = "home_page_element_id")
-    private HomePageElement homePageElement;
+//    @ManyToOne
+//    @JoinColumn(name = "home_page_element_id")
+//    private HomePageElement homePageElement;
 }

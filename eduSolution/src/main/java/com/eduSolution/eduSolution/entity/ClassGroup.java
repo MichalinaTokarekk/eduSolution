@@ -33,6 +33,8 @@ public class ClassGroup {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Lob
+    @Column(name="CONTENT", length=1000)
     private String description;
 
     private int studentsLimit;

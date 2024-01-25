@@ -28,9 +28,9 @@ public class HomePageElement {
     private String title;
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "home_page_element_id")
-    private List<HomePageImage> images;
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "home_page_element_id")
+//    private List<HomePageImage> images;
 
     @CreatedBy
     private String createdBy;
