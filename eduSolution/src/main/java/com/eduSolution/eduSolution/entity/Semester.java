@@ -20,7 +20,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 public class Semester {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false, length = 100, unique = true)
