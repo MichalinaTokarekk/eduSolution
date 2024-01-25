@@ -10,10 +10,10 @@ import java.util.List;
 public interface LessonRepository extends JpaRepository<Lesson,Integer> {
 //    List<Lesson> findByClassGroup_IdIn(List<Integer> classGroupIds);
 
-//    @Query("SELECT l FROM Lesson l " +
-//            "JOIN l.classGroup cg " +
-//            "WHERE cg IN (SELECT cu.classGroups FROM User cu WHERE cu.id = :userId)")
-//    List<Lesson> findLessonsForUserInClassGroups(@Param("userId") Integer userId);
+    @Query("SELECT l FROM Lesson l " +
+            "JOIN l.classGroup cg " +
+            "WHERE cg IN (SELECT cu.classGroups FROM User cu WHERE cu.id = :userId)")
+    List<Lesson> findLessonsForUserInClassGroupsWithoutStatus(@Param("userId") Integer userId);
 
     @Query("SELECT l FROM Lesson l " +
             "JOIN l.classGroup cg " +

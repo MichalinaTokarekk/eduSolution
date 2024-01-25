@@ -58,6 +58,10 @@ public class LessonService {
         return lessonRepository.findLessonsForUserInClassGroups(userId);
     }
 
+    public List<Lesson> findLessonsForUserInClassGroupsWithoutStatus(Integer userId) {
+        return lessonRepository.findLessonsForUserInClassGroupsWithoutStatus(userId);
+    }
+
     public List<Lesson> findLessonsByClassGroupId(Integer classGroupId) {
         return lessonRepository.findLessonsByClassGroupId(classGroupId);
     }

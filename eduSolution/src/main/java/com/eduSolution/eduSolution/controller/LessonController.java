@@ -49,6 +49,11 @@ public class LessonController {
         return lessonService.findLessonsForUserInClassGroups(userId);
     }
 
+    @GetMapping("/findLessonsForUserInClassGroupsWithoutStatus/{userId}")
+    public List<Lesson> findLessonsForUserInClassGroupsWithoutStatus(@PathVariable Integer userId) {
+        return lessonService.findLessonsForUserInClassGroupsWithoutStatus(userId);
+    }
+
     @GetMapping("/findLessonsByClassGroupId/{classGroupId}")
     public List<Lesson> findLessonsByClassGroupId(@PathVariable Integer classGroupId) {
         return lessonService.findLessonsByClassGroupId(classGroupId);
