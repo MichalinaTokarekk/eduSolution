@@ -66,6 +66,11 @@ public class CourseController {
         return courseService.updateCourse(course, imageFile);
     }
 
+    @PutMapping("/updateCourseRemove")
+    public Course updateCourseRemove (@RequestParam (name ="imageFile", required = false)MultipartFile imageFile, @ModelAttribute Course course, boolean removeImage) {
+        return courseService.updateCourseRemove(course, imageFile, removeImage);
+    }
+
     @DeleteMapping("/deleteCourse/{id}")
     public DeleteResponseDTO deleteCourse(@PathVariable int id) {
         return courseService.deleteCourse(id);

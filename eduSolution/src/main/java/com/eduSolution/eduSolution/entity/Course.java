@@ -39,7 +39,7 @@ public class Course {
 
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
-    private String image;
+    private byte[] image;
 
     @CreatedBy
     private String createdBy;
