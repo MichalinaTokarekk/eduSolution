@@ -5,9 +5,14 @@ import com.eduSolution.eduSolution.entity.Course;
 import com.eduSolution.eduSolution.repository.CourseRepository;
 import com.eduSolution.eduSolution.repository.SemesterRepository;
 import com.eduSolution.eduSolution.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -19,8 +24,26 @@ public class CourseService {
     private UserRepository userRepository;
 
     public Course saveCourse (Course course){
+        course.setCashAdvance(10);
         return courseRepository.save(course);
     }
+
+    public Course saveCourseWithImage(Course course, MultipartFile imageFile) {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
+            if (fileName.contains("..")) {
+                System.out.println("Not a valid file");
+            }
+            try {
+                course.setImage(Base64.getEncoder().encodeToString(imageFile.getBytes()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return courseRepository.save(course);
+    }
+
 
     public List<Course> saveCourses (List <Course> courses){
         return courseRepository.saveAll(courses);
@@ -49,13 +72,36 @@ public class CourseService {
         return courseRepository.findCoursesByUserId(userId);
     }
 
-    public Course updateCourse (Course course){
+//    public Course updateCourse (Course course){
+//        Course existingCourse = courseRepository.findById(course.getId()).orElse(null);
+//        existingCourse.setName(course.getName());
+//        existingCourse.setDescription(course.getDescription());
+//        existingCourse.setAmountToPay(course.getAmountToPay());
+//        existingCourse.setDifficultyLevel(course.getDifficultyLevel());
+//        return courseRepository.save(existingCourse);
+//    }
+
+    public Course updateCourse (Course course, MultipartFile imageFile){
         Course existingCourse = courseRepository.findById(course.getId()).orElse(null);
+        if (existingCourse == null) {
+            // Obsłuż przypadek, gdy kurs nie istnieje
+            throw new EntityNotFoundException("Course with id " + course.getId() + " not found");
+        }
         existingCourse.setName(course.getName());
         existingCourse.setDescription(course.getDescription());
         existingCourse.setAmountToPay(course.getAmountToPay());
-        existingCourse.setCashAdvance(course.getCashAdvance());
         existingCourse.setDifficultyLevel(course.getDifficultyLevel());
+        if (imageFile != null) {
+            String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
+            if (fileName.contains("..")) {
+                System.out.println("Not a valid file");
+            }
+            try {
+                existingCourse.setImage(Base64.getEncoder().encodeToString(imageFile.getBytes()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return courseRepository.save(existingCourse);
     }
 

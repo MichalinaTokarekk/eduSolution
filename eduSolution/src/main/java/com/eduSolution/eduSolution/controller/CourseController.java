@@ -6,6 +6,7 @@ import com.eduSolution.eduSolution.service.CourseService;
 import com.eduSolution.eduSolution.service.SemesterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,6 +18,11 @@ public class CourseController {
     @PostMapping("/addCourse")
     public Course addCourse (@RequestBody Course course){
         return courseService.saveCourse(course);
+    }
+
+    @PostMapping("/saveCourseWithImage")
+    public Course saveCourseWithImage (@RequestParam (name = "imageFile", required = false)MultipartFile imageFile, @ModelAttribute Course course){
+        return courseService.saveCourseWithImage(course, imageFile);
     }
     @PostMapping("/addCourses")
     public List<Course> addCourses (@RequestBody List<Course> courses){
@@ -50,9 +56,14 @@ public class CourseController {
         return courseService.findCoursesByUserId(userId);
     }
 
+//    @PutMapping("/updateCourse")
+//    public Course updateCourse (@RequestBody Course course) {
+//        return courseService.updateCourse(course);
+//    }
+
     @PutMapping("/updateCourse")
-    public Course updateCourse (@RequestBody Course course) {
-        return courseService.updateCourse(course);
+    public Course updateCourse (@RequestParam (name ="imageFile", required = false)MultipartFile imageFile, @ModelAttribute Course course) {
+        return courseService.updateCourse(course, imageFile);
     }
 
     @DeleteMapping("/deleteCourse/{id}")

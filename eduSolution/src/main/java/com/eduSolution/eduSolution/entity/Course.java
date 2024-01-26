@@ -37,6 +37,10 @@ public class Course {
     @Column(length = 1000)
     private String description;
 
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
+
     @CreatedBy
     private String createdBy;
 
