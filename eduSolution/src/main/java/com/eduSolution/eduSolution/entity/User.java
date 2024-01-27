@@ -49,17 +49,23 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 100)
     private String address;
 
-    @Column(nullable = false, length = 100)
-    private String city;
+//    @Column(nullable = false, length = 100)
+//    private String city;
+//
+//    @Column(nullable = false, length = 100)
+//    private String post;
+//
+//    @Column(nullable = false, length = 100)
+//    private String postCode;
 
     @Column(nullable = false, length = 100)
-    private String post;
+    private long albumNr;
 
     @Column(nullable = false, length = 100)
-    private String postCode;
+    private String phoneNr;
 
     @Column(nullable = false, length = 100)
-    private String country;
+    private String dateOfBirth;
 
     @CreatedBy
     private String createdBy;

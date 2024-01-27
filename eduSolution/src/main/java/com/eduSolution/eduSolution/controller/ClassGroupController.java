@@ -2,12 +2,14 @@ package com.eduSolution.eduSolution.controller;
 
 import com.eduSolution.eduSolution.dto.DeleteResponseDTO;
 import com.eduSolution.eduSolution.entity.ClassGroup;
+import com.eduSolution.eduSolution.entity.Course;
 import com.eduSolution.eduSolution.service.ClassGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +22,11 @@ public class ClassGroupController {
     @PostMapping("/addGroup")
     public ClassGroup addGroup (@RequestBody ClassGroup group){
         return classGroupService.saveClassGroup(group);
+    }
+
+    @PostMapping("/saveClassGroupWithImage")
+    public ClassGroup saveCourseWithImage (@RequestParam (name = "imageFile", required = false)MultipartFile imageFile, @ModelAttribute ClassGroup classGroup){
+        return classGroupService.saveClassGroupWithImage(classGroup, imageFile);
     }
     @PostMapping("/addGroups")
     public List<ClassGroup> addGroups (@RequestBody List<ClassGroup> classGroups){
@@ -82,6 +89,16 @@ public class ClassGroupController {
     @PutMapping("/updateGroup")
     public ClassGroup updateSemester (@RequestBody ClassGroup group) {
         return classGroupService.updateClassGroup(group);
+    }
+
+    @PutMapping("/updateClassGroupWithImage")
+    public ClassGroup updateClassGroupWithImage (@RequestParam (name ="imageFile", required = false) MultipartFile imageFile, @ModelAttribute ClassGroup classGroup) {
+        return classGroupService.updateClassGroupWithImage(classGroup, imageFile);
+    }
+
+    @PutMapping("/updateClassGroupRemove")
+    public ClassGroup updateClassGroupRemove (@RequestParam (name ="imageFile", required = false)MultipartFile imageFile, @ModelAttribute ClassGroup classGroup, boolean removeImage) {
+        return classGroupService.updateClassGroupRemove(classGroup, imageFile, removeImage);
     }
 
     @DeleteMapping("/deleteGroup/{id}")

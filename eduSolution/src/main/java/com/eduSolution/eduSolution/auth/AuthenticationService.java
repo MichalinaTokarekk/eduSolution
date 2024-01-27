@@ -89,10 +89,13 @@ public class AuthenticationService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .address(request.getAddress())
-                .city(request.getCity())
-                .post(request.getPost())
-                .postCode(request.getPostCode())
-                .country(request.getCountry())
+//                .city(request.getCity())
+//                .post(request.getPost())
+//                .postCode(request.getPostCode())
+//                .country(request.getCountry())
+                .phoneNr(request.getPhoneNr())
+                .dateOfBirth(request.getDateOfBirth())
+                .albumNr(generateRandomAlbumNr())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
@@ -119,6 +122,16 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .build();
 
+    }
+
+    public static long generateRandomAlbumNr() {
+        // Tworzymy obiekt klasy Random
+        Random random = new Random();
+
+        // Generujemy losową liczbę typu long
+        long randomAlbumNr = Math.abs(random.nextLong());
+
+        return randomAlbumNr;
     }
 
     private String generateRandomPassword() {
@@ -159,10 +172,13 @@ public class AuthenticationService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .address(request.getAddress())
-                .city(request.getCity())
-                .post(request.getPost())
-                .postCode(request.getPostCode())
-                .country(request.getCountry())
+//                .city(request.getCity())
+//                .post(request.getPost())
+//                .postCode(request.getPostCode())
+//                .country(request.getCountry())
+                .phoneNr(request.getPhoneNr())
+                .dateOfBirth(request.getDateOfBirth())
+                .albumNr(generateRandomAlbumNr())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(generatedPassword))
                 .role(Role.USER)
@@ -179,7 +195,7 @@ public class AuthenticationService {
         saveUserToken(savedUser, jwtToken);
 
         String subject = "Potwierdzenie rejestracji";
-        String body = "Dziękujemy za rejestrację! Tu twoje hasło:" + generatedPassword;
+        String body = "Dziękujemy za rejestrację! Tu twoje hasło: " + generatedPassword;
 
         emailService.sendConfirmationEmail(user.getEmail(), subject, body);
 

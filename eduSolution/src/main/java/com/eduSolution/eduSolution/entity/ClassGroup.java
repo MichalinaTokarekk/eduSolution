@@ -49,6 +49,10 @@ public class ClassGroup {
     @Enumerated(EnumType.STRING)
     private ClassGroupStatus classGroupStatus;
 
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] image;
+
     @CreatedBy
     private String createdBy;
 

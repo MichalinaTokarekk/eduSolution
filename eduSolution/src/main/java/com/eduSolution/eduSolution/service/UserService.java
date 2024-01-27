@@ -6,6 +6,7 @@ import com.eduSolution.eduSolution.entity.*;
 import com.eduSolution.eduSolution.exception.ErrorObject;
 import com.eduSolution.eduSolution.repository.ClassGroupRepository;
 import com.eduSolution.eduSolution.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,12 +75,14 @@ public class UserService {
             existingUser.setPassword(applicationConfig.passwordEncoder().encode(user.getPassword()));
             existingUser.setFirstName(user.getFirstName());
             existingUser.setLastName(user.getLastName());
-            existingUser.setCity(user.getCity());
-            existingUser.setCountry(user.getCountry());
+//            existingUser.setCity(user.getCity());
+//            existingUser.setCountry(user.getCountry());
             existingUser.setAddress(user.getAddress());
-            existingUser.setPost(user.getPost());
-            existingUser.setPostCode(user.getPostCode());
+//            existingUser.setPost(user.getPost());
+//            existingUser.setPostCode(user.getPostCode());
             existingUser.setRole(user.getRole());
+            existingUser.setPhoneNr(user.getPhoneNr());
+            existingUser.setDateOfBirth(user.getDateOfBirth());
 //            changeRole(user);
 
 
@@ -153,11 +156,13 @@ public class UserService {
             existingUser.setEmail(user.getEmail());
             existingUser.setFirstName(user.getFirstName());
             existingUser.setLastName(user.getLastName());
-            existingUser.setCity(user.getCity());
-            existingUser.setCountry(user.getCountry());
+//            existingUser.setCity(user.getCity());
+//            existingUser.setCountry(user.getCountry());
             existingUser.setAddress(user.getAddress());
-            existingUser.setPost(user.getPost());
-            existingUser.setPostCode(user.getPostCode());
+//            existingUser.setPost(user.getPost());
+//            existingUser.setPostCode(user.getPostCode());
+            existingUser.setPhoneNr(user.getPhoneNr());
+            existingUser.setDateOfBirth(user.getDateOfBirth());
             existingUser.setRole(user.getRole());
 
             Set<ClassGroup> classGroups = new HashSet<>();
@@ -177,44 +182,51 @@ public class UserService {
 
     public User updateUserWithoutPassword(User user) {
         User existingUser = userRepository.findById(user.getId()).orElse(null);
-        existingUser.setEmail(user.getEmail());
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setCity(user.getCity());
-        existingUser.setCountry(user.getCountry());
-        existingUser.setAddress(user.getAddress());
-        existingUser.setPost(user.getPost());
-        existingUser.setPostCode(user.getPostCode());
-        existingUser.setRole(user.getRole());
-
         if (existingUser != null) {
-            Set<ClassGroup> classGroups = new HashSet<>();
+            existingUser.setEmail(user.getEmail());
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastName(user.getLastName());
+//            existingUser.setCity(user.getCity());
+//            existingUser.setCountry(user.getCountry());
+            existingUser.setAddress(user.getAddress());
+//            existingUser.setPost(user.getPost());
+//            existingUser.setPostCode(user.getPostCode());
+            existingUser.setPhoneNr(user.getPhoneNr());
+            existingUser.setDateOfBirth(user.getDateOfBirth());
+            existingUser.setRole(user.getRole());
 
-            if (user.getClassGroups() != null && !user.getClassGroups().isEmpty()) {
-                for (ClassGroup teachingClassGroup : user.getClassGroups()) {
-                    ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
+            if (existingUser != null) {
+                Set<ClassGroup> classGroups = new HashSet<>();
 
-                    if (existingTeachingClassGroup != null) {
-                        // Sprawdzenie czy przypisanie nie przekroczy limitu tylko, gdy dodajesz nową grupę
-                        if (!existingUser.getClassGroups().contains(existingTeachingClassGroup)) {
-                            int currentStudentsCount = classGroupRepository.getStudentsCountInClassGroup(existingTeachingClassGroup.getId());
+                if (user.getClassGroups() != null && !user.getClassGroups().isEmpty()) {
+                    for (ClassGroup teachingClassGroup : user.getClassGroups()) {
+                        ClassGroup existingTeachingClassGroup = classGroupRepository.findById(teachingClassGroup.getId()).orElse(null);
 
-                            if (currentStudentsCount < existingTeachingClassGroup.getStudentsLimit()) {
-                                classGroups.add(existingTeachingClassGroup);
+                        if (existingTeachingClassGroup != null) {
+                            // Sprawdzenie czy przypisanie nie przekroczy limitu tylko, gdy dodajesz nową grupę
+                            if (!existingUser.getClassGroups().contains(existingTeachingClassGroup)) {
+                                int currentStudentsCount = classGroupRepository.getStudentsCountInClassGroup(existingTeachingClassGroup.getId());
+
+                                if (currentStudentsCount < existingTeachingClassGroup.getStudentsLimit()) {
+                                    classGroups.add(existingTeachingClassGroup);
+                                } else {
+                                    // Handle exceeding the limit (możesz też pominąć zapis i poinformować użytkownika)
+                                    throw new IllegalArgumentException("Przekroczono limit użytkowników w grupie.");
+                                }
                             } else {
-                                // Handle exceeding the limit (możesz też pominąć zapis i poinformować użytkownika)
-                                throw new IllegalArgumentException("Przekroczono limit użytkowników w grupie.");
+                                // Jeśli grupa jest już przypisana, nie sprawdzaj limitu
+                                classGroups.add(existingTeachingClassGroup);
                             }
-                        } else {
-                            // Jeśli grupa jest już przypisana, nie sprawdzaj limitu
-                            classGroups.add(existingTeachingClassGroup);
                         }
                     }
                 }
+
+
+                existingUser.setClassGroups(classGroups);
             }
+        } else {
+            throw new EntityNotFoundException("Użytkownik o podanym ID nie istnieje.");
 
-
-            existingUser.setClassGroups(classGroups);
         }
 
         return userRepository.save(existingUser);

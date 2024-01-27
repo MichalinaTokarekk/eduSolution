@@ -16,10 +16,9 @@ public class RegisterRequest {
     private String firstName;
     private String lastName;
     private String address;
-    private String city;
-    private String post;
-    private String postCode;
-    private String country;
+    private String phoneNr;
+    private String dateOfBirth;
+    private long albumNr;
     private Set<Integer> classGroups;
 
 }
